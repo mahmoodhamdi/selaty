@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "930626327476",
+    "project_id": "selaty-5060",
+    "storage_bucket": "selaty-5060.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:930626327476:android:96c6760073577e388618e1",
+        "android_client_info": {
+          "package_name": "com.example.selaty"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCZoRqQbyt-lOcU7_rFFI4d3uDAUfKA-WI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

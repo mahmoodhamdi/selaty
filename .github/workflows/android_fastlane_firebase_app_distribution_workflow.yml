@@ -1,0 +1,43 @@
+name: Android Fastlane with Firebase App Distribution Workflow
+ 
+on:
+  push:
+    branches:
+      - mobile-app-stable # The branch that you would like to run the workflow when you push into it.
+
+jobs:
+  distribute_to_firebase:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout my repo code
+        uses: actions/checkout@v2
+
+      - name: Set up JDK 11
+        uses: actions/setup-java@v2
+        with:
+          java-version: "11"
+          distribution: "temurin"
+
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+
+      # If there was an error, then run this: "cd android" then "bundle lock --add-platform x86_64-linux"
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.3.4"
+          bundler-cache: true
+          working-directory: android
+
+      - name: Build and Distribute App
+        env:
+          APP_ID: "1:930626327476:android:96c6760073577e388618e1"
+          FIREBASE_CLI_TOKEN: "1//03RvHmudjVlqfCgYIARAAGAMSNwF-L9IrqXsgE3miadC12wHJfO57D_wMxDafIPhYfkzM6-xUde1lLE0NpbcNTvgB6reAaaR_rUw"
+          FIREBASE_OPTIONS_ANDROID_API_KEY: "AIzaSyCZoRqQbyt-lOcU7_rFFI4d3uDAUfKA-WI"
+          FIREBASE_OPTIONS_ANDROID_APP_ID: "1:930626327476:android:96c6760073577e388618e1"
+   
+        run: |
+          bundle exec fastlane android firebase_distribution
+        working-directory: android

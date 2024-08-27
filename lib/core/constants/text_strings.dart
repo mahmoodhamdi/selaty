@@ -1,15 +1,5 @@
 /// This class contains all the App Text in String formats.
 class TTexts {
-  // -- GLOBAL Texts
-  static const String and = "and";
-  static const String skip = "Skip";
-  static const String done = "Done";
-  static const String submit = "Submit";
-  static const String appName = "T-Store";
-  static const String tContinue = "Continue";
-  static const String viewAll = "View All";
-  static const String account = "Account";
-
   // -- OnBoarding Texts
   static const String onBoardingTitle1 = 'البحث بالقرب منك';
   static const String onBoardingTitle2 = 'عروض طازجة وجودة';
@@ -21,4 +11,23 @@ class TTexts {
       'جميع العناصر لها نضارة حقيقية وهي مخصصة لاحتياجاتك';
   static const String onBoardingSubTitle3 =
       'جميع العناصر لها نضارة حقيقية وهي مخصصة لاحتياجاتك';
+  // -- Auth Texts
+
+  static const String loginTitle = 'تسجيل الدخول';
+  static const String registerTitle = 'انشـئ حساب';
+  static const String forgotPasswordTitle = 'نسيت كلمة المرور؟';
+
+  static const String forgotPasswordSubTitle = 'أدخل بريدك الإلكتروني';
+
+  static const String forgotPasswordDescription =
+      'سوف نرسل لك رابطًا لإعادة تعيين كلمة المرور الخاصة بك';
+
+  static const String resetPasswordTitle = 'إعادة تعيين كلمة المرور';
+
+  static const String resetPasswordSubTitle = 'أدخل كلمة المرور الجديدة';
+
+  static const String resetPasswordDescription =
+      'يجب عليك تأكيد كلمة المرور الجديدة';
+
+  static const String resetPasswordSuccessTitle = 'تم تغيير كلمة المرور بنجاح';
 }

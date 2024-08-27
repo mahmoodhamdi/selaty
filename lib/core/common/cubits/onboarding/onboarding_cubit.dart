@@ -1,8 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:selaty/core/helpers/helper_functions.dart';
-import 'package:selaty/features/home/presentation/views/home_view.dart';
+import 'package:selaty/core/routes/routes.dart';
 
 part 'onboarding_state.dart';
 
@@ -23,7 +22,7 @@ class OnboardingCubit extends Cubit<OnboardingState> {
       pageController.jumpToPage(currentIndex);
       emit(OnboardingUpdateIndicator());
     } else {
-      THelperFunctions.navigateReplacementToScreen(context, const HomeView());
+      Navigator.pushReplacementNamed(context, Routes.authView);
     }
   }
 

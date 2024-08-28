@@ -27,13 +27,13 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.3.4'
-          bundler-cache: true
-          working-directory: android
+          bundler-cache: false # Disable bundler-cache to manage dependencies manually
 
       - name: Update Gemfile.lock platforms
         run: |
           cd android
           bundle lock --add-platform x86_64-linux
+          bundle lock --add-platform ruby
 
       - name: Install Ruby Dependencies
         run: |

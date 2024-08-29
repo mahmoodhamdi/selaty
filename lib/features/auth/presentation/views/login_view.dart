@@ -104,7 +104,7 @@ class _LoginViewState extends State<LoginView> {
       onTap: () {
         if (formKey.currentState!.validate()) {
           formKey.currentState!.save();
-          Navigator.pushNamed(context, Routes.register);
+          Navigator.pushNamed(context, Routes.homeView);
         }
       },
       width: width,

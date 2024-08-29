@@ -9,7 +9,7 @@ class LoginHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isPortrait = TDeviceUtils.isPortraitOrientation(context);
+    final isPortrait = TDeviceUtils.isLandscapeOrientation(context);
     return Padding(
       padding: EdgeInsets.symmetric(vertical: isPortrait ? 30 : 20),
       child: Row(

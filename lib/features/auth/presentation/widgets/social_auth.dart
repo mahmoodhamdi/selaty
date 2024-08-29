@@ -13,7 +13,7 @@ class SocialAuth extends StatelessWidget {
   final String text;
   @override
   Widget build(BuildContext context) {
-    final isPortrait = TDeviceUtils.isPortraitOrientation(context);
+    final isPortrait = TDeviceUtils.isLandscapeOrientation(context);
     final width = TDeviceUtils.getScreenWidth(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,

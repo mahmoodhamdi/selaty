@@ -2,25 +2,76 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class THelperFunctions {
-
-
-  static void showSnackBar({required BuildContext context, required String message}) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message)),
+  static void showSnackBar({
+    required BuildContext context,
+    required String message,
+    Duration duration = const Duration(seconds: 3),
+    Color backgroundColor = const Color(0xFF323232),
+    Color textColor = Colors.white,
+  }) {
+    final snackBar = SnackBar(
+      content: Text(
+        message,
+        style: TextStyle(color: textColor, fontSize: 16),
+      ),
+      backgroundColor: backgroundColor,
+      behavior: SnackBarBehavior.floating,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      duration: duration,
+      action: SnackBarAction(
+        label: 'Dismiss',
+        textColor: Colors.yellow,
+        onPressed: () {
+          ScaffoldMessenger.of(context).hideCurrentSnackBar();
+        },
+      ),
     );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
-  static void showAlert({required BuildContext context, required String title, required String message }) {
+  static void showAlert({
+    required BuildContext context,
+    required String title,
+    required String message,
+    String? primaryButtonText,
+    String? secondaryButtonText,
+    VoidCallback? primaryAction,
+    VoidCallback? secondaryAction,
+  }) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(title),
-          content: Text(message),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          title: Text(
+            title,
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+          ),
+          content: Text(
+            message,
+            style: const TextStyle(fontSize: 16),
+          ),
           actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: const Text('OK'),
+            if (secondaryButtonText != null)
+              TextButton(
+                onPressed: secondaryAction ?? () => Navigator.of(context).pop(),
+                child: Text(
+                  secondaryButtonText,
+                  style: const TextStyle(color: Colors.grey, fontSize: 16),
+                ),
+              ),
+            ElevatedButton(
+              onPressed: primaryAction ?? () => Navigator.of(context).pop(),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Theme.of(context).primaryColor,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30)),
+              ),
+              child: Text(
+                primaryButtonText ?? 'OK',
+                style: const TextStyle(fontSize: 16),
+              ),
             ),
           ],
         );

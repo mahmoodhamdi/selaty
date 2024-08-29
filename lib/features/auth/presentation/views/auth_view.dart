@@ -12,11 +12,9 @@ class AuthView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: TSizes.defaultSpace,
-          vertical: TSizes.defaultSpace,
-        ),
+      body: SingleChildScrollView(
+        padding:   EdgeInsets.symmetric(
+            horizontal: TSizes.defaultSpace, vertical:MediaQuery.of(context).size.height * 0.3),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,

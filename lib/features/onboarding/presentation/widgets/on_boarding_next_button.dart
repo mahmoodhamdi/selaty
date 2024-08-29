@@ -13,7 +13,7 @@ class OnboardingNextButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Positioned(
         bottom: TDeviceUtils.getBottomNavigationBarHeight() + 25,
-        right: TSizes.defaultSpace,
+        left: TSizes.defaultSpace,
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
             shape: const CircleBorder(),

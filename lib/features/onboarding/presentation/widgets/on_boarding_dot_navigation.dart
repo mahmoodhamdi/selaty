@@ -14,7 +14,7 @@ class OnboardingDotNavigation extends StatelessWidget {
   Widget build(BuildContext context) {
     return Positioned(
       bottom: TDeviceUtils.getBottomNavigationBarHeight() + 25,
-      left: TSizes.defaultSpace,
+      right: TSizes.defaultSpace,
       child: SmoothPageIndicator(
           controller: context.read<OnboardingCubit>().pageController,
           count: 3,

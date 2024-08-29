@@ -9,7 +9,7 @@ class HorizontalLogo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isPortrait = TDeviceUtils.isPortraitOrientation(context);
+    final isPortrait = TDeviceUtils.isLandscapeOrientation(context);
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [

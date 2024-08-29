@@ -8,15 +8,14 @@ class CircularBackground extends StatelessWidget {
     required this.image,
     required this.size,
   });
-final double size;
- final Color color;
- final String image;
+  final double size;
+  final Color color;
+  final String image;
 
   @override
   Widget build(BuildContext context) {
+    final isPortrait = TDeviceUtils.isLandscapeOrientation(context);
 
-    final isPortrait = TDeviceUtils.isPortraitOrientation(context);
-    
     return CircleAvatar(
       backgroundColor: color.withOpacity(0.1),
       radius: isPortrait ? 130 : 85,

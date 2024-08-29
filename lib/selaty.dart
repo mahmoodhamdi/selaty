@@ -29,7 +29,7 @@ class Selaty extends StatelessWidget {
           child: child!,
         );
       },
-      initialRoute: Routes.homeView,
+      initialRoute: Routes.onBoarding,
       onGenerateRoute: Routes.generateRoute,
       theme: ThemeData(
         fontFamily: 'Cairo',

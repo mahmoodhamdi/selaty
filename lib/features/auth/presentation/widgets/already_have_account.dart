@@ -15,6 +15,7 @@ class AlreadyHaveAccount extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          const Text('لديك حساب بالفعل؟', style: Styles.textStyle16),
           TextButton(
             onPressed: () => Navigator.pushNamed(context, Routes.login),
             child: const Text(
@@ -23,7 +24,6 @@ class AlreadyHaveAccount extends StatelessWidget {
                   TextStyle(color: primaryGreen, fontWeight: FontWeight.bold),
             ),
           ),
-          const Text('لديك حساب بالفعل؟', style: Styles.textStyle16),
         ],
       ),
     );

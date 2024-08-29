@@ -29,11 +29,17 @@ jobs:
       - name: Build the APK
         run: flutter build apk --release --flavor production -t lib/main_production.dart
 
+      - name: List APK Files
+        run: ls -la build/app/outputs/flutter-apk/
+
+      - name: Create Tag
+        run: git tag v1.0.0 && git push origin v1.0.0
+
       - name: Create Release
         id: create_release
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: v1.0.0 # Adjust this to reflect your versioning
+          tag_name: v1.0.0 # This should match the tag created in the previous step
           name: Release v1.0.0
           body: |
             ## What's New in this Release:
@@ -41,4 +47,4 @@ jobs:
             - Social Auth Refactor
             - CI/CD Pipeline Integration
           files: |
-            build/app/outputs/flutter-apk/app-production-release.apk # Adjust the path to your APK file
+            build/app/outputs/flutter-apk/app-production-release.apk

@@ -5,11 +5,12 @@ import 'package:selaty/core/constants/styles.dart';
 import 'package:selaty/core/device/device_utility.dart';
 import 'package:selaty/features/auth/presentation/widgets/register_button.dart';
 
-class SocialRegister extends StatelessWidget {
-  const SocialRegister({
+class SocialAuth extends StatelessWidget {
+  const SocialAuth({
     super.key,
+    required this.text,
   });
-
+  final String text;
   @override
   Widget build(BuildContext context) {
     final isPortrait = TDeviceUtils.isPortraitOrientation(context);
@@ -17,7 +18,7 @@ class SocialRegister extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        const Text('أو اشترك بواسطة', style: Styles.textStyle16),
+        Text(text, style: Styles.textStyle16),
         const SizedBox(height: 10),
         Row(
           children: [

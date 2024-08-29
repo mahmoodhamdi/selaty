@@ -3,8 +3,8 @@ import 'package:selaty/core/constants/colors.dart';
 import 'package:selaty/core/constants/styles.dart';
 import 'package:selaty/core/routes/routes.dart';
 
-class AlreadyHaveAccount extends StatelessWidget {
-  const AlreadyHaveAccount({
+class NotHaveAccount extends StatelessWidget {
+  const NotHaveAccount({
     super.key,
   });
 
@@ -16,14 +16,14 @@ class AlreadyHaveAccount extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           TextButton(
-            onPressed: () => Navigator.pushNamed(context, Routes.login),
+            onPressed: () => Navigator.pushNamed(context, Routes.register),
             child: const Text(
-              'تسجيل الدخول',
+              'إنشاء حساب',
               style:
                   TextStyle(color: primaryGreen, fontWeight: FontWeight.bold),
             ),
           ),
-          const Text('لديك حساب بالفعل؟', style: Styles.textStyle16),
+          const Text('ليس لديك حساب؟', style: Styles.textStyle16),
         ],
       ),
     );

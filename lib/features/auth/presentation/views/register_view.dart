@@ -8,7 +8,7 @@ import 'package:selaty/core/routes/routes.dart';
 import 'package:selaty/core/validators/validator.dart';
 import 'package:selaty/features/auth/presentation/widgets/already_have_account.dart';
 import 'package:selaty/features/auth/presentation/widgets/register_header.dart';
-import 'package:selaty/features/auth/presentation/widgets/social_register.dart';
+import 'package:selaty/features/auth/presentation/widgets/social_auth.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView({super.key});
@@ -50,7 +50,9 @@ class _RegisterViewState extends State<RegisterView> {
                     SizedBox(height: isPortrait ? 20 : 10),
                     _buildSignUpButton(width),
                     SizedBox(height: isPortrait ? 20 : 10),
-                    const SocialRegister(),
+                    const SocialAuth(
+                      text: 'أو اشترك بواسطة',
+                    ),
                     const AlreadyHaveAccount(),
                   ],
                 ),

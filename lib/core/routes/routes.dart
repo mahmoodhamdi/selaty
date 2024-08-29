@@ -4,6 +4,7 @@ import 'package:selaty/core/common/cubits/onboarding/onboarding_cubit.dart';
 import 'package:selaty/features/auth/presentation/views/auth_view.dart';
 import 'package:selaty/features/auth/presentation/views/login_view.dart';
 import 'package:selaty/features/auth/presentation/views/register_view.dart';
+import 'package:selaty/features/auth/presentation/views/reset_password_view.dart';
 import 'package:selaty/features/home/presentation/views/home_view.dart';
 import 'package:selaty/features/onboarding/presentation/views/onboarding_view.dart';
 
@@ -13,6 +14,7 @@ class Routes {
   static const String login = '/login';
   static const String register = '/register';
   static const String authView = '/auth_view';
+  static const String resetPassword = '/reset_password';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     // this arguments is for passing data from one screen to another
@@ -33,6 +35,8 @@ class Routes {
         return MaterialPageRoute(builder: (_) => const LoginView());
       case register:
         return MaterialPageRoute(builder: (_) => const RegisterView());
+      case resetPassword:
+        return MaterialPageRoute(builder: (_) => const ResetPasswordView());
       default:
         // error page
         return MaterialPageRoute(

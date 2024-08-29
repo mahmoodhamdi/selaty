@@ -6,7 +6,7 @@ class PrimaryButton extends StatelessWidget {
       {super.key,
       required this.text,
       required this.color,
-      required this.onTap,
+       this.onTap,
        this.width=double.infinity,
       this.height = 50});
   final String text;

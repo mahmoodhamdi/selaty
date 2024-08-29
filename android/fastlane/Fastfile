@@ -19,7 +19,11 @@ platform :android do
       
       - **Social Authentication:**
         - Refactored social authentication components in the login view for better modularity and maintainability.
-              
+      
+      - **Home View Implementation:**
+        - Added the `HomeView` with various sections like best sellers, offers, fresh products, and more.
+        - Integrated multiple custom widgets (`HeaderSection`, `SeeAllWidget`, `BestValueProductsList`, `CategoryItem`, etc.) to create a modular and user-friendly home screen.
+
       ### 🛠 Improvements:
       - **Registration UI:**
         - Implemented a clean, user-friendly registration UI within the authentication feature.

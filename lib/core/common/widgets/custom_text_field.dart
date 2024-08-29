@@ -4,16 +4,18 @@ class CustomTextField extends StatelessWidget {
   const CustomTextField(
       {super.key,
       required this.text,
-      this.icon,
+      this.suffixIcon,
       this.isPassword = false,
       required this.width,
       this.onSaved,
       this.validator,
+      this.prefixIcon,
       this.onChanged,
       required this.controller});
   final String text;
 
-  final Icon? icon;
+  final Widget? suffixIcon;
+  final Widget? prefixIcon;
   final bool isPassword;
   final double width;
   final String? Function(String?)? validator;
@@ -32,9 +34,10 @@ class CustomTextField extends StatelessWidget {
         validator: validator,
         obscureText: isPassword,
         decoration: InputDecoration(
+          prefixIcon: prefixIcon,
           contentPadding:
               const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
-          suffixIcon: icon,
+          suffixIcon: suffixIcon,
           label: Text(
             text,
             style: const TextStyle(

@@ -15,6 +15,7 @@ class NotHaveAccount extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          const Text('ليس لديك حساب؟', style: Styles.textStyle16),
           TextButton(
             onPressed: () => Navigator.pushNamed(context, Routes.register),
             child: const Text(
@@ -23,7 +24,6 @@ class NotHaveAccount extends StatelessWidget {
                   TextStyle(color: primaryGreen, fontWeight: FontWeight.bold),
             ),
           ),
-          const Text('ليس لديك حساب؟', style: Styles.textStyle16),
         ],
       ),
     );

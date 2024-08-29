@@ -14,7 +14,7 @@ class OnboardingSkipButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Positioned(
       top: TDeviceUtils.getAppBarHeight(),
-      right: TSizes.defaultSpace,
+      left: TSizes.defaultSpace,
       child: TextButton(
         onPressed: context.read<OnboardingCubit>().skipPage,
         child: const Text('تخطي', style: TextStyle(color: primaryGreen)),

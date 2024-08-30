@@ -25,7 +25,7 @@ class HomeView extends StatelessWidget {
               child: SizedBox(
                 height: 18,
               ),
-            ),
+            ), 
             const SliverToBoxAdapter(
               child: HeaderSection(),
             ),

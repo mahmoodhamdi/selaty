@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:selaty/core/common/widgets/custom_text_field.dart';
 import 'package:selaty/core/constants/colors.dart';
 import 'package:selaty/core/constants/styles.dart';
+import 'package:selaty/core/routes/routes.dart';
 
 class HeaderSection extends StatefulWidget {
   const HeaderSection({
@@ -25,7 +26,7 @@ class _HeaderSectionState extends State<HeaderSection> {
             children: [
               GestureDetector(
                 onTap: () {
-                  // Navigator.pushNamed(context, ProfileView.id);
+                  Navigator.pushNamed(context, Routes.profileView);
                 },
                 child: CircleAvatar(
                   radius: 22,
@@ -41,7 +42,8 @@ class _HeaderSectionState extends State<HeaderSection> {
                         ),
                       ),
                       child: Image.asset(
-                        'assets/images/key.png',
+                        'assets/images/profile.png',
+                        fit: BoxFit.cover,
                         width: 50,
                       ),
                     ),

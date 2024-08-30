@@ -9,6 +9,7 @@ import 'package:selaty/features/auth/presentation/views/password_changed_success
 import 'package:selaty/features/auth/presentation/views/register_view.dart';
 import 'package:selaty/features/auth/presentation/views/reset_password_view.dart';
 import 'package:selaty/features/home/presentation/views/home_view.dart';
+import 'package:selaty/features/home/presentation/views/profile_view.dart';
 import 'package:selaty/features/onboarding/presentation/views/onboarding_view.dart';
 
 class Routes {
@@ -20,6 +21,7 @@ class Routes {
   static const String resetPassword = '/reset_password';
   static const String otpView = '/otp_view';
   static const String newPasswordView = '/new_password_view';
+  static const String profileView = '/profile_view';
 
   static const String passwordChangedSuccessfullyView =
       '/password_changed_successfully_view';
@@ -57,6 +59,8 @@ class Routes {
       case passwordChangedSuccessfullyView:
         return MaterialPageRoute(
             builder: (_) => const PasswordChangedSuccessfullyView());
+      case profileView:
+        return MaterialPageRoute(builder: (_) => const ProfileView());
       default:
         // error page
         return MaterialPageRoute(

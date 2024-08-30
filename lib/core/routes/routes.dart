@@ -8,6 +8,8 @@ import 'package:selaty/features/auth/presentation/views/otp_view.dart';
 import 'package:selaty/features/auth/presentation/views/password_changed_successfully.dart';
 import 'package:selaty/features/auth/presentation/views/register_view.dart';
 import 'package:selaty/features/auth/presentation/views/reset_password_view.dart';
+import 'package:selaty/features/home/presentation/views/categories_view.dart';
+import 'package:selaty/features/home/presentation/views/category_products_view.dart';
 import 'package:selaty/features/home/presentation/views/home_view.dart';
 import 'package:selaty/features/home/presentation/views/profile_view.dart';
 import 'package:selaty/features/onboarding/presentation/views/onboarding_view.dart';
@@ -21,11 +23,15 @@ class Routes {
   static const String resetPassword = '/reset_password';
   static const String otpView = '/otp_view';
   static const String newPasswordView = '/new_password_view';
-  static const String profileView = '/profile_view';
-
   static const String passwordChangedSuccessfullyView =
       '/password_changed_successfully_view';
+  static const String profileView = '/profile_view';
 
+  static const String categoryProductsView = '/category_products_view';
+
+  static const String categoriesView = '/categories_view';
+
+  
   static Route<dynamic> generateRoute(RouteSettings settings) {
     // this arguments is for passing data from one screen to another
     // final arguments = settings.arguments;
@@ -61,6 +67,13 @@ class Routes {
             builder: (_) => const PasswordChangedSuccessfullyView());
       case profileView:
         return MaterialPageRoute(builder: (_) => const ProfileView());
+      case categoriesView:
+        return MaterialPageRoute(builder: (_) => const CategoriesView());
+      case categoryProductsView:
+        return MaterialPageRoute(
+            builder: (_) => CategoryProductsView(
+                  categoryName: settings.arguments as String,
+                ));
       default:
         // error page
         return MaterialPageRoute(

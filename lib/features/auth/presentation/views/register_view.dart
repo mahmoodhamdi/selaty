@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart'; // Import ScreenUtil
 import 'package:selaty/core/common/widgets/custom_app_bar.dart';
 import 'package:selaty/core/common/widgets/custom_password_text_field.dart';
 import 'package:selaty/core/common/widgets/custom_text_field.dart';
@@ -22,6 +23,7 @@ class _RegisterViewState extends State<RegisterView> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
   @override
   void dispose() {
     emailController.dispose();
@@ -41,7 +43,7 @@ class _RegisterViewState extends State<RegisterView> {
           final width =
               isPortrait ? constraints.maxWidth : constraints.maxWidth / 2;
           final horizontalPadding =
-              isPortrait ? 20.0 : constraints.maxWidth / 4;
+              isPortrait ? 20.0.w : constraints.maxWidth / 4;
 
           return SingleChildScrollView(
             child: Padding(
@@ -52,11 +54,17 @@ class _RegisterViewState extends State<RegisterView> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const RegisterHeader(),
-                    SizedBox(height: isPortrait ? 20 : 10),
+                    SizedBox(
+                        height:
+                            isPortrait ? 20.h : 10.h), // Make height responsive
                     _buildInputFields(width),
-                    SizedBox(height: isPortrait ? 20 : 10),
+                    SizedBox(
+                        height:
+                            isPortrait ? 20.h : 10.h), // Make height responsive
                     _buildSignUpButton(width),
-                    SizedBox(height: isPortrait ? 20 : 10),
+                    SizedBox(
+                        height:
+                            isPortrait ? 20.h : 10.h), // Make height responsive
                     const SocialAuth(
                       text: 'أو اشترك بواسطة',
                     ),
@@ -82,7 +90,7 @@ class _RegisterViewState extends State<RegisterView> {
             return TValidator.validateName(value);
           },
         ),
-        const SizedBox(height: 10),
+        SizedBox(height: 10.h), // Make height responsive
         CustomTextField(
           controller: emailController,
           width: width,
@@ -91,7 +99,7 @@ class _RegisterViewState extends State<RegisterView> {
           },
           text: 'عنوان البريد الالكتروني',
         ),
-        const SizedBox(height: 10),
+        SizedBox(height: 10.h), // Make height responsive
         CustomPasswordTextFormField(
           controller: passwordController,
           width: width,
@@ -103,7 +111,6 @@ class _RegisterViewState extends State<RegisterView> {
 
   Widget _buildSignUpButton(double width) {
     return PrimaryButton(
-      height: 50,
       text: 'اشتراك',
       color: primaryGreen,
       onTap: () {

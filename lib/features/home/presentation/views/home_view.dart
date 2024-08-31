@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:selaty/core/constants/sizes.dart';
-import 'package:selaty/core/routes/routes.dart';
+ import 'package:selaty/core/routes/routes.dart';
 import 'package:selaty/features/home/presentation/widgets/Interest_free_discount_grid_view.dart';
 import 'package:selaty/features/home/presentation/widgets/ad_widget.dart';
 import 'package:selaty/features/home/presentation/widgets/best_seller_products_grid_view.dart';
@@ -18,7 +17,7 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.only(top: TSizes.defaultSpace),
+        padding: const EdgeInsets.only(top: 24),
         child: CustomScrollView(
           clipBehavior: Clip.none,
           slivers: [

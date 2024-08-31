@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:selaty/core/constants/sizes.dart';
+import 'package:selaty/core/routes/routes.dart';
+import 'package:selaty/features/home/presentation/widgets/Interest_free_discount_grid_view.dart';
 import 'package:selaty/features/home/presentation/widgets/ad_widget.dart';
 import 'package:selaty/features/home/presentation/widgets/best_seller_products_grid_view.dart';
 import 'package:selaty/features/home/presentation/widgets/best_value_products_list.dart';
-import 'package:selaty/features/home/presentation/widgets/category_item.dart';
+import 'package:selaty/features/home/presentation/widgets/categories_list_view.dart';
 import 'package:selaty/features/home/presentation/widgets/fresh_products_grid_view.dart';
 import 'package:selaty/features/home/presentation/widgets/header_section.dart';
 import 'package:selaty/features/home/presentation/widgets/offers_grid_view.dart';
 import 'package:selaty/features/home/presentation/widgets/see_all_widget.dart';
-import 'package:selaty/features/home/presentation/widgets/Interest_free_discount_grid_view.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
@@ -54,24 +55,18 @@ class HomeView extends StatelessWidget {
               ),
             ),
             SliverToBoxAdapter(
-              child: SeeAllWidget(title: 'التصنيفات', onTap: () {}),
+              child: SeeAllWidget(
+                  title: 'التصنيفات',
+                  onTap: () {
+                    Navigator.pushNamed(context, Routes.categoriesView);
+                  }),
             ),
             const SliverToBoxAdapter(
               child: SizedBox(
                 height: 8,
               ),
             ),
-            SliverToBoxAdapter(
-                child: SizedBox(
-              height: 100,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: 10,
-                itemBuilder: (context, index) {
-                  return const CategoryItem();
-                },
-              ),
-            )),
+            const SliverToBoxAdapter(child: CategoriesListView()),
             const SliverToBoxAdapter(
               child: SizedBox(
                 height: 18,

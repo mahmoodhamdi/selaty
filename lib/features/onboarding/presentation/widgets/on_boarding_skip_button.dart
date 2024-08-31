@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:selaty/core/common/cubits/onboarding/onboarding_cubit.dart';
 import 'package:selaty/core/constants/colors.dart';
-import 'package:selaty/core/constants/sizes.dart';
 import 'package:selaty/core/device/device_utility.dart';
 
 class OnboardingSkipButton extends StatelessWidget {
@@ -13,11 +13,17 @@ class OnboardingSkipButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      top: TDeviceUtils.getAppBarHeight(),
-      left: TSizes.defaultSpace,
+      top: TDeviceUtils.getAppBarHeight().h, // Make the top position responsive
+      left: 24.w, // Make the left position responsive
       child: TextButton(
         onPressed: context.read<OnboardingCubit>().skipPage,
-        child: const Text('تخطي', style: TextStyle(color: primaryGreen)),
+        child: Text(
+          'تخطي',
+          style: TextStyle(
+            color: primaryGreen,
+            fontSize: 16.sp, // Make the font size responsive
+          ),
+        ),
       ),
     );
   }

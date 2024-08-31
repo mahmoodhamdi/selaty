@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart'; // Import ScreenUtil
 import 'package:selaty/core/common/widgets/custom_app_bar.dart';
 import 'package:selaty/core/common/widgets/custom_text_field.dart';
 import 'package:selaty/core/common/widgets/primary_button.dart';
@@ -38,37 +39,36 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
           return SingleChildScrollView(
             child: Padding(
               padding: EdgeInsets.symmetric(
-                horizontal: isPortrait ? 20 : screenSize.width * 0.15,
-                vertical: screenSize.height * 0.05,
+                horizontal: isPortrait ? 20.w : screenSize.width * 0.15,
+                vertical: 20.h,
               ),
               child: Form(
                 key: _formKey,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    const SizedBox(height: 20),
+                    SizedBox(height: 20.h),
                     Text(
                       'لتغيير كلمة المرور الخاصة بك، الرجاء ادخال بريدك الالكتروني',
                       style: Styles.textStyle16.copyWith(color: Colors.grey),
                       textAlign: TextAlign.right,
                     ),
-                    const SizedBox(height: 40),
+                    SizedBox(height: 40.h),
                     CustomTextField(
                       text: 'البريد الالكتروني',
                       validator: TValidator.validateEmail,
                       width: double.infinity,
                       controller: emailController,
                     ),
-                    const SizedBox(height: 20),
+                    SizedBox(height: 20.h),
                     Text(
                       'سيتم إرسال رمز التحقق إلى بريدك الإلكتروني',
                       style:
                           Styles.textStyle14.copyWith(color: Colors.grey[600]),
                       textAlign: TextAlign.right,
                     ),
-                    const SizedBox(height: 40),
+                    SizedBox(height: 40.h),
                     PrimaryButton(
-                      height: 60,
                       text: 'إرسال رمز التحقق',
                       color: primaryGreen,
                       onTap: () {
@@ -81,9 +81,9 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
                               arguments: emailController.text);
                         }
                       },
-                      width: screenSize.width,
+                      width: double.infinity, // Adjust width as needed
                     ),
-                    const SizedBox(height: 20),
+                    SizedBox(height: 20.h),
                     TextButton(
                       onPressed: () {
                         // Navigate back to login page

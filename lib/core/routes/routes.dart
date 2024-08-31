@@ -8,10 +8,15 @@ import 'package:selaty/features/auth/presentation/views/otp_view.dart';
 import 'package:selaty/features/auth/presentation/views/password_changed_successfully.dart';
 import 'package:selaty/features/auth/presentation/views/register_view.dart';
 import 'package:selaty/features/auth/presentation/views/reset_password_view.dart';
+import 'package:selaty/features/home/presentation/views/address_view.dart';
+import 'package:selaty/features/home/presentation/views/cart_view.dart';
 import 'package:selaty/features/home/presentation/views/categories_view.dart';
 import 'package:selaty/features/home/presentation/views/category_products_view.dart';
+import 'package:selaty/features/home/presentation/views/empty_shopping_cart_view.dart';
 import 'package:selaty/features/home/presentation/views/home_view.dart';
 import 'package:selaty/features/home/presentation/views/profile_view.dart';
+import 'package:selaty/features/home/presentation/views/successful_order_view.dart';
+import 'package:selaty/features/home/presentation/views/track_order_view.dart';
 import 'package:selaty/features/onboarding/presentation/views/onboarding_view.dart';
 
 class Routes {
@@ -30,8 +35,11 @@ class Routes {
   static const String categoryProductsView = '/category_products_view';
 
   static const String categoriesView = '/categories_view';
-
-  
+  static const String emptyShopingCartView = '/empty_shopping_cart_view';
+  static const String addressView = '/address_view';
+  static const String trackOrderView = '/track_order_view';
+  static const String successfulOrderView = '/successful_order_view';
+  static const String cartView = '/cart_view';
   static Route<dynamic> generateRoute(RouteSettings settings) {
     // this arguments is for passing data from one screen to another
     // final arguments = settings.arguments;
@@ -74,6 +82,17 @@ class Routes {
             builder: (_) => CategoryProductsView(
                   categoryName: settings.arguments as String,
                 ));
+      case emptyShopingCartView:
+        return MaterialPageRoute(builder: (_) => const EmptyShoppingCartView());
+      case addressView:
+        return MaterialPageRoute(builder: (_) => const AddressView());
+      case trackOrderView:
+        return MaterialPageRoute(builder: (_) => const TrackOrderView());
+
+      case successfulOrderView:
+        return MaterialPageRoute(builder: (_) => const SuccessfulOrderView());
+      case cartView:
+        return MaterialPageRoute(builder: (_) => const CartView());
       default:
         // error page
         return MaterialPageRoute(

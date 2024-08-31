@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:selaty/core/constants/colors.dart';
 import 'package:selaty/core/constants/styles.dart';
+import 'package:selaty/core/routes/routes.dart';
 
 class ProductCard extends StatelessWidget {
   const ProductCard({super.key});
@@ -10,7 +11,7 @@ class ProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        //   Navigator.pushNamed(context, ShoppingCartView.id);
+        Navigator.pushNamed(context, Routes.cartView);
       },
       child: Container(
         decoration: const BoxDecoration(

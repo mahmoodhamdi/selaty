@@ -7,30 +7,30 @@ platform :android do
     sh "flutter build apk --release --flavor production -t lib/main_production.dart --no-tree-shake-icons"
     firebase_app_distribution(
       app: "1:775986245859:android:ed5a1f87ef9867ee3d55d6",
-      release_notes: '<<-EOF
-      🚀 **Release Notes - Version 1.0.0+1**
-      
-      We are excited to introduce the following updates in this release:
-      
-      ### ✨ New Features:
-      - **Auth Views Completed:**
-        - Implementation of `new_password_view`, `otp_view`, and `password_changed_successfully`.
-        - Enhanced OTP input experience with auto-detection for seamless user interaction.
-      
-      - **Social Authentication:**
-        - Refactored social authentication components in the login view for better modularity and maintainability.
-              
-      ### 🛠 Improvements:
-      - **Registration UI:**
-        - Implemented a clean, user-friendly registration UI within the authentication feature.
-        - Integrated custom validations and error handling to enhance user experience.
-      
-      - **CI/CD Integration:**
-        - Set up Firebase CI/CD pipeline for automated app distribution.
-        - Configured Fastlane for efficient Android release management.
+      release_notes: '
+🚀 Release Highlights:
 
-      📥 **Download and test the latest release via Firebase Distribution.**
-            EOF',
+✨ New Features:
+Authentication Views Completed:
+
+Added LoginView, NewPasswordView, OTPView, PasswordChangedSuccessfullyView, RegisterView, and ResetPasswordView.
+These views provide a comprehensive authentication flow, enhancing user security and account management.
+Enhanced Home Experience:
+
+Implemented several new views including AddressView, CartView, CategoriesView, CategoryProductsView, HomeView, ProfileView, SuccessfulOrderView, and TrackOrderView.
+These updates provide users with a rich and seamless shopping experience, from browsing categories to managing profiles.
+Onboarding View:
+
+Introduced the OnboardingView to guide new users through the app\'s features, improving user engagement and retention.
+🛠 Improvements:
+Comprehensive Shopping Cart Flow:
+
+Enhanced the shopping cart experience with EmptyShoppingCartView and related components, ensuring a user-friendly checkout process.
+Profile and Order Management:
+
+Updated profile and order tracking views to deliver a smooth and intuitive interface for managing personal details and order statuses.
+📥 Download and test the latest release via Firebase Distribution.
+',
       testers: "hmdy7486@gmail.com, mahmoud21-02064@student.eelu.edu.eg, waleedelgendy3@gmail.com",
       android_artifact_type: "APK",
       android_artifact_path: "../build/app/outputs/flutter-apk/app-production-release.apk",

@@ -13,6 +13,9 @@ class OnboardingDotNavigation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isPortrait =
+        Orientation.portrait == MediaQuery.of(context).orientation;
+
     return Positioned(
       bottom: (TDeviceUtils.getBottomNavigationBarHeight() + 25)
           .h, // Make bottom position responsive
@@ -25,8 +28,8 @@ class OnboardingDotNavigation extends StatelessWidget {
           context.read<OnboardingCubit>().dotNavigationClicked(index);
         },
         effect: ExpandingDotsEffect(
-          dotHeight: 8.h, // Make dot height responsive
-          dotWidth: 16.w, // Make dot width responsive
+          dotHeight: isPortrait ? 6.h : 12.h, // Make dot height responsive
+          dotWidth: isPortrait ? 18.h : 12.w, // Make dot width responsive
           activeDotColor: primaryGreen,
           spacing: 4.w, // Optional: Add spacing between dots, if needed
         ),

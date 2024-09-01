@@ -12,6 +12,7 @@ class OnboardingSkipButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isPortrait = Orientation.portrait == MediaQuery.of(context).orientation;
     return Positioned(
       top: TDeviceUtils.getAppBarHeight().h, // Make the top position responsive
       left: 24.w, // Make the left position responsive
@@ -21,7 +22,7 @@ class OnboardingSkipButton extends StatelessWidget {
           'تخطي',
           style: TextStyle(
             color: primaryGreen,
-            fontSize: 16.sp, // Make the font size responsive
+            fontSize: isPortrait ? 16.sp : 10.sp, // Make the font size responsive
           ),
         ),
       ),

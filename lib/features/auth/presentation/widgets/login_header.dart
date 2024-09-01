@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart'; // Import ScreenUtil
 import 'package:selaty/core/constants/colors.dart';
-import 'package:selaty/core/device/device_utility.dart';
 
 class LoginHeader extends StatelessWidget {
   const LoginHeader({
@@ -9,9 +9,11 @@ class LoginHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isPortrait = TDeviceUtils.isLandscapeOrientation(context);
+    final isPortrait =
+        Orientation.portrait == MediaQuery.of(context).orientation;
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: isPortrait ? 30 : 20),
+      padding: EdgeInsets.symmetric(
+          vertical: isPortrait ? 30.h : 20.h), // Use ScreenUtil for padding
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -21,7 +23,9 @@ class LoginHeader extends StatelessWidget {
                 'ســـــــــــلتي',
                 style: TextStyle(
                   color: accentRedText,
-                  fontSize: isPortrait ? 34 : 28,
+                  fontSize: isPortrait
+                      ? 34.sp
+                      : 24.sp, // Use ScreenUtil for font size
                   fontWeight: FontWeight.bold,
                   fontFamily: 'NotoKufiArabic',
                 ),
@@ -30,16 +34,18 @@ class LoginHeader extends StatelessWidget {
                 'S    E    L    A    T    Y',
                 style: TextStyle(
                   color: Colors.black,
-                  fontSize: isPortrait ? 18 : 14,
+                  fontSize: isPortrait
+                      ? 18.sp
+                      : 12.sp, // Use ScreenUtil for font size
                   fontWeight: FontWeight.w900,
                 ),
               ),
             ],
           ),
-          const SizedBox(width: 10),
+          SizedBox(width: 10.h), // Use ScreenUtil for width
           Image.asset(
             'assets/images/logo.png',
-            width: isPortrait ? 100 : 80,
+            width: isPortrait ? 100.w : 50.w, // Use ScreenUtil for width
           ),
         ],
       ),

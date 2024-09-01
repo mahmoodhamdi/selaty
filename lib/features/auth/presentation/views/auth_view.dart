@@ -11,11 +11,14 @@ class AuthView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isPortrait =
+        Orientation.portrait == MediaQuery.of(context).orientation;
     return Scaffold(
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(
           horizontal: 24.w, // Make horizontal padding responsive
-          vertical: 0.3.sh, // Make vertical padding responsive
+          vertical:
+              isPortrait ? 0.3.sh : 0.06.sh, // Make vertical padding responsive
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -26,6 +29,7 @@ class AuthView extends StatelessWidget {
               height: 40.h, // Make space between widgets responsive
             ),
             PrimaryButton(
+              width: isPortrait ? double.infinity : 0.5.sw,
               text: TTexts.loginTitle,
               color: primaryRed,
               onTap: () {
@@ -36,6 +40,7 @@ class AuthView extends StatelessWidget {
               height: 16.h, // Add space between buttons, responsive
             ),
             PrimaryButton(
+              width: isPortrait ? double.infinity : 0.5.sw,
               text: TTexts.registerTitle,
               color: primaryGreen,
               onTap: () {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
- import 'package:selaty/core/routes/routes.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart'; // Import ScreenUtil
+import 'package:selaty/core/routes/routes.dart';
 import 'package:selaty/features/home/presentation/widgets/Interest_free_discount_grid_view.dart';
 import 'package:selaty/features/home/presentation/widgets/ad_widget.dart';
 import 'package:selaty/features/home/presentation/widgets/best_seller_products_grid_view.dart';
@@ -17,21 +18,21 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.only(top: 24),
+        padding: EdgeInsets.only(top: 24.h), // Use ScreenUtil for padding
         child: CustomScrollView(
           clipBehavior: Clip.none,
           slivers: [
-            const SliverToBoxAdapter(
+            SliverToBoxAdapter(
               child: SizedBox(
-                height: 18,
+                height: 18.h, // Use ScreenUtil for spacing
               ),
             ),
             const SliverToBoxAdapter(
               child: HeaderSection(),
             ),
-            const SliverToBoxAdapter(
+            SliverToBoxAdapter(
               child: SizedBox(
-                height: 18,
+                height: 18.h, // Use ScreenUtil for spacing
               ),
             ),
             SliverToBoxAdapter(
@@ -40,17 +41,17 @@ class HomeView extends StatelessWidget {
                   subTitle: 'اعلى المبيعات',
                   onTap: () {}),
             ),
-            const SliverToBoxAdapter(
+            SliverToBoxAdapter(
               child: SizedBox(
-                height: 8,
+                height: 8.h, // Use ScreenUtil for spacing
               ),
             ),
             const SliverToBoxAdapter(
               child: BestValueProductsList(),
             ),
-            const SliverToBoxAdapter(
+            SliverToBoxAdapter(
               child: SizedBox(
-                height: 18,
+                height: 18.h, // Use ScreenUtil for spacing
               ),
             ),
             SliverToBoxAdapter(
@@ -60,82 +61,89 @@ class HomeView extends StatelessWidget {
                     Navigator.pushNamed(context, Routes.categoriesView);
                   }),
             ),
-            const SliverToBoxAdapter(
+            SliverToBoxAdapter(
               child: SizedBox(
-                height: 8,
+                height: 8.h, // Use ScreenUtil for spacing
               ),
             ),
-            const SliverToBoxAdapter(child: CategoriesListView()),
             const SliverToBoxAdapter(
+              child: CategoriesListView(),
+            ),
+            SliverToBoxAdapter(
               child: SizedBox(
-                height: 18,
+                height: 18.h, // Use ScreenUtil for spacing
               ),
             ),
             SliverToBoxAdapter(
               child: SeeAllWidget(title: 'الأكثر مبيعا', onTap: () {}),
             ),
-            const SliverToBoxAdapter(
+            SliverToBoxAdapter(
               child: SizedBox(
-                height: 8,
+                height: 8.h, // Use ScreenUtil for spacing
               ),
             ),
             const SliverToBoxAdapter(
               child: BestSellerProductsGridView(),
             ),
-            const SliverToBoxAdapter(
+            SliverToBoxAdapter(
               child: SizedBox(
-                height: 18,
+                height: 18.h, // Use ScreenUtil for spacing
               ),
             ),
             SliverToBoxAdapter(
               child: SeeAllWidget(title: 'تسوق حسب العروض', onTap: () {}),
             ),
+            SliverToBoxAdapter(
+              child: SizedBox(
+                height: 8.h, // Use ScreenUtil for spacing
+              ),
+            ),
             const SliverToBoxAdapter(
               child: OffersGridView(),
             ),
-            const SliverToBoxAdapter(
+            SliverToBoxAdapter(
               child: SizedBox(
-                height: 18,
+                height: 18.h, // Use ScreenUtil for spacing
               ),
             ),
             SliverToBoxAdapter(
               child: SeeAllWidget(title: 'طازج وسريع', onTap: () {}),
             ),
-            const SliverToBoxAdapter(
+            SliverToBoxAdapter(
               child: SizedBox(
-                height: 8,
+                height: 8.h, // Use ScreenUtil for spacing
               ),
             ),
             const SliverToBoxAdapter(
               child: FreshProductsGridView(),
             ),
-            const SliverToBoxAdapter(
+            SliverToBoxAdapter(
               child: SizedBox(
-                height: 10,
+                height: 10.h, // Use ScreenUtil for spacing
               ),
             ),
             const SliverToBoxAdapter(
               child: AdWidget(),
             ),
-            const SliverToBoxAdapter(
+            SliverToBoxAdapter(
               child: SizedBox(
-                height: 10,
+                height: 10.h, // Use ScreenUtil for spacing
               ),
             ),
             SliverToBoxAdapter(
               child: SeeAllWidget(title: 'انتهز الفرصه', onTap: () {}),
             ),
-            const SliverToBoxAdapter(
+            SliverToBoxAdapter(
               child: SizedBox(
-                height: 8,
+                height: 8.h, // Use ScreenUtil for spacing
               ),
             ),
             const SliverToBoxAdapter(
               child: InterestFreeDiscountGridView(),
             ),
-            const SliverToBoxAdapter(
+            SliverToBoxAdapter(
               child: SizedBox(
-                height: 18,
+                height: 18.h, // Use ScreenUtil for spacing
               ),
             ),
           ],

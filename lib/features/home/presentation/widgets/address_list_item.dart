@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:selaty/core/constants/colors.dart';
 import 'package:selaty/core/constants/styles.dart';
 
 class AddressListItem extends StatefulWidget {
-  const AddressListItem({super.key});
+  const AddressListItem({
+    super.key,
+  });
 
   @override
   State<AddressListItem> createState() => _AddressListItemState();
@@ -15,32 +18,35 @@ class _AddressListItemState extends State<AddressListItem> {
 
   @override
   Widget build(BuildContext context) {
+    bool isPortrait =
+        MediaQuery.of(context).orientation == Orientation.portrait;
     return Container(
-      height: 200,
-      width: MediaQuery.sizeOf(context).width,
-      decoration: const BoxDecoration(
+      width: isPortrait ? 1.sw : 345.w,
+      decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.all(Radius.circular(8)),
+        borderRadius: BorderRadius.all(Radius.circular(8.r)),
       ),
       child: Column(
         children: [
           Row(
             children: [
               Padding(
-                padding: const EdgeInsets.only(right: 10),
+                padding: EdgeInsets.only(right: 10.h),
                 child: Container(
                   decoration: BoxDecoration(
-                      color: primaryGreen.withOpacity(0.2),
-                      borderRadius: const BorderRadius.only(
-                        bottomLeft: Radius.circular(8),
-                        bottomRight: Radius.circular(8),
-                      )),
+                    color: primaryGreen.withOpacity(0.2),
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(8.r),
+                      bottomRight: Radius.circular(8.r),
+                    ),
+                  ),
                   child: Padding(
-                    padding: const EdgeInsets.all(5.0),
+                    padding: EdgeInsets.all(5.r),
                     child: Text(
                       'افتراضي',
                       style: Styles.textStyle12Bold.copyWith(
                         color: primaryGreen,
+                        fontSize: isPortrait ? 12.sp : 8.sp,
                       ),
                     ),
                   ),
@@ -59,13 +65,13 @@ class _AddressListItemState extends State<AddressListItem> {
                       },
                       icon: Container(
                         decoration: BoxDecoration(
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(50)),
-                            border: Border.all(color: primaryRed, width: 2)),
-                        child: const Icon(
+                          borderRadius: BorderRadius.all(Radius.circular(50.r)),
+                          border: Border.all(color: primaryRed, width: 2.w),
+                        ),
+                        child: Icon(
                           Icons.circle,
                           color: primaryRed,
-                          size: 18,
+                          size: isPortrait ? 18.sp : 8.sp,
                         ),
                       ),
                     )
@@ -75,55 +81,61 @@ class _AddressListItemState extends State<AddressListItem> {
                           isClicked = true;
                         });
                       },
-                      icon: const Icon(
+                      icon: Icon(
                         Icons.circle_outlined,
                         color: Colors.black,
-                        size: 24,
+                        size: isPortrait ? 18.sp : 8.sp,
                       ),
                     ),
-              const Text(
+              Text(
                 'المـنـزل',
-                style: Styles.textStyle16Bold,
+                style: Styles.textStyle16Bold
+                    .copyWith(fontSize: isPortrait ? 16.sp : 10.sp),
               ),
               const Spacer(),
               IconButton(
                 onPressed: () {},
-                icon: const Icon(
+                icon: Icon(
                   FontAwesomeIcons.ellipsis,
-                  size: 24,
+                  size: isPortrait ? 18.sp : 8.sp,
+                ),
+              ),
+            ],
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                ' ح حمدي فتحي الأشوح - ش داير الناحيه\n ح حمدي فتحي الأشوح -   ش المنوفيه',
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: Styles.textStyle16Bold.copyWith(
+                  color: Colors.grey,
+                  fontSize: isPortrait ? 14.sp : 8.sp,
+                ),
+              ),
+              Text(
+                ' الباجور - المنوفيه',
+                style: Styles.textStyle16Bold.copyWith(
+                  color: Colors.grey,
+                  fontSize: isPortrait ? 14.sp : 8.sp,
                 ),
               ),
             ],
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  ' ح حمدي فتحي الأشوح - ش داير الناحيه\n ح حمدي فتحي الأشوح -   ش المنوفيه',
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: Styles.textStyle16Bold.copyWith(color: Colors.grey),
-                ),
-                Text(
-                  ' الباجور - المنوفيه',
-                  style: Styles.textStyle16Bold.copyWith(color: Colors.grey),
-                ),
-              ],
-            ),
-          ),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
             child: Row(
               children: [
                 Text(
                   'جوال : ',
-                  style: Styles.textStyle16Bold,
+                  style: Styles.textStyle16Bold
+                      .copyWith(fontSize: isPortrait ? 14.sp : 8.sp),
                 ),
                 Text(
                   '01019793768',
-                  style: Styles.textStyle16Bold,
+                  style: Styles.textStyle16Bold
+                      .copyWith(fontSize: isPortrait ? 14.sp : 8.sp),
                 ),
               ],
             ),

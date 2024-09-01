@@ -12,6 +12,9 @@ class OnboardingNextButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isPortrait =
+        Orientation.portrait == MediaQuery.of(context).orientation;
+
     return Positioned(
       bottom: (TDeviceUtils.getBottomNavigationBarHeight() + 25)
           .h, // Make bottom position responsive
@@ -27,7 +30,7 @@ class OnboardingNextButton extends StatelessWidget {
         },
         child: Icon(
           Icons.arrow_right_alt_outlined,
-          size: 30.sp, // Make icon size responsive
+          size: isPortrait ? 24.sp : 16.sp, // Make icon size responsive
           color: Colors.white,
         ),
       ),

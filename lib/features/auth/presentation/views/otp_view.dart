@@ -33,7 +33,6 @@ class _OtpViewState extends State<OtpView> {
               builder: (context, constraints) {
                 final isPortrait = orientation == Orientation.portrait;
                 final screenWidth = constraints.maxWidth;
-                final screenHeight = constraints.maxHeight;
 
                 return SingleChildScrollView(
                   child: Padding(

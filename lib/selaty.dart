@@ -9,7 +9,7 @@ class Selaty extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: const Size(375, 812), // Define your design size here
+      designSize: const Size(360, 690), // Define your design size here
       minTextAdapt: true,
       builder: (context, child) {
         return MaterialApp(

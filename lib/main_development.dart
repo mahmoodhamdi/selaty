@@ -1,7 +1,15 @@
+import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:selaty/selaty.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const Selaty());
+  await ScreenUtil.ensureScreenSize();
+  runApp(DevicePreview(
+    enabled: true,
+    builder: (context) {
+      return const Selaty();
+    }
+  ));
 }

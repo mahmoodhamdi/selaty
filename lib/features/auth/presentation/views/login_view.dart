@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart'; // Import ScreenUtil
 import 'package:selaty/core/common/widgets/custom_app_bar.dart';
 import 'package:selaty/core/common/widgets/custom_password_text_field.dart';
 import 'package:selaty/core/common/widgets/custom_text_field.dart';
@@ -22,6 +23,7 @@ class _LoginViewState extends State<LoginView> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
   @override
   void dispose() {
     emailController.dispose();
@@ -40,7 +42,7 @@ class _LoginViewState extends State<LoginView> {
           final width =
               isPortrait ? constraints.maxWidth : constraints.maxWidth / 2;
           final horizontalPadding =
-              isPortrait ? 20.0 : constraints.maxWidth / 4;
+              isPortrait ? 20.0.w : constraints.maxWidth / 4;
 
           return SingleChildScrollView(
             child: Padding(
@@ -51,16 +53,16 @@ class _LoginViewState extends State<LoginView> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const LoginHeader(),
-                    const SizedBox(height: 30),
+                    SizedBox(height: 30.h), // Make height responsive
                     _buildInputFields(width),
                     ForgotPasswordButton(
                       onPressed: () {
                         Navigator.pushNamed(context, Routes.resetPassword);
                       },
                     ),
-                    const SizedBox(height: 30),
+                    SizedBox(height: 30.h), // Make height responsive
                     _buildLoginButton(width),
-                    const SizedBox(height: 20),
+                    SizedBox(height: 20.h), // Make height responsive
                     const SocialAuth(
                       text: 'أو تسجيل الدخول باستخدام',
                     ),
@@ -86,7 +88,7 @@ class _LoginViewState extends State<LoginView> {
           },
           text: 'عنوان البريد الالكتروني',
         ),
-        const SizedBox(height: 10),
+        SizedBox(height: 10.h), // Make height responsive
         CustomPasswordTextFormField(
           controller: passwordController,
           width: width,
@@ -98,7 +100,6 @@ class _LoginViewState extends State<LoginView> {
 
   Widget _buildLoginButton(double width) {
     return PrimaryButton(
-      height: 50,
       text: 'تسجيل الدخول',
       color: primaryGreen,
       onTap: () {

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:selaty/core/constants/colors.dart';
-import 'package:selaty/core/constants/sizes.dart';
-import 'package:selaty/features/home/presentation/widgets/offer_item.dart';
+ import 'package:selaty/features/home/presentation/widgets/offer_item.dart';
 
 class OffersGridView extends StatelessWidget {
   const OffersGridView({
@@ -13,7 +12,7 @@ class OffersGridView extends StatelessWidget {
     final isPortrait =
         MediaQuery.of(context).orientation == Orientation.portrait;
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: TSizes.defaultSpace / 3),
+      padding: const EdgeInsets.symmetric(horizontal: 24 / 3),
       child: SizedBox(
         height: isPortrait
             ? MediaQuery.sizeOf(context).height * 0.45

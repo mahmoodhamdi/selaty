@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:selaty/core/common/widgets/custom_app_bar.dart';
 import 'package:selaty/core/common/widgets/primary_button.dart';
 import 'package:selaty/core/constants/colors.dart';
@@ -11,104 +12,109 @@ class AddressView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var isPortrait = MediaQuery.of(context).orientation == Orientation.portrait;
     return Scaffold(
       appBar: const CustomAppBar(
         title: 'عنوان التسليم',
       ),
-      body: isPortrait
-          ? Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: Text(
-                      'يشحن الى',
-                      style: Styles.textStyle18.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.grey,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Expanded(
-                    child: SizedBox(
-                      width: MediaQuery.sizeOf(context).width,
-                      child: ListView.builder(
-                        itemCount: 5,
-                        itemBuilder: (context, index) => const Padding(
-                          padding: EdgeInsets.only(bottom: 20),
-                          child: AddressListItem(),
-                        ),
-                      ),
-                    ),
-                  ),
-                  PrimaryButton(
-                    text: 'التسليم لهذا العنوان',
-                    color: primaryGreen,
-                    onTap: () {
-                      Navigator.pushNamed(context, Routes.successfulOrderView);
-                    },
-                    width: MediaQuery.sizeOf(context).width,
-                    height: 60,
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                ],
+      body: OrientationBuilder(
+        builder: (context, orientation) {
+          return orientation == Orientation.portrait
+              ? _buildPortraitLayout(context)
+              : _buildLandscapeLayout(context);
+        },
+      ),
+    );
+  }
+
+  Widget _buildPortraitLayout(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 20.w),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Align(
+            alignment: Alignment.centerRight,
+            child: Text(
+              'يشحن الى',
+              style: Styles.textStyle18.copyWith(
+                fontWeight: FontWeight.bold,
+                color: Colors.grey,
+                fontSize: 18.sp,
               ),
-            )
-          : Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
+            ),
+          ),
+          SizedBox(height: 10.h),
+          Expanded(
+            child: ListView.builder(
+              itemCount: 5,
+              itemBuilder: (context, index) => Padding(
+                padding: EdgeInsets.only(bottom: 20.h),
+                child: const AddressListItem(),
+              ),
+            ),
+          ),
+          PrimaryButton(
+            text: 'التسليم لهذا العنوان',
+            color: primaryGreen,
+            onTap: () {
+              Navigator.pushNamed(context, Routes.successfulOrderView);
+            },
+            height: 60.h,
+          ),
+          SizedBox(height: 10.h),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildLandscapeLayout(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(width: 20.h),
+            Text(
+              'يشحن الى :',
+              style: Styles.textStyle18.copyWith(
+                fontWeight: FontWeight.bold,
+                color: Colors.grey,
+                fontSize: 8.sp,
+              ),
+            ),
+            SizedBox(width: 10.h),
+            Expanded(
+              child: Column(
                 children: [
-                  Text(
-                    'يشحن الى :',
-                    style: Styles.textStyle18.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.grey,
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: 5,
+                      itemBuilder: (context, index) => SizedBox(
+                        child: Padding(
+                          padding: EdgeInsets.all(16.0.h),
+                          child: const AddressListItem(),
+                        ),
+                      ),
                     ),
                   ),
-                  Expanded(
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: 220,
-                          child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: 5,
-                            itemBuilder: (context, index) => const SizedBox(
-                                width: 345,
-                                child: Padding(
-                                  padding: EdgeInsets.all(8.0),
-                                  child: AddressListItem(),
-                                )),
-                          ),
-                        ),
-                        const Spacer(),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 10),
-                          child: PrimaryButton(
-                            text: 'التسليم لهذا العنوان',
-                            color: primaryGreen,
-                            onTap: () {
-                              Navigator.pushNamed(
-                                  context, Routes.successfulOrderView);
-                            },
-                            width: MediaQuery.sizeOf(context).width,
-                          ),
-                        ),
-                      ],
+                  Padding(
+                    padding:
+                        EdgeInsets.symmetric(vertical: 10.h, horizontal: 20.w),
+                    child: PrimaryButton(
+                      text: 'التسليم لهذا العنوان',
+                      color: primaryGreen,
+                      onTap: () {
+                        Navigator.pushNamed(
+                            context, Routes.successfulOrderView);
+                      },
                     ),
                   ),
                 ],
               ),
             ),
+          ],
+        );
+      },
     );
   }
 }

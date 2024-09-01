@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart'; // Import ScreenUtil
 import 'package:selaty/core/common/widgets/custom_app_bar.dart';
 import 'package:selaty/core/common/widgets/custom_password_text_field.dart';
 import 'package:selaty/core/common/widgets/primary_button.dart';
@@ -52,13 +53,14 @@ class _NewPasswordViewState extends State<NewPasswordView> {
       body: OrientationBuilder(
         builder: (context, orientation) {
           final isPortrait = orientation == Orientation.portrait;
-          final screenSize = MediaQuery.of(context).size;
 
           return SingleChildScrollView(
             child: Padding(
               padding: EdgeInsets.symmetric(
-                horizontal: isPortrait ? 20 : screenSize.width * 0.15,
-                vertical: screenSize.height * 0.05,
+                horizontal: isPortrait
+                    ? 20.w
+                    : 20.w, // Use ScreenUtil for horizontal padding
+                vertical: 20.h, // Use ScreenUtil for vertical padding
               ),
               child: Form(
                 key: _formKey,
@@ -70,25 +72,24 @@ class _NewPasswordViewState extends State<NewPasswordView> {
                       style: Styles.textStyle16.copyWith(color: Colors.grey),
                       textAlign: TextAlign.right,
                     ),
-                    const SizedBox(height: 40),
+                    SizedBox(height: 40.h), // Use ScreenUtil for spacing
                     CustomPasswordTextFormField(
                       text: 'كلمة المرور الجديدة',
                       width: double.infinity,
                       controller: _passwordController,
                     ),
-                    const SizedBox(height: 20),
+                    SizedBox(height: 20.h), // Use ScreenUtil for spacing
                     CustomPasswordTextFormField(
                       text: 'تأكيد كلمة المرور الجديدة',
                       width: double.infinity,
                       controller: _confirmPasswordController,
                     ),
-                    const SizedBox(height: 40),
+                    SizedBox(height: 40.h), // Use ScreenUtil for spacing
                     PrimaryButton(
-                      height: 60,
                       text: 'تعيين كلمة المرور الجديدة',
                       color: primaryGreen,
                       onTap: _submitNewPassword,
-                      width: screenSize.width,
+                      width: double.infinity,
                     ),
                   ],
                 ),

@@ -6,13 +6,13 @@ class PrimaryButton extends StatelessWidget {
       {super.key,
       required this.text,
       required this.color,
-       this.onTap,
-       this.width=double.infinity,
+      this.onTap,
+      this.width = double.infinity,
       this.height = 50});
   final String text;
   final Color color;
   final void Function()? onTap;
-  final double ?width;
+  final double? width;
   final double? height;
   @override
   Widget build(BuildContext context) {

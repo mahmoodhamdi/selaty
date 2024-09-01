@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart'; // Import ScreenUtil
 import 'package:selaty/core/common/widgets/custom_app_bar.dart';
 import 'package:selaty/core/common/widgets/primary_button.dart';
 import 'package:selaty/core/constants/colors.dart';
@@ -21,14 +22,14 @@ class PasswordChangedSuccessfullyView extends StatelessWidget {
             return LayoutBuilder(
               builder: (context, constraints) {
                 final isPortrait = orientation == Orientation.portrait;
-                final screenWidth = constraints.maxWidth;
-                final screenHeight = constraints.maxHeight;
 
                 return SingleChildScrollView(
                   child: Padding(
                     padding: EdgeInsets.symmetric(
-                      horizontal: isPortrait ? 20 : screenWidth * 0.1,
-                      vertical: screenHeight * 0.05,
+                      horizontal: isPortrait
+                          ? 20.w
+                          : 20.w, // Use ScreenUtil for horizontal padding
+                      vertical: 20.h, // Use ScreenUtil for vertical padding
                     ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -36,10 +37,12 @@ class PasswordChangedSuccessfullyView extends StatelessWidget {
                       children: [
                         Icon(
                           Icons.check_circle_outline,
-                          size: isPortrait ? 120 : 80,
+                          size: isPortrait
+                              ? 120.w
+                              : 80.w, // Use ScreenUtil for icon size
                           color: primaryGreen,
                         ),
-                        SizedBox(height: screenHeight * 0.04),
+                        SizedBox(height: 20.h), // Use ScreenUtil for spacing
                         Text(
                           'تم تغيير كلمة المرور بنجاح!',
                           style: Styles.textStyle24.copyWith(
@@ -48,7 +51,7 @@ class PasswordChangedSuccessfullyView extends StatelessWidget {
                           ),
                           textAlign: TextAlign.center,
                         ),
-                        SizedBox(height: screenHeight * 0.02),
+                        SizedBox(height: 10.h), // Use ScreenUtil for spacing
                         Text(
                           'يمكنك الآن تسجيل الدخول باستخدام كلمة المرور الجديدة.',
                           style: Styles.textStyle16.copyWith(
@@ -56,7 +59,7 @@ class PasswordChangedSuccessfullyView extends StatelessWidget {
                           ),
                           textAlign: TextAlign.center,
                         ),
-                        SizedBox(height: screenHeight * 0.06),
+                        SizedBox(height: 30.h), // Use ScreenUtil for spacing
                         PrimaryButton(
                           text: 'العودة إلى تسجيل الدخول',
                           color: primaryGreen,
@@ -67,7 +70,6 @@ class PasswordChangedSuccessfullyView extends StatelessWidget {
                             );
                           },
                           width: double.infinity,
-                          height: 50,
                         ),
                       ],
                     ),

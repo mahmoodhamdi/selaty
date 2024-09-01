@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart'; // Import ScreenUtil
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:selaty/core/common/widgets/custom_app_bar.dart';
 import 'package:selaty/core/common/widgets/primary_button.dart';
@@ -32,13 +33,12 @@ class _OtpViewState extends State<OtpView> {
               builder: (context, constraints) {
                 final isPortrait = orientation == Orientation.portrait;
                 final screenWidth = constraints.maxWidth;
-                final screenHeight = constraints.maxHeight;
 
                 return SingleChildScrollView(
                   child: Padding(
                     padding: EdgeInsets.symmetric(
-                      horizontal: isPortrait ? 20 : screenWidth * 0.1,
-                      vertical: screenHeight * 0.05,
+                      horizontal: isPortrait ? 20.w : screenWidth * 0.1,
+                      vertical: 20.h,
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -54,7 +54,7 @@ class _OtpViewState extends State<OtpView> {
                             textDirection: TextDirection.rtl,
                           ),
                         ),
-                        SizedBox(height: screenHeight * 0.06),
+                        SizedBox(height: 20.h),
                         Directionality(
                           textDirection: TextDirection.ltr,
                           child: PinCodeTextField(
@@ -63,18 +63,19 @@ class _OtpViewState extends State<OtpView> {
                             obscureText: false,
                             animationType: AnimationType.fade,
                             pinTheme: PinTheme(
-                                shape: PinCodeFieldShape.box,
-                                borderRadius: BorderRadius.circular(12),
-                                fieldHeight: isPortrait ? 70 : 60,
-                                fieldWidth: isPortrait ? 70 : 60,
-                                activeFillColor: primaryGreen.withOpacity(0.1),
-                                inactiveFillColor: Colors.white,
-                                selectedFillColor:
-                                    primaryGreen.withOpacity(0.2),
-                                activeColor: primaryGreen,
-                                inactiveColor: const Color(0xFF757575),
-                                selectedColor: primaryGreen,
-                                errorBorderColor: primaryRed),
+                              shape: PinCodeFieldShape.box,
+                              borderRadius: BorderRadius.circular(
+                                  12.r), // Use r for responsive radius
+                              fieldHeight: isPortrait ? 70.h : 90.h,
+                              fieldWidth: isPortrait ? 70.w : 40.w,
+                              activeFillColor: primaryGreen.withOpacity(0.1),
+                              inactiveFillColor: Colors.white,
+                              selectedFillColor: primaryGreen.withOpacity(0.2),
+                              activeColor: primaryGreen,
+                              inactiveColor: const Color(0xFF757575),
+                              selectedColor: primaryGreen,
+                              errorBorderColor: primaryRed,
+                            ),
                             animationDuration:
                                 const Duration(milliseconds: 300),
                             backgroundColor: Colors.transparent,
@@ -99,7 +100,7 @@ class _OtpViewState extends State<OtpView> {
                             },
                           ),
                         ),
-                        SizedBox(height: screenHeight * 0.06),
+                        SizedBox(height: 20.h),
                         Align(
                           alignment: Alignment.centerRight,
                           child: Text(
@@ -131,7 +132,7 @@ class _OtpViewState extends State<OtpView> {
                             ),
                           ),
                         ),
-                        SizedBox(height: screenHeight * 0.04),
+                        SizedBox(height: 20.h),
                         PrimaryButton(
                           text: 'تأكيد',
                           color: primaryGreen,
@@ -143,13 +144,12 @@ class _OtpViewState extends State<OtpView> {
                             } else {
                               THelperFunctions.showSnackBar(
                                 context: context,
-                                message: ' الكود غير صحيح',
+                                message: 'الكود غير صحيح',
                               );
                             }
                           },
                           width: double.infinity,
-                          height: 50,
-                        )
+                        ),
                       ],
                     ),
                   ),

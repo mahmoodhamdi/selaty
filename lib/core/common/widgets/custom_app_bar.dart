@@ -3,15 +3,17 @@ import 'package:selaty/core/constants/styles.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppBar(
-      {super.key, this.title = '', this.titleColor = Colors.black});
+      {super.key,
+      this.title = '',
+      this.titleColor = Colors.black,
+        this.onPressed});
   final String title;
   final Color titleColor;
-
+  final void Function()? onPressed;
   @override
   Widget build(BuildContext context) {
     return AppBar(
       elevation: 0,
-      
       backgroundColor: Colors.transparent,
       automaticallyImplyLeading: false,
       actions: [
@@ -25,12 +27,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             color: Colors.white,
             borderRadius: BorderRadius.circular(8),
           ),
-          child: Center(
+          child: const Center(
             child: IconButton(
-              onPressed: () {
-                // Your onPressed logic here
-              },
-              icon: const Icon(
+              onPressed: null,
+              icon: Icon(
                 Icons.camera_alt_outlined,
                 size: 20,
               ),
@@ -55,9 +55,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
           child: Center(
             child: IconButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
+              onPressed: onPressed,
               icon: const Icon(
                 Icons.arrow_forward_ios,
                 size: 20,

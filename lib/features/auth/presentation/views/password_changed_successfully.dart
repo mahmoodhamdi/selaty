@@ -4,7 +4,7 @@ import 'package:selaty/core/common/widgets/custom_app_bar.dart';
 import 'package:selaty/core/common/widgets/primary_button.dart';
 import 'package:selaty/core/constants/colors.dart';
 import 'package:selaty/core/constants/styles.dart';
-import 'package:selaty/core/routes/routes.dart';
+import 'package:selaty/features/auth/presentation/views/login_view.dart';
 
 class PasswordChangedSuccessfullyView extends StatelessWidget {
   const PasswordChangedSuccessfullyView({super.key});
@@ -12,7 +12,10 @@ class PasswordChangedSuccessfullyView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(
+      appBar: CustomAppBar(
+        onPressed: () {
+          Navigator.pop(context);
+        },
         title: 'تم تغيير كلمة المرور',
       ),
       backgroundColor: Colors.white,
@@ -64,8 +67,10 @@ class PasswordChangedSuccessfullyView extends StatelessWidget {
                           text: 'العودة إلى تسجيل الدخول',
                           color: primaryGreen,
                           onTap: () {
-                            Navigator.of(context).pushNamedAndRemoveUntil(
-                              Routes.login,
+                            Navigator.of(context).pushAndRemoveUntil(
+                              MaterialPageRoute(
+                                builder: (context) => const LoginView(),
+                              ),
                               (Route<dynamic> route) => false,
                             );
                           },

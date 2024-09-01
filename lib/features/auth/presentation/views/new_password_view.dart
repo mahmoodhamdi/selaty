@@ -6,7 +6,7 @@ import 'package:selaty/core/common/widgets/primary_button.dart';
 import 'package:selaty/core/constants/colors.dart';
 import 'package:selaty/core/constants/styles.dart';
 import 'package:selaty/core/helpers/helper_functions.dart';
-import 'package:selaty/core/routes/routes.dart';
+import 'package:selaty/features/auth/presentation/views/password_changed_successfully.dart';
 
 class NewPasswordView extends StatefulWidget {
   const NewPasswordView({super.key, required this.email});
@@ -36,8 +36,10 @@ class _NewPasswordViewState extends State<NewPasswordView> {
         _formKey.currentState!.save();
         THelperFunctions.showSnackBar(
             context: context, message: 'تم تغيير كلمة المرور بنجاح');
-        Navigator.pushReplacementNamed(
-            context, Routes.passwordChangedSuccessfullyView);
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (context) => const PasswordChangedSuccessfullyView()));
       } else {
         THelperFunctions.showSnackBar(
             context: context, message: 'كلمة المرور غير متطابقة');
@@ -49,7 +51,11 @@ class _NewPasswordViewState extends State<NewPasswordView> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xffFDFDFF),
-      appBar: const CustomAppBar(title: 'تعيين كلمة مرور جديدة'),
+      appBar: CustomAppBar(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          title: 'تعيين كلمة مرور جديدة'),
       body: OrientationBuilder(
         builder: (context, orientation) {
           final isPortrait = orientation == Orientation.portrait;

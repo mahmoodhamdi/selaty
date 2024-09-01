@@ -13,7 +13,10 @@ class TrackOrderView extends StatelessWidget {
     final screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      appBar: const CustomAppBar(
+      appBar:  CustomAppBar(
+            onPressed: () {
+          Navigator.pop(context);
+        },
         title: 'ترتيب المسار',
       ),
       body: Padding(

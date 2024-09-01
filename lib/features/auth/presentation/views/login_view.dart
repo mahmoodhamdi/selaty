@@ -5,12 +5,13 @@ import 'package:selaty/core/common/widgets/custom_password_text_field.dart';
 import 'package:selaty/core/common/widgets/custom_text_field.dart';
 import 'package:selaty/core/common/widgets/primary_button.dart';
 import 'package:selaty/core/constants/colors.dart';
-import 'package:selaty/core/routes/routes.dart';
 import 'package:selaty/core/validators/validator.dart';
+import 'package:selaty/features/auth/presentation/views/reset_password_view.dart';
 import 'package:selaty/features/auth/presentation/widgets/forgot_password_button.dart';
 import 'package:selaty/features/auth/presentation/widgets/login_header.dart';
 import 'package:selaty/features/auth/presentation/widgets/not_have_account.dart';
 import 'package:selaty/features/auth/presentation/widgets/social_auth.dart';
+import 'package:selaty/features/home/presentation/views/main_view.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -35,7 +36,11 @@ class _LoginViewState extends State<LoginView> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xffFDFDFF),
-      appBar: const CustomAppBar(),
+      appBar: CustomAppBar(
+        onPressed: () {
+          Navigator.pop(context);
+        },
+      ),
       body: LayoutBuilder(
         builder: (context, constraints) {
           final isPortrait = constraints.maxWidth < constraints.maxHeight;
@@ -57,7 +62,7 @@ class _LoginViewState extends State<LoginView> {
                     _buildInputFields(width),
                     ForgotPasswordButton(
                       onPressed: () {
-                        Navigator.pushNamed(context, Routes.resetPassword);
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => const ResetPasswordView()));
                       },
                     ),
                     SizedBox(height: 30.h), // Make height responsive
@@ -105,7 +110,7 @@ class _LoginViewState extends State<LoginView> {
       onTap: () {
         if (formKey.currentState!.validate()) {
           formKey.currentState!.save();
-          Navigator.pushNamed(context, Routes.homeView);
+          Navigator.push(context,MaterialPageRoute(builder: (context) => const MainView()));
         }
       },
       width: width,

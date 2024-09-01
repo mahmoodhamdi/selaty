@@ -6,8 +6,8 @@ import 'package:selaty/core/common/widgets/primary_button.dart';
 import 'package:selaty/core/constants/colors.dart';
 import 'package:selaty/core/constants/styles.dart';
 import 'package:selaty/core/helpers/helper_functions.dart';
-import 'package:selaty/core/routes/routes.dart';
 import 'package:selaty/core/validators/validator.dart';
+import 'package:selaty/features/auth/presentation/views/otp_view.dart';
 
 class ResetPasswordView extends StatefulWidget {
   const ResetPasswordView({super.key});
@@ -30,7 +30,11 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xffFDFDFF),
-      appBar: const CustomAppBar(title: 'تحقق من البريد الالكتروني'),
+      appBar: CustomAppBar(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          title: 'تحقق من البريد الالكتروني'),
       body: OrientationBuilder(
         builder: (context, orientation) {
           final isPortrait = orientation == Orientation.portrait;
@@ -76,9 +80,12 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
                           _formKey.currentState!.save();
                           THelperFunctions.showSnackBar(
                               context: context, message: "تم ارسال رمز التحقق");
-                          Navigator.pushReplacementNamed(
-                              context, Routes.otpView,
-                              arguments: emailController.text);
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => OtpView(
+                                        email: emailController.text,
+                                      )));
                         }
                       },
                       width: double.infinity, // Adjust width as needed

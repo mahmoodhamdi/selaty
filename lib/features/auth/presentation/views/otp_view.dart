@@ -6,7 +6,7 @@ import 'package:selaty/core/common/widgets/primary_button.dart';
 import 'package:selaty/core/constants/colors.dart';
 import 'package:selaty/core/constants/styles.dart';
 import 'package:selaty/core/helpers/helper_functions.dart';
-import 'package:selaty/core/routes/routes.dart';
+import 'package:selaty/features/auth/presentation/views/new_password_view.dart';
 
 class OtpView extends StatefulWidget {
   const OtpView({super.key, required this.email});
@@ -22,7 +22,10 @@ class _OtpViewState extends State<OtpView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(
+      appBar: CustomAppBar(
+        onPressed: () {
+          Navigator.pop(context);
+        },
         title: 'التحقق من البريد الالكتروني',
       ),
       backgroundColor: const Color(0xFFF5F5F5),
@@ -83,9 +86,13 @@ class _OtpViewState extends State<OtpView> {
                             controller: _otpController,
                             onCompleted: (v) {
                               if (v == '1234') {
-                                Navigator.pushReplacementNamed(
-                                    context, Routes.newPasswordView,
-                                    arguments: widget.email);
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => NewPasswordView(
+                                            email: widget.email,
+                                          )),
+                                );
                               } else {
                                 THelperFunctions.showSnackBar(
                                     context: context,
@@ -138,9 +145,11 @@ class _OtpViewState extends State<OtpView> {
                           color: primaryGreen,
                           onTap: () {
                             if (_otpController.text == '1234') {
-                              Navigator.pushReplacementNamed(
-                                  context, Routes.newPasswordView,
-                                  arguments: widget.email);
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => NewPasswordView(
+                                          email: widget.email)));
                             } else {
                               THelperFunctions.showSnackBar(
                                 context: context,

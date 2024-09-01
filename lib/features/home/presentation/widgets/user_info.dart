@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:selaty/core/constants/colors.dart';
 import 'package:selaty/core/constants/styles.dart';
-import 'package:selaty/core/routes/routes.dart';
+import 'package:selaty/features/home/presentation/views/profile_view.dart';
 
 class UserInfo extends StatelessWidget {
   const UserInfo({
@@ -17,7 +17,7 @@ class UserInfo extends StatelessWidget {
         children: [
           GestureDetector(
             onTap: () {
-              Navigator.pushNamed(context, Routes.profileView);
+              Navigator.push(context,MaterialPageRoute(builder: (context) => const ProfileView()));
             },
             child: CircleAvatar(
               radius: 22,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:selaty/core/constants/colors.dart';
 import 'package:selaty/core/constants/styles.dart';
-import 'package:selaty/core/routes/routes.dart';
+import 'package:selaty/features/auth/presentation/views/register_view.dart';
 
 class NotHaveAccount extends StatelessWidget {
   const NotHaveAccount({
@@ -17,7 +17,7 @@ class NotHaveAccount extends StatelessWidget {
         children: [
           const Text('ليس لديك حساب؟', style: Styles.textStyle16),
           TextButton(
-            onPressed: () => Navigator.pushNamed(context, Routes.register),
+            onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const RegisterView())),
             child: const Text(
               'إنشاء حساب',
               style:

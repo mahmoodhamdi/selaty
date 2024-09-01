@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:selaty/core/constants/colors.dart';
 import 'package:selaty/core/constants/styles.dart';
-import 'package:selaty/core/routes/routes.dart';
+import 'package:selaty/features/auth/presentation/views/login_view.dart';
 
 class AlreadyHaveAccount extends StatelessWidget {
   const AlreadyHaveAccount({
@@ -17,7 +17,7 @@ class AlreadyHaveAccount extends StatelessWidget {
         children: [
           const Text('لديك حساب بالفعل؟', style: Styles.textStyle16),
           TextButton(
-            onPressed: () => Navigator.pushNamed(context, Routes.login),
+            onPressed: () => Navigator.push(context,MaterialPageRoute(builder: (context) => const LoginView())),
             child: const Text(
               'تسجيل الدخول',
               style:

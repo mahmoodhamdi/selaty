@@ -4,7 +4,8 @@ import 'package:selaty/core/common/widgets/horizontal_logo.dart';
 import 'package:selaty/core/common/widgets/primary_button.dart';
 import 'package:selaty/core/constants/colors.dart';
 import 'package:selaty/core/constants/text_strings.dart';
-import 'package:selaty/core/routes/routes.dart';
+import 'package:selaty/features/auth/presentation/views/login_view.dart';
+import 'package:selaty/features/auth/presentation/views/register_view.dart';
 
 class AuthView extends StatelessWidget {
   const AuthView({super.key});
@@ -33,7 +34,7 @@ class AuthView extends StatelessWidget {
               text: TTexts.loginTitle,
               color: primaryRed,
               onTap: () {
-                Navigator.pushNamed(context, Routes.login);
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginView()));
               },
             ),
             SizedBox(
@@ -44,7 +45,7 @@ class AuthView extends StatelessWidget {
               text: TTexts.registerTitle,
               color: primaryGreen,
               onTap: () {
-                Navigator.pushNamed(context, Routes.register);
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const RegisterView()));
               },
             ),
           ],

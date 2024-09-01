@@ -3,7 +3,7 @@ import 'package:selaty/core/common/widgets/custom_app_bar.dart';
 import 'package:selaty/core/common/widgets/primary_button.dart';
 import 'package:selaty/core/constants/colors.dart';
 import 'package:selaty/core/constants/styles.dart';
-import 'package:selaty/core/routes/routes.dart';
+import 'package:selaty/features/home/presentation/views/track_order_view.dart';
 
 class SuccessfulOrderView extends StatelessWidget {
   const SuccessfulOrderView({super.key});
@@ -16,7 +16,10 @@ class SuccessfulOrderView extends StatelessWidget {
     final screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      appBar: const CustomAppBar(
+      appBar: CustomAppBar(
+        onPressed: () {
+          Navigator.pop(context);
+        },
         title: 'عربة التسوق',
       ),
       body: Center(
@@ -37,10 +40,10 @@ class SuccessfulOrderView extends StatelessWidget {
                 const Spacer(),
                 Image.asset(
                   'assets/images/success_bag_icon.png',
-                  width: isPortrait ? screenWidth : screenWidth /6,
+                  width: isPortrait ? screenWidth : screenWidth / 6,
                 ),
                 const SizedBox(height: 10),
-                 Text(
+                Text(
                   'طلبك ناجح !',
                   style: TextStyle(
                     color: Colors.white,
@@ -64,7 +67,10 @@ class SuccessfulOrderView extends StatelessWidget {
                     text: 'ترتيب المسار',
                     color: const Color(0xff38344B),
                     onTap: () {
-                      Navigator.pushNamed(context, Routes.trackOrderView);
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const TrackOrderView()));
                     },
                     width: double.infinity,
                     height: isPortrait ? 60 : 40,

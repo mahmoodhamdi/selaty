@@ -3,7 +3,7 @@ import 'package:selaty/core/common/widgets/custom_app_bar.dart';
 import 'package:selaty/core/common/widgets/primary_button.dart';
 import 'package:selaty/core/constants/colors.dart';
 import 'package:selaty/core/constants/styles.dart';
-import 'package:selaty/core/routes/routes.dart';
+import 'package:selaty/features/home/presentation/views/address_view.dart';
 
 class EmptyShoppingCartView extends StatelessWidget {
   const EmptyShoppingCartView({super.key});
@@ -11,7 +11,10 @@ class EmptyShoppingCartView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(
+      appBar: CustomAppBar(
+        onPressed: () {
+          Navigator.pop(context);
+        },
         title: 'عربة التسوق',
       ),
       body: Column(
@@ -67,7 +70,10 @@ class EmptyShoppingCartView extends StatelessWidget {
                       text: 'ابدأ التسوق',
                       color: primaryGreen,
                       onTap: () {
-                        Navigator.pushNamed(context, Routes.addressView);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const AddressView()));
                       },
                       width: double.infinity,
                       height: MediaQuery.of(context).orientation ==

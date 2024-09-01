@@ -5,8 +5,8 @@ import 'package:selaty/core/common/widgets/custom_password_text_field.dart';
 import 'package:selaty/core/common/widgets/custom_text_field.dart';
 import 'package:selaty/core/common/widgets/primary_button.dart';
 import 'package:selaty/core/constants/colors.dart';
-import 'package:selaty/core/routes/routes.dart';
 import 'package:selaty/core/validators/validator.dart';
+import 'package:selaty/features/auth/presentation/views/login_view.dart';
 import 'package:selaty/features/auth/presentation/widgets/already_have_account.dart';
 import 'package:selaty/features/auth/presentation/widgets/register_header.dart';
 import 'package:selaty/features/auth/presentation/widgets/social_auth.dart';
@@ -36,7 +36,11 @@ class _RegisterViewState extends State<RegisterView> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xffFDFDFF),
-      appBar: const CustomAppBar(),
+      appBar: CustomAppBar(
+        onPressed: () {
+          Navigator.pop(context);
+        },
+      ),
       body: LayoutBuilder(
         builder: (context, constraints) {
           final isPortrait = constraints.maxWidth < constraints.maxHeight;
@@ -116,7 +120,8 @@ class _RegisterViewState extends State<RegisterView> {
       onTap: () {
         if (formKey.currentState!.validate()) {
           formKey.currentState!.save();
-          Navigator.pushNamed(context, Routes.login);
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const LoginView()));
         }
       },
       width: width,

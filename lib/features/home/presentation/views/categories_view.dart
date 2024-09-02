@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:selaty/core/common/widgets/custom_app_bar.dart';
 import 'package:selaty/features/home/presentation/widgets/categories_view_item.dart';
-import 'package:selaty/features/home/presentation/widgets/custom_bottom_navigation_bar.dart';
-import 'package:selaty/features/home/presentation/widgets/custom_floating_action_button.dart';
 
 class CategoriesView extends StatelessWidget {
   const CategoriesView({super.key});
@@ -10,7 +8,11 @@ class CategoriesView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(
+
+      appBar:  CustomAppBar(
+            onPressed: () {
+          Navigator.pop(context);
+        },
         title: 'التصنيفات',
       ),
       body: Padding(
@@ -39,9 +41,6 @@ class CategoriesView extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: const CustomBottomNavigationBar(),
-      floatingActionButton: const CustomFloatingActionButton(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }

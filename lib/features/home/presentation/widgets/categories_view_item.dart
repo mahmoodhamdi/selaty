@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:selaty/core/constants/styles.dart';
-import 'package:selaty/core/routes/routes.dart';
+import 'package:selaty/features/home/presentation/views/category_products_view.dart';
 
 class CategoriesViewItem extends StatelessWidget {
   const CategoriesViewItem({super.key});
@@ -9,8 +9,12 @@ class CategoriesViewItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, Routes.categoryProductsView,
-            arguments: 'فواكه');
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => const CategoryProductsView(
+                      categoryName: 'فواكه',
+                    )));
       },
       child: Container(
         decoration: const BoxDecoration(

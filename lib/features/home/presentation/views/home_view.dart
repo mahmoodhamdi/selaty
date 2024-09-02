@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart'; // Import ScreenUtil
-import 'package:selaty/core/routes/routes.dart';
+import 'package:selaty/features/home/presentation/views/categories_view.dart';
 import 'package:selaty/features/home/presentation/widgets/Interest_free_discount_grid_view.dart';
 import 'package:selaty/features/home/presentation/widgets/ad_widget.dart';
 import 'package:selaty/features/home/presentation/widgets/best_seller_products_grid_view.dart';
@@ -58,7 +58,10 @@ class HomeView extends StatelessWidget {
               child: SeeAllWidget(
                   title: 'التصنيفات',
                   onTap: () {
-                    Navigator.pushNamed(context, Routes.categoriesView);
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const CategoriesView()));
                   }),
             ),
             SliverToBoxAdapter(

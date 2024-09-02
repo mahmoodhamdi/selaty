@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:selaty/core/constants/colors.dart';
 import 'package:selaty/core/constants/styles.dart';
-import 'package:selaty/core/routes/routes.dart';
+import 'package:selaty/features/home/presentation/views/cart_view.dart';
 
 class ProductCard extends StatelessWidget {
   const ProductCard({super.key});
@@ -11,9 +12,11 @@ class ProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, Routes.cartView);
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => const CartView()));
       },
       child: Container(
+        width: 150.w, // Adjusted width
         decoration: const BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.all(
@@ -27,8 +30,8 @@ class ProductCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
-                  width: 40.0,
-                  height: 20.0,
+                  width: 30.w, // Adjusted width
+                  height: 15.h, // Adjusted height
                   decoration: const BoxDecoration(
                     color: primaryGreen,
                     borderRadius: BorderRadius.only(
@@ -47,33 +50,34 @@ class ProductCard extends StatelessWidget {
                 ),
                 IconButton(
                   onPressed: () {},
-                  icon: const Icon(
+                  icon: Icon(
                     FontAwesomeIcons.solidHeart,
                     color: primaryGreen,
-                    size: 18,
+                    size: 16.w, // Adjusted size
                   ),
                 ),
               ],
             ),
             Image.asset(
               'assets/images/fruits.png',
-              height: 80,
-              width: 150,
+              height: 50.h, // Adjusted height
+              width: 120.w, // Adjusted width
             ),
             const SizedBox(
-              height: 10,
+              height: 8, // Adjusted space
             ),
             Align(
               alignment: Alignment.centerRight,
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
+                padding:
+                    EdgeInsets.symmetric(horizontal: 8.w), // Adjusted padding
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
-                      width: 80.0,
-                      height: 20.0,
-                      padding: const EdgeInsets.only(right: 8),
+                      width: 60.w, // Adjusted width
+                      height: 15.h, // Adjusted height
+                      padding: EdgeInsets.only(right: 6.w), // Adjusted padding
                       alignment: Alignment.centerRight,
                       decoration: const BoxDecoration(
                         color: Colors.orange,
@@ -122,7 +126,8 @@ class ProductCard extends StatelessWidget {
                 ),
               ),
               child: Padding(
-                padding: const EdgeInsets.only(right: 10, left: 10, bottom: 4),
+                padding: EdgeInsets.only(
+                    right: 8.w, left: 8.w, bottom: 4.h), // Adjusted padding
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -132,8 +137,8 @@ class ProductCard extends StatelessWidget {
                       style: Styles.textStyle12Bold,
                     ),
                     Container(
-                      height: 30,
-                      width: 30,
+                      height: 24.h, // Adjusted height
+                      width: 24.w, // Adjusted width
                       decoration: const BoxDecoration(
                         color: primaryRed,
                         borderRadius: BorderRadius.all(
@@ -143,7 +148,7 @@ class ProductCard extends StatelessWidget {
                       child: const Icon(
                         FontAwesomeIcons.calendarPlus,
                         color: Colors.white,
-                        size: 16,
+                        size: 14, // Adjusted size
                       ),
                     ),
                   ],

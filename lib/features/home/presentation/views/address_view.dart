@@ -4,7 +4,7 @@ import 'package:selaty/core/common/widgets/custom_app_bar.dart';
 import 'package:selaty/core/common/widgets/primary_button.dart';
 import 'package:selaty/core/constants/colors.dart';
 import 'package:selaty/core/constants/styles.dart';
-import 'package:selaty/core/routes/routes.dart';
+import 'package:selaty/features/home/presentation/views/successful_order_view.dart';
 import 'package:selaty/features/home/presentation/widgets/address_list_item.dart';
 
 class AddressView extends StatelessWidget {
@@ -13,7 +13,10 @@ class AddressView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(
+      appBar: CustomAppBar(
+        onPressed: () {
+          Navigator.pop(context);
+        },
         title: 'عنوان التسليم',
       ),
       body: OrientationBuilder(
@@ -57,7 +60,10 @@ class AddressView extends StatelessWidget {
             text: 'التسليم لهذا العنوان',
             color: primaryGreen,
             onTap: () {
-              Navigator.pushNamed(context, Routes.successfulOrderView);
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const SuccessfulOrderView()));
             },
             height: 60.h,
           ),
@@ -104,8 +110,11 @@ class AddressView extends StatelessWidget {
                       text: 'التسليم لهذا العنوان',
                       color: primaryGreen,
                       onTap: () {
-                        Navigator.pushNamed(
-                            context, Routes.successfulOrderView);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    const SuccessfulOrderView()));
                       },
                     ),
                   ),

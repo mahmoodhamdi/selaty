@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:selaty/core/common/widgets/custom_app_bar.dart';
 import 'package:selaty/core/constants/colors.dart';
-import 'package:selaty/features/home/presentation/widgets/custom_bottom_navigation_bar.dart';
-import 'package:selaty/features/home/presentation/widgets/custom_floating_action_button.dart';
 import 'package:selaty/features/home/presentation/widgets/product_card.dart';
 import 'package:selaty/features/home/presentation/widgets/search_and_filter.dart';
 
@@ -24,7 +22,10 @@ class CategoryProductsView extends StatelessWidget {
                   decoration: const BoxDecoration(
                     color: primaryGreen,
                   ),
-                  child: const CustomAppBar(
+                  child: CustomAppBar(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
                     title: 'الفاكهة',
                     titleColor: Colors.white,
                   ),
@@ -80,9 +81,6 @@ class CategoryProductsView extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: const CustomBottomNavigationBar(),
-      floatingActionButton: const CustomFloatingActionButton(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }

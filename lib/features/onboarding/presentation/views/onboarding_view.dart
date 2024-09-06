@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart'; // Import ScreenUtil
 import 'package:selaty/core/common/cubits/onboarding/onboarding_cubit.dart';
 import 'package:selaty/core/constants/colors.dart';
 import 'package:selaty/core/constants/text_strings.dart';

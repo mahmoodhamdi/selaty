@@ -17,11 +17,12 @@ class AlreadyHaveAccount extends StatelessWidget {
         children: [
           const Text('لديك حساب بالفعل؟', style: Styles.textStyle16),
           TextButton(
-            onPressed: () => Navigator.push(context,MaterialPageRoute(builder: (context) => const LoginView())),
-            child: const Text(
+            onPressed: () => Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const LoginView())),
+            child: Text(
               'تسجيل الدخول',
-              style:
-                  TextStyle(color: primaryGreen, fontWeight: FontWeight.bold),
+              style: Styles.textStyle16
+                  .copyWith(color: primaryGreen, fontWeight: FontWeight.bold),
             ),
           ),
         ],

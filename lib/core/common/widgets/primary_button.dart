@@ -27,13 +27,15 @@ class PrimaryButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(8),
             color: color,
           ),
-          child: Align(
-            alignment: Alignment.center,
-            child: Text(
-              text,
-              style: Styles.textStyle18.copyWith(
-                color: Colors.white,
-                fontWeight: FontWeight.normal,
+          child: Center(
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                text,
+                style: Styles.textStyle18.copyWith(
+                  color: Colors.white,
+                  fontWeight: FontWeight.normal,
+                ),
               ),
             ),
           ),

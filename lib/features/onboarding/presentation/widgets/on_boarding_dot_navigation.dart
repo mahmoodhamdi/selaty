@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart'; // Import ScreenUtil
 import 'package:selaty/core/common/cubits/onboarding/onboarding_cubit.dart';
 import 'package:selaty/core/constants/colors.dart';
-import 'package:selaty/core/device/device_utility.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class OnboardingDotNavigation extends StatelessWidget {
@@ -13,25 +11,21 @@ class OnboardingDotNavigation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isPortrait =
-        Orientation.portrait == MediaQuery.of(context).orientation;
-
     return Positioned(
-      bottom: (TDeviceUtils.getBottomNavigationBarHeight() + 25)
-          .h, // Make bottom position responsive
-      right: 24.w, // Make right position responsive
+      bottom: MediaQuery.of(context)
+          .padding
+          .bottom+25, // use MediaQuery for bottom positioning
+      right: 24, // use a fixed margin for simplicity
       child: SmoothPageIndicator(
         controller: context.read<OnboardingCubit>().pageController,
         count: 3,
-        axisDirection: Axis.horizontal,
-        onDotClicked: (index) {
-          context.read<OnboardingCubit>().dotNavigationClicked(index);
-        },
         effect: ExpandingDotsEffect(
-          dotHeight: isPortrait ? 6.h : 12.h, // Make dot height responsive
-          dotWidth: isPortrait ? 18.h : 12.w, // Make dot width responsive
+          dotHeight:
+              MediaQuery.of(context).size.height * 0.01, // dynamic dot height
+          dotWidth:
+              MediaQuery.of(context).size.width * 0.05, // dynamic dot width
           activeDotColor: primaryGreen,
-          spacing: 4.w, // Optional: Add spacing between dots, if needed
+          spacing: 8, // optional fixed spacing
         ),
       ),
     );

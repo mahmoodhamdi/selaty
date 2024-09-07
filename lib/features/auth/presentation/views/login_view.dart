@@ -101,12 +101,7 @@ class _LoginViewState extends State<LoginView> {
   }
 
   Widget _buildLoginButton() {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final isPortrait =
-        MediaQuery.of(context).orientation == Orientation.portrait;
     return PrimaryButton(
-      height: isPortrait ? screenWidth / 7 : 60,
-      width: double.infinity,
       text: 'تسجيل الدخول',
       color: primaryGreen,
       onTap: () {

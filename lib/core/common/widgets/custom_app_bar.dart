@@ -4,7 +4,7 @@ import 'package:selaty/core/constants/styles.dart';
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppBar({
     super.key,
-    this.backgroundColor,
+    this.backgroundColor = const Color(0xffFDFDFF),
     this.title = '',
     this.titleColor = Colors.black,
     this.onPressed,
@@ -21,7 +21,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       elevation: 0,
       backgroundColor: backgroundColor,
       automaticallyImplyLeading: false,
-      flexibleSpace: Container( 
+      flexibleSpace: Container(
         decoration: BoxDecoration(
           color: backgroundColor,
         ),
@@ -29,8 +29,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: [
         const SizedBox(width: 20),
         Container(
-          width: 35,
-          height: 35,
+        
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(8),
@@ -55,8 +54,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         ),
         const Spacer(),
         Container(
-          width: 35,
-          height: 35,
+         
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(8),

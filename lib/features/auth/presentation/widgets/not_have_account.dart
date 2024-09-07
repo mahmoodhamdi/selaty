@@ -15,17 +15,14 @@ class NotHaveAccount extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Flexible(
-              child: Text('ليس لديك حساب؟', style: Styles.textStyle16)),
+          const Text('ليس لديك حساب؟', style: Styles.textStyle16),
           TextButton(
             onPressed: () => Navigator.push(context,
                 MaterialPageRoute(builder: (context) => const RegisterView())),
-            child:  Flexible(
-              child: Text(
-                'إنشاء حساب',
-                style: Styles.textStyle16
-                    .copyWith(color: primaryGreen, fontWeight: FontWeight.bold),
-              ),
+            child: Text(
+              'إنشاء حساب',
+              style: Styles.textStyle16
+                  .copyWith(color: primaryGreen, fontWeight: FontWeight.bold),
             ),
           ),
         ],

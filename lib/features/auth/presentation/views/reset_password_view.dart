@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart'; // Import ScreenUtil
 import 'package:selaty/core/common/widgets/custom_app_bar.dart';
 import 'package:selaty/core/common/widgets/custom_text_field.dart';
 import 'package:selaty/core/common/widgets/primary_button.dart';
@@ -28,86 +27,78 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isPortrait =
+        Orientation.portrait == MediaQuery.of(context).orientation;
     return Scaffold(
-      backgroundColor: const Color(0xffFDFDFF),
-      appBar: CustomAppBar(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          title: 'تحقق من البريد الالكتروني'),
-      body: OrientationBuilder(
-        builder: (context, orientation) {
-          final isPortrait = orientation == Orientation.portrait;
-          final screenSize = MediaQuery.of(context).size;
-
-          return SingleChildScrollView(
-            child: Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: isPortrait ? 20.w : screenSize.width * 0.15,
-                vertical: 20.h,
-              ),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    SizedBox(height: 20.h),
-                    Text(
-                      'لتغيير كلمة المرور الخاصة بك، الرجاء ادخال بريدك الالكتروني',
-                      style: Styles.textStyle16.copyWith(color: Colors.grey),
-                      textAlign: TextAlign.right,
-                    ),
-                    SizedBox(height: 40.h),
-                    CustomTextField(
-                      text: 'البريد الالكتروني',
-                      validator: TValidator.validateEmail,
-                      width: double.infinity,
-                      controller: emailController,
-                    ),
-                    SizedBox(height: 20.h),
-                    Text(
-                      'سيتم إرسال رمز التحقق إلى بريدك الإلكتروني',
-                      style:
-                          Styles.textStyle14.copyWith(color: Colors.grey[600]),
-                      textAlign: TextAlign.right,
-                    ),
-                    SizedBox(height: 40.h),
-                    PrimaryButton(
-                      text: 'إرسال رمز التحقق',
-                      color: primaryGreen,
-                      onTap: () {
-                        if (_formKey.currentState!.validate()) {
-                          _formKey.currentState!.save();
-                          THelperFunctions.showSnackBar(
-                              context: context, message: "تم ارسال رمز التحقق");
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => OtpView(
-                                        email: emailController.text,
-                                      )));
-                        }
-                      },
-                      width: double.infinity, // Adjust width as needed
-                    ),
-                    SizedBox(height: 20.h),
-                    TextButton(
-                      onPressed: () {
-                        // Navigate back to login page
-                        Navigator.pop(context);
-                      },
-                      child: Text(
-                        'العودة إلى تسجيل الدخول',
-                        style: Styles.textStyle16.copyWith(color: primaryGreen),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+        backgroundColor: const Color(0xffFDFDFF),
+        appBar: CustomAppBar(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            title: 'تحقق من البريد الالكتروني'),
+        body: SingleChildScrollView(
+            padding: EdgeInsets.symmetric(
+              horizontal: isPortrait ? screenWidth * 0.05 : screenWidth * 0.08,
+              vertical:isPortrait? screenWidth * 0.09: screenWidth * 0.025,
             ),
-          );
-        },
-      ),
-    );
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const SizedBox(height: 20),
+                Text(
+                  'لتغيير كلمة المرور الخاصة بك، الرجاء ادخال بريدك الالكتروني',
+                  style: Styles.textStyle16.copyWith(color: Colors.grey),
+                  textAlign: TextAlign.right,
+                ),
+                const SizedBox(height: 40),
+                CustomTextField(
+                  text: 'البريد الالكتروني',
+                  validator: TValidator.validateEmail,
+                  width: double.infinity,
+                  controller: emailController,
+                ),
+                const SizedBox(height: 20),
+                Text(
+                  'سيتم إرسال رمز التحقق إلى بريدك الإلكتروني',
+                  style: Styles.textStyle14.copyWith(color: Colors.grey[600]),
+                  textAlign: TextAlign.right,
+                ),
+                const SizedBox(height: 40),
+                PrimaryButton(
+                  text: 'إرسال رمز التحقق',
+                  color: primaryGreen,
+                  onTap: () {
+                    if (_formKey.currentState!.validate()) {
+                      _formKey.currentState!.save();
+                      THelperFunctions.showSnackBar(
+                          context: context, message: "تم ارسال رمز التحقق");
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => OtpView(
+                                    email: emailController.text,
+                                  )));
+                    }
+                  },
+                  width: double.infinity, // Adjust width as needed
+                ),
+                const SizedBox(height: 20),
+                TextButton(
+                  onPressed: () {
+                    // Navigate back to login page
+                    Navigator.pop(context);
+                  },
+                  child: Text(
+                    'العودة إلى تسجيل الدخول',
+                    style: Styles.textStyle16.copyWith(color: primaryGreen),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ));
   }
 }

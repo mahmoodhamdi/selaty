@@ -104,12 +104,7 @@ class _RegisterViewState extends State<RegisterView> {
   }
 
   Widget _buildSignUpButton() {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final isPortrait =
-        Orientation.portrait == MediaQuery.of(context).orientation;
     return PrimaryButton(
-      height: isPortrait ? screenWidth / 7 : 60,
-      width: double.infinity,
       text: 'اشتراك',
       color: primaryGreen,
       onTap: () {

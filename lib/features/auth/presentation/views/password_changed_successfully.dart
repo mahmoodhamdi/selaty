@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart'; // Import ScreenUtil
 import 'package:selaty/core/common/widgets/custom_app_bar.dart';
 import 'package:selaty/core/common/widgets/primary_button.dart';
 import 'package:selaty/core/constants/colors.dart';
@@ -11,78 +10,70 @@ class PasswordChangedSuccessfullyView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    final isPortrait =
+        MediaQuery.of(context).orientation == Orientation.portrait;
+
+    // Responsive sizing
+    final horizontalPadding = size.width * 0.05;
+    final verticalPadding = size.height * 0.03;
+    final iconSize = size.width * (isPortrait ? 0.3 : 0.15);
+    final spacing = size.height * 0.02;
+    final largeSpacing = size.height * 0.04;
+
     return Scaffold(
       appBar: CustomAppBar(
-        onPressed: () {
-          Navigator.pop(context);
-        },
+        onPressed: () => Navigator.pop(context),
         title: 'تم تغيير كلمة المرور',
       ),
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: OrientationBuilder(
-          builder: (context, orientation) {
-            return LayoutBuilder(
-              builder: (context, constraints) {
-                final isPortrait = orientation == Orientation.portrait;
-
-                return SingleChildScrollView(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: isPortrait
-                          ? 20.w
-                          : 20.w, // Use ScreenUtil for horizontal padding
-                      vertical: 20.h, // Use ScreenUtil for vertical padding
+        child: SingleChildScrollView(
+          padding: EdgeInsets.symmetric(
+            horizontal: horizontalPadding,
+            vertical: verticalPadding,
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.check_circle_outline,
+                size: iconSize,
+                color: primaryGreen,
+              ),
+              SizedBox(height: spacing),
+              Text(
+                'تم تغيير كلمة المرور بنجاح!',
+                style: Styles.textStyle24.copyWith(
+                  color: primaryGreen,
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: spacing * 0.5),
+              Text(
+                'يمكنك الآن تسجيل الدخول باستخدام كلمة المرور الجديدة.',
+                style: Styles.textStyle16.copyWith(
+                  color: secondaryPurple,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: largeSpacing),
+              PrimaryButton(
+                text: 'العودة إلى تسجيل الدخول',
+                color: primaryGreen,
+                onTap: () {
+                  Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(
+                      builder: (context) => const LoginView(),
                     ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.check_circle_outline,
-                          size: isPortrait
-                              ? 120.w
-                              : 80.w, // Use ScreenUtil for icon size
-                          color: primaryGreen,
-                        ),
-                        SizedBox(height: 20.h), // Use ScreenUtil for spacing
-                        Text(
-                          'تم تغيير كلمة المرور بنجاح!',
-                          style: Styles.textStyle24.copyWith(
-                            color: primaryGreen,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                        SizedBox(height: 10.h), // Use ScreenUtil for spacing
-                        Text(
-                          'يمكنك الآن تسجيل الدخول باستخدام كلمة المرور الجديدة.',
-                          style: Styles.textStyle16.copyWith(
-                            color: secondaryPurple,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                        SizedBox(height: 30.h), // Use ScreenUtil for spacing
-                        PrimaryButton(
-                          text: 'العودة إلى تسجيل الدخول',
-                          color: primaryGreen,
-                          onTap: () {
-                            Navigator.of(context).pushAndRemoveUntil(
-                              MaterialPageRoute(
-                                builder: (context) => const LoginView(),
-                              ),
-                              (Route<dynamic> route) => false,
-                            );
-                          },
-                          width: double.infinity,
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              },
-            );
-          },
+                    (Route<dynamic> route) => false,
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

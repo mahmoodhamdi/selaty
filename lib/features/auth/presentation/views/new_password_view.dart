@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart'; // Import ScreenUtil
 import 'package:selaty/core/common/widgets/custom_app_bar.dart';
 import 'package:selaty/core/common/widgets/custom_password_text_field.dart';
 import 'package:selaty/core/common/widgets/primary_button.dart';
@@ -49,60 +48,63 @@ class _NewPasswordViewState extends State<NewPasswordView> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    final isPortrait =
+        MediaQuery.of(context).orientation == Orientation.portrait;
+
+    // Responsive sizing
+    final horizontalPadding = size.width * (isPortrait ? 0.05 : 0.1);
+    final verticalPadding = size.height * 0.03;
+    final spacing = size.height * 0.02;
+    final largeSpacing = size.height * 0.04;
+
     return Scaffold(
       backgroundColor: const Color(0xffFDFDFF),
       appBar: CustomAppBar(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          title: 'تعيين كلمة مرور جديدة'),
-      body: OrientationBuilder(
-        builder: (context, orientation) {
-          final isPortrait = orientation == Orientation.portrait;
-
-          return SingleChildScrollView(
-            child: Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: isPortrait
-                    ? 20.w
-                    : 20.w, // Use ScreenUtil for horizontal padding
-                vertical: 20.h, // Use ScreenUtil for vertical padding
-              ),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Text(
-                      'الرجاء إدخال كلمة المرور الجديدة',
-                      style: Styles.textStyle16.copyWith(color: Colors.grey),
-                      textAlign: TextAlign.right,
-                    ),
-                    SizedBox(height: 40.h), // Use ScreenUtil for spacing
-                    CustomPasswordTextFormField(
-                      text: 'كلمة المرور الجديدة',
-                      width: double.infinity,
-                      controller: _passwordController,
-                    ),
-                    SizedBox(height: 20.h), // Use ScreenUtil for spacing
-                    CustomPasswordTextFormField(
-                      text: 'تأكيد كلمة المرور الجديدة',
-                      width: double.infinity,
-                      controller: _confirmPasswordController,
-                    ),
-                    SizedBox(height: 40.h), // Use ScreenUtil for spacing
-                    PrimaryButton(
-                      text: 'تعيين كلمة المرور الجديدة',
-                      color: primaryGreen,
-                      onTap: _submitNewPassword,
-                      width: double.infinity,
-                    ),
-                  ],
-                ),
+        onPressed: () => Navigator.pop(context),
+        title: 'تعيين كلمة مرور جديدة',
+      ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: horizontalPadding,
+              vertical: verticalPadding,
+            ),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text(
+                    'الرجاء إدخال كلمة المرور الجديدة',
+                    style: Styles.textStyle16.copyWith(color: Colors.grey),
+                    textAlign: TextAlign.right,
+                  ),
+                  SizedBox(height: largeSpacing),
+                  CustomPasswordTextFormField(
+                    text: 'كلمة المرور الجديدة',
+                    width: double.infinity,
+                    controller: _passwordController,
+                  ),
+                  SizedBox(height: spacing),
+                  CustomPasswordTextFormField(
+                    text: 'تأكيد كلمة المرور الجديدة',
+                    width: double.infinity,
+                    controller: _confirmPasswordController,
+                  ),
+                  SizedBox(height: largeSpacing),
+                  PrimaryButton(
+                    text: 'تعيين كلمة المرور الجديدة',
+                    color: primaryGreen,
+                    onTap: _submitNewPassword,
+                    width: double.infinity,
+                  ),
+                ],
               ),
             ),
-          );
-        },
+          ),
+        ),
       ),
     );
   }

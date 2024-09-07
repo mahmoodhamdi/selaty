@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:selaty/features/home/presentation/widgets/product_card.dart';
 
-
 class BestSellerProductsGridView extends StatelessWidget {
   const BestSellerProductsGridView({
     super.key,
@@ -16,10 +15,10 @@ class BestSellerProductsGridView extends StatelessWidget {
         child: GridView.builder(
           scrollDirection: Axis.horizontal,
           clipBehavior: Clip.none,
-          itemCount:20,
+          itemCount: 20,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
-              childAspectRatio: 2 / 1.4,
+              childAspectRatio: 2.1 / 1.2,
               mainAxisSpacing: 20,
               crossAxisSpacing: 10),
           itemBuilder: (context, index) => const ProductCard(),

@@ -25,7 +25,7 @@ class _MainViewState extends State<MainView> {
 
   List<Widget> _buildScreens() {
     return [
-      const ProfileView(),
+        ProfileView( controller: _controller,),
       const NotificationsView(),
       const HomeView(),
       const FavouritesView(),

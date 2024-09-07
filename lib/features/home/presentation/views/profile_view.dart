@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 import 'package:selaty/core/common/widgets/custom_app_bar.dart';
 import 'package:selaty/features/home/presentation/widgets/profile_grid_view.dart';
 import 'package:selaty/features/home/presentation/widgets/profile_info.dart';
 import 'package:selaty/features/home/presentation/widgets/profile_util_box.dart';
 
 class ProfileView extends StatelessWidget {
-  const ProfileView({super.key});
+  final PersistentTabController controller;
+
+  const ProfileView({super.key, required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +19,7 @@ class ProfileView extends StatelessWidget {
       backgroundColor: Colors.white.withOpacity(0.96),
       appBar: CustomAppBar(
         onPressed: () {
-          Navigator.pop(context);
+          controller.jumpToTab(2); // Jump to HomeView
         },
       ),
       body: Padding(

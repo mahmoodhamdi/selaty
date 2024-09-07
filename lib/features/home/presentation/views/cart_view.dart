@@ -3,7 +3,7 @@ import 'package:selaty/core/common/widgets/custom_app_bar.dart';
 import 'package:selaty/core/common/widgets/primary_button.dart';
 import 'package:selaty/core/constants/colors.dart';
 import 'package:selaty/core/constants/styles.dart';
-import 'package:selaty/features/home/presentation/views/empty_shopping_cart_view.dart';
+import 'package:selaty/features/home/presentation/views/address_view.dart';
 import 'package:selaty/features/home/presentation/widgets/cart_item.dart';
 
 class CartView extends StatelessWidget {
@@ -134,7 +134,7 @@ class CartView extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const EmptyShoppingCartView(),
+                          builder: (context) => const AddressView(),
                         ),
                       );
                     },
@@ -232,8 +232,7 @@ class CartView extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) =>
-                                    const EmptyShoppingCartView(),
+                                builder: (context) => const AddressView(),
                               ),
                             );
                           },

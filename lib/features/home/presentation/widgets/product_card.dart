@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:selaty/core/constants/colors.dart';
 import 'package:selaty/core/constants/styles.dart';
@@ -10,13 +9,15 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isPortrait =
+        MediaQuery.of(context).orientation == Orientation.portrait;
+
     return GestureDetector(
       onTap: () {
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => const CartView()));
       },
       child: Container(
-        width: 150.w, // Adjusted width
         decoration: const BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.all(
@@ -26,19 +27,16 @@ class ProductCard extends StatelessWidget {
         child: Column(
           children: [
             Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
-                  width: 30.w, // Adjusted width
-                  height: 15.h, // Adjusted height
+                  width: isPortrait ? 35 : 35,
+                  height: isPortrait ? 20 : 20, // Adjusted width
                   decoration: const BoxDecoration(
                     color: primaryGreen,
                     borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(50.0),
-                      bottomLeft: Radius.circular(50.0),
-                      topRight: Radius.circular(0.0),
-                      bottomRight: Radius.circular(0.0),
+                      topLeft: Radius.circular(50),
+                      bottomLeft: Radius.circular(50),
                     ),
                   ),
                   child: Center(
@@ -53,15 +51,16 @@ class ProductCard extends StatelessWidget {
                   icon: Icon(
                     FontAwesomeIcons.solidHeart,
                     color: primaryGreen,
-                    size: 16.w, // Adjusted size
+                    size: isPortrait ? 25 : 25, // Adjusted size
                   ),
                 ),
               ],
             ),
-            Image.asset(
-              'assets/images/fruits.png',
-              height: 50.h, // Adjusted height
-              width: 120.w, // Adjusted width
+            Expanded(
+              child: Image.asset(
+                'assets/images/fruits.png',
+                // Adjusted width
+              ),
             ),
             const SizedBox(
               height: 8, // Adjusted space
@@ -69,15 +68,16 @@ class ProductCard extends StatelessWidget {
             Align(
               alignment: Alignment.centerRight,
               child: Padding(
-                padding:
-                    EdgeInsets.symmetric(horizontal: 8.w), // Adjusted padding
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 8), // Adjusted padding
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
-                      width: 60.w, // Adjusted width
-                      height: 15.h, // Adjusted height
-                      padding: EdgeInsets.only(right: 6.w), // Adjusted padding
+                      height: 20,
+                      width: 50, // Adjusted height
+                      padding:
+                          const EdgeInsets.only(right: 6), // Adjusted padding
                       alignment: Alignment.centerRight,
                       decoration: const BoxDecoration(
                         color: Colors.orange,
@@ -99,7 +99,7 @@ class ProductCard extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      '1 kg',
+                      '1 كيلو',
                       style: Styles.textStyle12.copyWith(
                         color: Colors.grey.shade600,
                       ),
@@ -108,7 +108,9 @@ class ProductCard extends StatelessWidget {
                 ),
               ),
             ),
-            const Spacer(),
+            const SizedBox(
+              height: 8, // Adjusted space
+            ),
             Container(
               decoration: BoxDecoration(
                 boxShadow: [
@@ -126,9 +128,10 @@ class ProductCard extends StatelessWidget {
                 ),
               ),
               child: Padding(
-                padding: EdgeInsets.only(
-                    right: 8.w, left: 8.w, bottom: 4.h), // Adjusted padding
+                padding: const EdgeInsets.only(
+                    top: 4, right: 8, left: 8, bottom: 4), // Adjusted padding
                 child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     const Text(
@@ -137,8 +140,8 @@ class ProductCard extends StatelessWidget {
                       style: Styles.textStyle12Bold,
                     ),
                     Container(
-                      height: 24.h, // Adjusted height
-                      width: 24.w, // Adjusted width
+                      height: isPortrait ? 30 : 30, // Adjusted height
+                      width: isPortrait ? 30 : 30, // Adjusted width
                       decoration: const BoxDecoration(
                         color: primaryRed,
                         borderRadius: BorderRadius.all(

@@ -26,7 +26,7 @@ class PrimaryButton extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 10),
         child: Container(
           width: width ?? double.infinity,
-          height: height ?? (isPortrait ? screenWidth / 7 : 60),
+          height: height ?? (isPortrait ? screenWidth / 8 : 55),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
             color: color,

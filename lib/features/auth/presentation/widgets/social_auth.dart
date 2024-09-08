@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:selaty/core/constants/colors.dart';
 import 'package:selaty/core/constants/styles.dart';
-import 'package:selaty/core/device/device_utility.dart';
 import 'package:selaty/features/auth/presentation/widgets/register_button.dart';
+import 'package:selaty/features/home/presentation/views/main_view.dart';
 
 class SocialAuth extends StatelessWidget {
   const SocialAuth({
@@ -13,8 +13,9 @@ class SocialAuth extends StatelessWidget {
   final String text;
   @override
   Widget build(BuildContext context) {
-    final isPortrait = TDeviceUtils.isLandscapeOrientation(context);
-    final width = TDeviceUtils.getScreenWidth(context);
+    final isPortrait =
+        Orientation.portrait == MediaQuery.of(context).orientation;
+    final screenWidth = MediaQuery.of(context).size.width;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -22,18 +23,27 @@ class SocialAuth extends StatelessWidget {
         const SizedBox(height: 10),
         Row(
           children: [
-            const Expanded(
-              child: RegisterButton(
-                text: 'Facebook',
-                color: Color(0xff3C5A9A),
-                icon: FaIcon(
-                  FontAwesomeIcons.facebookF,
-                  size: 24,
+            Expanded(
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const MainView()));
+                },
+                child: const RegisterButton(
+                  text: 'Facebook',
                   color: Color(0xff3C5A9A),
+                  icon: FaIcon(
+                    FontAwesomeIcons.facebookF,
+                    size: 24,
+                    color: Color(0xff3C5A9A),
+                  ),
                 ),
               ),
             ),
-            SizedBox(width: isPortrait ? width * 0.09 : width * 0.09),
+            SizedBox(
+                width: isPortrait ? screenWidth * 0.09 : screenWidth * 0.09),
             const Expanded(
               child: RegisterButton(
                 color: primaryRed,

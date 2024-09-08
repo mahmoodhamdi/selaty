@@ -8,7 +8,7 @@ class PrimaryButton extends StatelessWidget {
       required this.color,
       this.onTap,
       this.width = double.infinity,
-      this.height = 50});
+      this.height});
   final String text;
   final Color color;
   final void Function()? onTap;
@@ -16,24 +16,30 @@ class PrimaryButton extends StatelessWidget {
   final double? height;
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isPortrait =
+        MediaQuery.of(context).orientation == Orientation.portrait;
+
     return GestureDetector(
       onTap: onTap,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 10),
         child: Container(
-          width: width,
-          height: height,
+          width: width ?? double.infinity,
+          height: height ?? (isPortrait ? screenWidth / 8 : 55),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
             color: color,
-          ),
-          child: Align(
-            alignment: Alignment.center,
-            child: Text(
-              text,
-              style: Styles.textStyle18.copyWith(
-                color: Colors.white,
-                fontWeight: FontWeight.normal,
+            ),
+          child: Center(
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                text,
+                style: Styles.textStyle18.copyWith(
+                  color: Colors.white,
+                  fontWeight: FontWeight.normal,
+                ),
               ),
             ),
           ),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 import 'package:selaty/core/common/widgets/custom_app_bar.dart';
+import 'package:selaty/features/home/presentation/views/home_view.dart';
 import 'package:selaty/features/home/presentation/widgets/profile_grid_view.dart';
 import 'package:selaty/features/home/presentation/widgets/profile_info.dart';
 import 'package:selaty/features/home/presentation/widgets/profile_util_box.dart';
@@ -13,10 +15,19 @@ class ProfileView extends StatelessWidget {
         MediaQuery.of(context).orientation == Orientation.portrait;
 
     return Scaffold(
-      backgroundColor: Colors.white.withOpacity(0.96),
+      backgroundColor: const Color(0xffFDFDFF),
       appBar: CustomAppBar(
         onPressed: () {
-          Navigator.pop(context);
+          if (Navigator.of(context).canPop()) {
+            Navigator.of(context).pop();
+          } else {
+            PersistentNavBarNavigator.pushNewScreen(
+              context,
+              screen: const HomeView(),
+              withNavBar: true,
+              pageTransitionAnimation: PageTransitionAnimation.cupertino,
+            );
+          }
         },
       ),
       body: Padding(
@@ -40,13 +51,13 @@ class ProfileView extends StatelessWidget {
                 height: 10,
               ),
               const ProfileUtilBox(),
+              const SizedBox(
+                height: 20,
+              ),
             ],
           ),
         ),
       ),
-      // bottomNavigationBar: const CustomBottomNavigationBar(),
-      // floatingActionButton: const CustomFloatingActionButton(),
-      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }

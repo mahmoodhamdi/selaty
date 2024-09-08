@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart'; // Import ScreenUtil
 import 'package:selaty/core/common/widgets/horizontal_logo.dart';
 import 'package:selaty/core/common/widgets/primary_button.dart';
 import 'package:selaty/core/constants/colors.dart';
@@ -12,14 +11,14 @@ class AuthView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
     final isPortrait =
         Orientation.portrait == MediaQuery.of(context).orientation;
+
     return Scaffold(
-      body: SingleChildScrollView(
+      body: Padding(
         padding: EdgeInsets.symmetric(
-          horizontal: 24.w, // Make horizontal padding responsive
-          vertical:
-              isPortrait ? 0.3.sh : 0.06.sh, // Make vertical padding responsive
+          horizontal: isPortrait ? screenWidth / 9 : screenWidth / 12,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -27,25 +26,31 @@ class AuthView extends StatelessWidget {
           children: [
             const HorizontalLogo(),
             SizedBox(
-              height: 40.h, // Make space between widgets responsive
+              height: isPortrait ? 50 : 20,
             ),
             PrimaryButton(
-              width: isPortrait ? double.infinity : 0.5.sw,
+              height: isPortrait ? screenWidth / 7 : 60,
+              width: isPortrait ? double.infinity : screenWidth / 2,
               text: TTexts.loginTitle,
               color: primaryRed,
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginView()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const LoginView()));
               },
             ),
-            SizedBox(
-              height: 16.h, // Add space between buttons, responsive
+            const SizedBox(
+              height: 16,
             ),
             PrimaryButton(
-              width: isPortrait ? double.infinity : 0.5.sw,
+              height: isPortrait ? screenWidth / 7 : 60,
+              width: isPortrait ? double.infinity : screenWidth / 2,
               text: TTexts.registerTitle,
               color: primaryGreen,
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const RegisterView()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const RegisterView()));
               },
             ),
           ],

@@ -32,10 +32,12 @@ class RegisterButton extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              text,
-              style: Styles.textStyle16.copyWith(
-                color: color,
+            Flexible(
+              child: Text(
+                text,
+                style: Styles.textStyle16.copyWith(
+                  color: color,
+                ),
               ),
             ),
             const SizedBox(

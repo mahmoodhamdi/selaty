@@ -9,20 +9,23 @@ class ProfileGridViewItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(24)),
-        color: Colors.white,
+      decoration: BoxDecoration(
+        borderRadius: const BorderRadius.all(Radius.circular(24)),
+        color: Colors.grey.withOpacity(0.1),
       ),
       child: const Padding(
         padding: EdgeInsets.all(8.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Icon(
-              //use font awesome icons
-              FontAwesomeIcons.person,
-              color: primaryRed,
-              size: 32,
+            CircleAvatar(
+              backgroundColor: Colors.white,
+              child: Icon(
+                //use font awesome icons
+                FontAwesomeIcons.person,
+                color: primaryRed,
+                size: 32,
+              ),
             ),
             Text(
               'عنـي',

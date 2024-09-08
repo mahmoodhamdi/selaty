@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:selaty/core/common/widgets/custom_app_bar.dart';
 import 'package:selaty/core/constants/colors.dart';
+import 'package:selaty/core/constants/styles.dart';
 import 'package:selaty/features/home/presentation/widgets/product_card.dart';
 import 'package:selaty/features/home/presentation/widgets/search_and_filter.dart';
 
@@ -13,25 +13,77 @@ class CategoryProductsView extends StatelessWidget {
     return Scaffold(
       body: CustomScrollView(
         slivers: [
+          SliverAppBar(
+            backgroundColor: primaryGreen,
+            pinned: true,
+            elevation: 0,
+            automaticallyImplyLeading: false,
+            flexibleSpace: Container(
+              decoration: const BoxDecoration(
+                color: primaryGreen,
+              ),
+            ),
+            actions: [
+              const SizedBox(width: 20),
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: const Center(
+                  child: IconButton(
+                    onPressed: null,
+                    icon: Icon(
+                      Icons.camera_alt_outlined,
+                      size: 20,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+              ),
+              const Spacer(),
+              Text(
+                categoryName,
+                style: Styles.textStyle18.copyWith(
+                  color: Colors.white,
+                ),
+              ),
+              const Spacer(),
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Center(
+                  child: IconButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: const Icon(
+                      Icons.arrow_forward_ios,
+                      size: 20,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 20),
+            ],
+            floating: true,
+            snap: true,
+          ),
           SliverToBoxAdapter(
             child: Stack(
               clipBehavior: Clip.none,
               children: [
                 Container(
-                  height: 130,
+                  height: 50,
                   decoration: const BoxDecoration(
                     color: primaryGreen,
                   ),
-                  child: CustomAppBar(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    title: 'الفاكهة',
-                    titleColor: Colors.white,
-                  ),
                 ),
                 Positioned(
-                  right: MediaQuery.sizeOf(context).width / 2 - 45,
+                  right: MediaQuery.sizeOf(context).width / 2 - 80,
                   bottom: -40,
                   child: CircleAvatar(
                     radius: 45,

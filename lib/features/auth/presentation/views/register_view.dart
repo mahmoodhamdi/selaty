@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart'; // Import ScreenUtil
 import 'package:selaty/core/common/widgets/custom_app_bar.dart';
 import 'package:selaty/core/common/widgets/custom_password_text_field.dart';
 import 'package:selaty/core/common/widgets/custom_text_field.dart';
@@ -34,86 +33,77 @@ class _RegisterViewState extends State<RegisterView> {
 
   @override
   Widget build(BuildContext context) {
+    final isPortrait =
+        Orientation.portrait == MediaQuery.of(context).orientation;
+    final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: const Color(0xffFDFDFF),
-      appBar: CustomAppBar(
-        onPressed: () {
-          Navigator.pop(context);
-        },
-      ),
-      body: LayoutBuilder(
-        builder: (context, constraints) {
-          final isPortrait = constraints.maxWidth < constraints.maxHeight;
-          final width =
-              isPortrait ? constraints.maxWidth : constraints.maxWidth / 2;
-          final horizontalPadding =
-              isPortrait ? 20.0.w : constraints.maxWidth / 4;
-
-          return SingleChildScrollView(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
-              child: Form(
-                key: formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const RegisterHeader(),
-                    SizedBox(
-                        height:
-                            isPortrait ? 20.h : 10.h), // Make height responsive
-                    _buildInputFields(width),
-                    SizedBox(
-                        height:
-                            isPortrait ? 20.h : 10.h), // Make height responsive
-                    _buildSignUpButton(width),
-                    SizedBox(
-                        height:
-                            isPortrait ? 20.h : 10.h), // Make height responsive
-                    const SocialAuth(
-                      text: 'أو اشترك بواسطة',
-                    ),
-                    const AlreadyHaveAccount(),
-                  ],
-                ),
+        backgroundColor: const Color(0xffFDFDFF),
+        appBar: CustomAppBar(
+          backgroundColor: const Color(0xffFDFDFF),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+                horizontal: isPortrait ? screenWidth / 12 : screenWidth / 10),
+            child: Form(
+              key: formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const RegisterHeader(),
+                  SizedBox(
+                      height: isPortrait ? 20 : 10), // Make height responsive
+                  _buildInputFields(),
+                  SizedBox(
+                      height: isPortrait ? 20 : 10), // Make height responsive
+                  _buildSignUpButton(),
+                  SizedBox(
+                      height: isPortrait ? 20 : 10), // Make height responsive
+                  const SocialAuth(
+                    text: 'أو اشترك بواسطة',
+                  ),
+                  const AlreadyHaveAccount(),
+                ],
               ),
             ),
-          );
-        },
-      ),
-    );
+          ),
+        ));
   }
 
-  Widget _buildInputFields(double width) {
+  Widget _buildInputFields() {
     return Column(
       children: [
         CustomTextField(
           controller: nameController,
-          width: width,
+          width: double.infinity,
           text: 'الاسم',
           validator: (value) {
             return TValidator.validateName(value);
           },
         ),
-        SizedBox(height: 10.h), // Make height responsive
+        const SizedBox(height: 10), // Make height responsive
         CustomTextField(
           controller: emailController,
-          width: width,
+          width: double.infinity,
           validator: (value) {
             return TValidator.validateEmail(value);
           },
           text: 'عنوان البريد الالكتروني',
         ),
-        SizedBox(height: 10.h), // Make height responsive
+        const SizedBox(height: 10), // Make height responsive
         CustomPasswordTextFormField(
           controller: passwordController,
-          width: width,
+          width: double.infinity,
           text: 'كلمة المرور',
         ),
       ],
     );
   }
 
-  Widget _buildSignUpButton(double width) {
+  Widget _buildSignUpButton() {
     return PrimaryButton(
       text: 'اشتراك',
       color: primaryGreen,
@@ -124,7 +114,6 @@ class _RegisterViewState extends State<RegisterView> {
               MaterialPageRoute(builder: (context) => const LoginView()));
         }
       },
-      width: width,
     );
   }
 }

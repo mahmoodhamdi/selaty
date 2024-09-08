@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:selaty/core/constants/colors.dart';
 import 'package:selaty/core/constants/styles.dart';
 import 'package:selaty/features/auth/presentation/widgets/register_button.dart';
+import 'package:selaty/features/home/presentation/views/main_view.dart';
 
 class SocialAuth extends StatelessWidget {
   const SocialAuth({
@@ -22,14 +23,22 @@ class SocialAuth extends StatelessWidget {
         const SizedBox(height: 10),
         Row(
           children: [
-            const Expanded(
-              child: RegisterButton(
-                text: 'Facebook',
-                color: Color(0xff3C5A9A),
-                icon: FaIcon(
-                  FontAwesomeIcons.facebookF,
-                  size: 24,
+            Expanded(
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const MainView()));
+                },
+                child: const RegisterButton(
+                  text: 'Facebook',
                   color: Color(0xff3C5A9A),
+                  icon: FaIcon(
+                    FontAwesomeIcons.facebookF,
+                    size: 24,
+                    color: Color(0xff3C5A9A),
+                  ),
                 ),
               ),
             ),

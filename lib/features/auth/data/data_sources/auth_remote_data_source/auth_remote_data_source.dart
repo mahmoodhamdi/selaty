@@ -7,28 +7,33 @@ import 'package:selaty/features/auth/data/models/register_req_body.dart';
 import 'package:selaty/features/auth/data/models/register_response.dart';
 
 abstract class AuthRemoteDataSource {
-  Future<Either> register({required RegisterReqBody registerReqBody});
+  Future<Either<String, UserData>> register(
+      {required RegisterReqBody registerReqBody});
 }
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   @override
-  Future<Either> register({required RegisterReqBody registerReqBody}) async {
+  Future<Either<String, UserData>> register(
+      {required RegisterReqBody registerReqBody}) async {
     try {
       var response = await sl<DioClient>().post(
         ApiConstants.registerUrl,
         data: registerReqBody.toJson(),
       );
+
       RegisterResponse registerResponseModel =
           RegisterResponse.fromJson(response.data);
+
       if (registerResponseModel.status) {
-        return Right(registerResponseModel.data);
+        return Right(registerResponseModel.data!);
       } else {
         return Left(registerResponseModel.errorMessage);
       }
     } on DioException catch (e) {
-      return Left(e);
-    } on Exception catch (e) {
-      return Left(e);
+      // Handle specific Dio errors if needed
+      return Left('${e.message}');
+    } catch (e) {
+      return Left('An unexpected error occurred: $e');
     }
   }
 }

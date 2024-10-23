@@ -4,31 +4,33 @@ class RegisterResponse extends Equatable {
   final bool status;
   final String errorMessage;
   final String errorMessageEn;
-  final UserData data;
+  final UserData? data;
 
   const RegisterResponse({
     required this.status,
     required this.errorMessage,
     required this.errorMessageEn,
-    required this.data,
+    this.data,
   });
 
   factory RegisterResponse.fromJson(Map<String, dynamic> json) {
-    return RegisterResponse(
-      status: json['status'],
-      errorMessage: json['error_message'],
-      errorMessageEn: json['error_message_en'],
-      data: UserData.fromJson(json['data']),
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'status': status,
-      'error_message': errorMessage,
-      'error_message_en': errorMessageEn,
-      'data': data.toJson(),
-    };
+    if (json['status'] == true) {
+      // Status is true, parse the user data
+      return RegisterResponse(
+        status: json['status'],
+        errorMessage: '', // No error message on success
+        errorMessageEn: '', // No error message on success
+        data: UserData.fromJson(json['data']),
+      );
+    } else {
+      // Status is false, parse the error messages
+      return RegisterResponse(
+        status: json['status'],
+        errorMessage: json['error_message'] ?? '',
+        errorMessageEn: json['error_message_en'] ?? '',
+        data: null, // No user data on error
+      );
+    }
   }
 
   @override

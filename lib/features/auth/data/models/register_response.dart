@@ -4,7 +4,7 @@ class RegisterResponse extends Equatable {
   final bool status;
   final String errorMessage;
   final String errorMessageEn;
-  final UserData? data;
+  final RegisterUserData? data;
 
   const RegisterResponse({
     required this.status,
@@ -20,7 +20,7 @@ class RegisterResponse extends Equatable {
         status: json['status'],
         errorMessage: '', // No error message on success
         errorMessageEn: '', // No error message on success
-        data: UserData.fromJson(json['data']),
+        data: RegisterUserData.fromJson(json['data']),
       );
     } else {
       // Status is false, parse the error messages
@@ -37,7 +37,7 @@ class RegisterResponse extends Equatable {
   List<Object?> get props => [status, errorMessage, errorMessageEn, data];
 }
 
-class UserData extends Equatable {
+class RegisterUserData extends Equatable {
   final String mobile;
   final String name;
   final String email;
@@ -45,7 +45,7 @@ class UserData extends Equatable {
   final String? profilePhotoPath;
   final String token;
 
-  const UserData({
+  const RegisterUserData({
     required this.mobile,
     required this.name,
     required this.email,
@@ -54,8 +54,8 @@ class UserData extends Equatable {
     required this.token,
   });
 
-  factory UserData.fromJson(Map<String, dynamic> json) {
-    return UserData(
+  factory RegisterUserData.fromJson(Map<String, dynamic> json) {
+    return RegisterUserData(
       mobile: json['mobile'],
       name: json['name'],
       email: json['email'],

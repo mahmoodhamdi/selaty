@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 
 class CustomTextField extends StatelessWidget {
-  const CustomTextField(
-      {super.key,
-      required this.text,
-      this.suffixIcon,
-      this.isPassword = false,
-      required this.width,
-      this.onSaved,
-      this.validator,
-      this.prefixIcon,
-      this.onChanged,
-      required this.controller});
-  final String text;
+  const CustomTextField({
+    super.key,
+    required this.text,
+    this.suffixIcon,
+    this.isPassword = false,
+    required this.width,
+    this.onSaved,
+    this.validator,
+    this.prefixIcon,
+    this.onChanged,
+    required this.controller,
+  });
 
+  final String text;
   final Widget? suffixIcon;
   final Widget? prefixIcon;
   final bool isPassword;
@@ -38,32 +39,19 @@ class CustomTextField extends StatelessWidget {
           contentPadding:
               const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
           suffixIcon: suffixIcon,
-          label: Text(
-            text,
-            style: const TextStyle(
-              color: Colors.grey,
-            ),
-          ),
-          border: const OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(12)),
-            borderSide: BorderSide(
-              color: Colors.grey,
-            ),
-          ),
-          enabledBorder: const OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(12)),
-            borderSide: BorderSide(
-              color: Colors.grey,
-            ),
-          ),
-          focusedBorder: const OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(12)),
-            borderSide: BorderSide(
-              color: Colors.grey,
-            ),
-          ),
+          label: Text(text, style: const TextStyle(color: Colors.grey)),
+          border: _borderStyle(),
+          enabledBorder: _borderStyle(),
+          focusedBorder: _borderStyle(),
         ),
       ),
+    );
+  }
+
+  OutlineInputBorder _borderStyle() {
+    return const OutlineInputBorder(
+      borderRadius: BorderRadius.all(Radius.circular(12)),
+      borderSide: BorderSide(color: Colors.grey),
     );
   }
 }

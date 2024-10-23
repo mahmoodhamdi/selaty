@@ -3,10 +3,11 @@ import 'package:selaty/core/network/dio_client.dart';
 import 'package:selaty/features/auth/data/data_sources/auth_remote_data_source/auth_remote_data_source.dart';
 import 'package:selaty/features/auth/data/repository/auth_repo_impl.dart';
 import 'package:selaty/features/auth/domain/repository/auth_repo.dart';
+import 'package:selaty/features/auth/domain/usecases/register_usecase.dart';
 
 final sl = GetIt.instance;
 
-Future<void> setupLocator() async {
+Future<void> setupServiceLocator() async {
   // Services
   sl.registerSingleton<DioClient>(DioClient());
 // DataSources
@@ -14,4 +15,5 @@ Future<void> setupLocator() async {
 // Repositories
   sl.registerSingleton<AuthRepo>(AuthRepoImpl());
 // Usecases
+  sl.registerSingleton<RegisterUseCase>(RegisterUseCase());
 }

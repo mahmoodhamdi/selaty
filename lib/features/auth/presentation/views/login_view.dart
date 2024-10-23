@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:selaty/core/common/widgets/custom_app_bar.dart';
-import 'package:selaty/core/common/widgets/custom_password_text_field.dart';
 import 'package:selaty/core/common/widgets/custom_text_field.dart';
 import 'package:selaty/core/common/widgets/horizontal_logo.dart';
+import 'package:selaty/core/common/widgets/password_text_field.dart';
 import 'package:selaty/core/common/widgets/primary_button.dart';
 import 'package:selaty/core/constants/colors.dart';
 import 'package:selaty/core/validators/validator.dart';
@@ -91,7 +91,7 @@ class _LoginViewState extends State<LoginView> {
           text: 'عنوان البريد الالكتروني',
         ),
         const SizedBox(height: 10), // Make height responsive
-        CustomPasswordTextFormField(
+        PasswordTextFormField(
           controller: passwordController,
           width: double.infinity,
           text: 'كلمة المرور',

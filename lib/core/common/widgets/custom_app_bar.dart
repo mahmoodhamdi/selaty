@@ -29,7 +29,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: [
         const SizedBox(width: 20),
         Container(
-        
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(8),
@@ -54,7 +53,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         ),
         const Spacer(),
         Container(
-         
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(8),

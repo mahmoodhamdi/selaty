@@ -8,9 +8,8 @@ class CategoriesView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
-      appBar:  CustomAppBar(
-            onPressed: () {
+      appBar: CustomAppBar(
+        onPressed: () {
           Navigator.pop(context);
         },
         title: 'التصنيفات',

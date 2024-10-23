@@ -28,13 +28,11 @@ class OrderTimelineItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TimelineTile(
-      
       isFirst: isFirst,
       isLast: isLast,
       beforeLineStyle: LineStyle(
         color: isCompleted ? primaryGreen : Colors.grey.shade300,
         thickness: 2,
-
       ),
       indicatorStyle: IndicatorStyle(
         width: isPortrait ? size.width * 0.11 : size.height * 0.11,
@@ -44,7 +42,7 @@ class OrderTimelineItem extends StatelessWidget {
       endChild: Padding(
         padding: EdgeInsets.symmetric(
           horizontal: size.width * 0.04,
-          vertical:isPortrait? size.height * 0.025: size.width * 0.030,
+          vertical: isPortrait ? size.height * 0.025 : size.width * 0.030,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

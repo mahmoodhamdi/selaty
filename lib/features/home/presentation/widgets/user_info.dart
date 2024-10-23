@@ -17,7 +17,8 @@ class UserInfo extends StatelessWidget {
         children: [
           GestureDetector(
             onTap: () {
-              Navigator.push(context,MaterialPageRoute(builder: (context) => const ProfileView()));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const ProfileView()));
             },
             child: CircleAvatar(
               radius: 22,

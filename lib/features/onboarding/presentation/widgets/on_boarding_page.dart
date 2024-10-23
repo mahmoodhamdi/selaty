@@ -48,7 +48,10 @@ class OnboardingPage extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
           ),
-          SizedBox(height:isPortrait? screenSize.height * 0.05: screenSize.height * 0.1),
+          SizedBox(
+              height: isPortrait
+                  ? screenSize.height * 0.05
+                  : screenSize.height * 0.1),
         ],
       ),
     );

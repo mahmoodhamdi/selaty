@@ -12,9 +12,8 @@ class OnboardingDotNavigation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      bottom: MediaQuery.of(context)
-          .padding
-          .bottom+25, // use MediaQuery for bottom positioning
+      bottom: MediaQuery.of(context).padding.bottom +
+          25, // use MediaQuery for bottom positioning
       right: 24, // use a fixed margin for simplicity
       child: SmoothPageIndicator(
         controller: context.read<OnboardingCubit>().pageController,

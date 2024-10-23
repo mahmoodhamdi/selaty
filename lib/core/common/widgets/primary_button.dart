@@ -30,7 +30,7 @@ class PrimaryButton extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
             color: color,
-            ),
+          ),
           child: Center(
             child: FittedBox(
               fit: BoxFit.scaleDown,

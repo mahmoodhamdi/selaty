@@ -38,10 +38,10 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
             },
             title: 'تحقق من البريد الالكتروني'),
         body: SingleChildScrollView(
-            padding: EdgeInsets.symmetric(
-              horizontal: isPortrait ? screenWidth * 0.05 : screenWidth * 0.08,
-              vertical:isPortrait? screenWidth * 0.09: screenWidth * 0.025,
-            ),
+          padding: EdgeInsets.symmetric(
+            horizontal: isPortrait ? screenWidth * 0.05 : screenWidth * 0.08,
+            vertical: isPortrait ? screenWidth * 0.09 : screenWidth * 0.025,
+          ),
           child: Form(
             key: _formKey,
             child: Column(

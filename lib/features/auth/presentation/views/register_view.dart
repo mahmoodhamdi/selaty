@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:selaty/core/common/widgets/custom_app_bar.dart';
 import 'package:selaty/core/common/widgets/custom_text_field.dart';
 import 'package:selaty/core/common/widgets/password_confirm_field.dart';
 import 'package:selaty/core/common/widgets/password_text_field.dart';
 import 'package:selaty/core/common/widgets/primary_button.dart';
 import 'package:selaty/core/constants/colors.dart';
+import 'package:selaty/core/enums/register_status.dart';
+import 'package:selaty/core/helpers/helper_functions.dart';
 import 'package:selaty/core/helpers/location_helper.dart';
 import 'package:selaty/core/validators/validator.dart';
+import 'package:selaty/features/auth/data/models/register_req_body.dart';
+import 'package:selaty/features/auth/domain/usecases/register_usecase.dart';
+import 'package:selaty/features/auth/presentation/bloc/register_cubit.dart';
+import 'package:selaty/features/auth/presentation/bloc/register_state.dart';
 import 'package:selaty/features/auth/presentation/views/login_view.dart';
 import 'package:selaty/features/auth/presentation/widgets/already_have_account.dart';
 import 'package:selaty/features/auth/presentation/widgets/register_header.dart';
@@ -25,9 +32,9 @@ class _RegisterViewState extends State<RegisterView> {
   final passwordController = TextEditingController();
   final cPasswordController = TextEditingController();
   final mobileController = TextEditingController();
-  final addressController = TextEditingController();
   final formKey = GlobalKey<FormState>();
   String? fetchedAddress;
+
   @override
   void dispose() {
     emailController.dispose();
@@ -35,17 +42,14 @@ class _RegisterViewState extends State<RegisterView> {
     passwordController.dispose();
     cPasswordController.dispose();
     mobileController.dispose();
-    addressController.dispose();
     super.dispose();
   }
 
   Future<void> getCurrentLocation() async {
     String? address = await LocationHelper.getAddressFromCurrentLocation();
-
     if (address != null) {
       setState(() {
         fetchedAddress = address;
-        addressController.text = address;
       });
     }
   }
@@ -62,129 +66,122 @@ class _RegisterViewState extends State<RegisterView> {
         MediaQuery.of(context).orientation == Orientation.portrait;
     final screenWidth = MediaQuery.of(context).size.width;
 
-    return Scaffold(
-      backgroundColor: const Color(0xffFDFDFF),
-      appBar: CustomAppBar(
-        backgroundColor: const Color(0xffFDFDFF),
-        onPressed: () => Navigator.pop(context),
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-              horizontal: isPortrait ? screenWidth / 12 : screenWidth / 10),
-          child: Form(
-            key: formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const RegisterHeader(),
-                const SizedBox(height: 20),
-                InputFields(
-                  nameController: nameController,
-                  emailController: emailController,
-                  passwordController: passwordController,
-                  cPasswordController: cPasswordController,
-                  mobileController: mobileController,
-                ),
-                const SizedBox(height: 20),
-                SignUpButton(formKey: formKey),
-                const SizedBox(height: 20),
-                const SocialAuth(text: 'أو اشترك بواسطة'),
-                const AlreadyHaveAccount(),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
+    return BlocListener<RegisterCubit, RegisterState>(
+      listener: (context, state) {
+        if (state.status == RegisterStatus.success) {
+          THelperFunctions.showSnackBar(
+              context: context, message: state.message);
 
-class InputFields extends StatelessWidget {
-  final TextEditingController nameController;
-  final TextEditingController emailController;
-  final TextEditingController passwordController;
-  final TextEditingController cPasswordController;
-  final TextEditingController mobileController;
-
-  const InputFields({
-    super.key,
-    required this.nameController,
-    required this.emailController,
-    required this.passwordController,
-    required this.cPasswordController,
-    required this.mobileController,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        CustomTextField(
-          controller: nameController,
-          width: double.infinity,
-          text: 'الاسم',
-          validator: TValidator.validateName,
-        ),
-        const SizedBox(height: 10),
-        CustomTextField(
-          controller: emailController,
-          width: double.infinity,
-          text: 'عنوان البريد الالكتروني',
-          validator: TValidator.validateEmail,
-        ),
-        const SizedBox(height: 10),
-        PasswordTextFormField(
-          controller: passwordController,
-          width: double.infinity,
-          text: 'كلمة المرور',
-        ),
-        const SizedBox(height: 10),
-        PasswordConfirmField(
-          text: "تأكيد كلمة المرور",
-          width: double.infinity,
-          controller: cPasswordController,
-          validator: (value) {
-            if (value == null || value.trim().isEmpty) {
-              return "تأكيد كلمة المرور مطلوب";
-            }
-            if (value != passwordController.text.trim()) {
-              return "لابد من توافق كلمات المرور";
-            }
-            return null;
-          },
-        ),
-        const SizedBox(height: 10),
-        CustomTextField(
-          controller: mobileController,
-          width: double.infinity,
-          text: 'رقم الجوال',
-          validator: TValidator.validatePhoneNumber,
-        ),
-      ],
-    );
-  }
-}
-
-class SignUpButton extends StatelessWidget {
-  final GlobalKey<FormState> formKey;
-
-  const SignUpButton({super.key, required this.formKey});
-
-  @override
-  Widget build(BuildContext context) {
-    return PrimaryButton(
-      text: 'اشتراك',
-      color: primaryGreen,
-      onTap: () {
-        if (formKey.currentState!.validate()) {
-          formKey.currentState!.save();
-          Navigator.push(
+          Future.delayed(const Duration(seconds: 1));
+          Navigator.pushReplacement(
             context,
             MaterialPageRoute(builder: (context) => const LoginView()),
           );
         }
+        if (state.status == RegisterStatus.failure) {
+          THelperFunctions.showSnackBar(
+              context: context, message: state.message);
+        }
       },
+      child: Scaffold(
+        backgroundColor: const Color(0xffFDFDFF),
+        appBar: CustomAppBar(
+          backgroundColor: const Color(0xffFDFDFF),
+          onPressed: () => Navigator.pop(context),
+        ),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+                horizontal: isPortrait ? screenWidth / 12 : screenWidth / 10),
+            child: Form(
+              key: formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const RegisterHeader(),
+                  const SizedBox(height: 20),
+                  Column(
+                    children: [
+                      CustomTextField(
+                        controller: nameController,
+                        width: double.infinity,
+                        text: 'الاسم',
+                        validator: TValidator.validateName,
+                      ),
+                      const SizedBox(height: 10),
+                      CustomTextField(
+                        controller: emailController,
+                        width: double.infinity,
+                        text: 'عنوان البريد الالكتروني',
+                        validator: TValidator.validateEmail,
+                      ),
+                      const SizedBox(height: 10),
+                      PasswordTextFormField(
+                        controller: passwordController,
+                        width: double.infinity,
+                        text: 'كلمة المرور',
+                      ),
+                      const SizedBox(height: 10),
+                      PasswordConfirmField(
+                        text: "تأكيد كلمة المرور",
+                        width: double.infinity,
+                        controller: cPasswordController,
+                        validator: (value) {
+                          if (value == null || value.trim().isEmpty) {
+                            return "تأكيد كلمة المرور مطلوب";
+                          }
+                          if (value != passwordController.text.trim()) {
+                            return "لابد من توافق كلمات المرور";
+                          }
+                          return null;
+                        },
+                      ),
+                      const SizedBox(height: 10),
+                      CustomTextField(
+                        controller: mobileController,
+                        width: double.infinity,
+                        text: 'رقم الجوال',
+                        // validator: TValidator.validatePhoneNumber,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  BlocBuilder<RegisterCubit, RegisterState>(
+                    builder: (context, state) {
+                      return PrimaryButton(
+                        text: state.status == RegisterStatus.loading
+                            ? 'جاري الاشتراك...'
+                            : 'اشتراك',
+                        color: primaryGreen,
+                        onTap: () {
+                          if (state.status != RegisterStatus.loading &&
+                              formKey.currentState!.validate()) {
+                            // Trigger registration
+                            final registerCubit = context.read<RegisterCubit>();
+                            registerCubit.register(RegisterParams(
+                              registerReqBody: RegisterReqBody(
+                                  address: fetchedAddress ?? "",
+                                  confirmPassword:
+                                      cPasswordController.text.trim(),
+                                  email: emailController.text.trim(),
+                                  mobile: mobileController.text.trim(),
+                                  name: nameController.text.trim(),
+                                  password: passwordController.text.trim()),
+                            ));
+                          }
+                        },
+                      );
+                    },
+                  ),
+                  const SizedBox(height: 20),
+                  const SocialAuth(text: 'أو اشترك بواسطة'),
+                  const AlreadyHaveAccount(),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

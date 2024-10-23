@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:selaty/core/common/widgets/horizontal_logo.dart';
 import 'package:selaty/core/common/widgets/primary_button.dart';
 import 'package:selaty/core/constants/colors.dart';
 import 'package:selaty/core/constants/text_strings.dart';
+import 'package:selaty/core/depandancy_injection/service_locator.dart';
+import 'package:selaty/features/auth/presentation/bloc/register_cubit.dart';
 import 'package:selaty/features/auth/presentation/views/login_view.dart';
 import 'package:selaty/features/auth/presentation/views/register_view.dart';
 
@@ -50,7 +53,10 @@ class AuthView extends StatelessWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const RegisterView()));
+                        builder: (context) => BlocProvider(
+                              create: (context) => sl<RegisterCubit>(),
+                              child: const RegisterView(),
+                            )));
               },
             ),
           ],

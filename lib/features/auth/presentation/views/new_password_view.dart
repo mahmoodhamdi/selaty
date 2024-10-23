@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:selaty/core/common/widgets/custom_app_bar.dart';
-import 'package:selaty/core/common/widgets/custom_password_text_field.dart';
+import 'package:selaty/core/common/widgets/password_text_field.dart';
 import 'package:selaty/core/common/widgets/primary_button.dart';
 import 'package:selaty/core/constants/colors.dart';
 import 'package:selaty/core/constants/styles.dart';
@@ -82,13 +82,13 @@ class _NewPasswordViewState extends State<NewPasswordView> {
                     textAlign: TextAlign.right,
                   ),
                   SizedBox(height: largeSpacing),
-                  CustomPasswordTextFormField(
+                  PasswordTextFormField(
                     text: 'كلمة المرور الجديدة',
                     width: double.infinity,
                     controller: _passwordController,
                   ),
                   SizedBox(height: spacing),
-                  CustomPasswordTextFormField(
+                  PasswordTextFormField(
                     text: 'تأكيد كلمة المرور الجديدة',
                     width: double.infinity,
                     controller: _confirmPasswordController,

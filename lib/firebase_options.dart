@@ -83,5 +83,4 @@ class DefaultFirebaseOptions {
     authDomain: 'selaty-5465.firebaseapp.com',
     storageBucket: 'selaty-5465.appspot.com',
   );
-
 }

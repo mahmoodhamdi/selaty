@@ -4,7 +4,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-
 class TDeviceUtils {
   static void hideKeyboard(BuildContext context) {
     FocusScope.of(context).requestFocus(FocusNode());
@@ -43,7 +42,7 @@ class TDeviceUtils {
     return MediaQuery.of(context).devicePixelRatio;
   }
 
-  static double getStatusBarHeight( BuildContext context) {
+  static double getStatusBarHeight(BuildContext context) {
     return MediaQuery.of(context).padding.top;
   }
 
@@ -55,12 +54,12 @@ class TDeviceUtils {
     return kToolbarHeight;
   }
 
-  static double getKeyboardHeight( BuildContext context) {
+  static double getKeyboardHeight(BuildContext context) {
     final viewInsets = MediaQuery.of(context).viewInsets;
     return viewInsets.bottom;
   }
 
-  static Future<bool> isKeyboardVisible( BuildContext context) async {
+  static Future<bool> isKeyboardVisible(BuildContext context) async {
     final viewInsets = View.of(context).viewInsets;
     return viewInsets.bottom > 0;
   }
@@ -105,7 +104,6 @@ class TDeviceUtils {
   static bool isAndroid() {
     return Platform.isAndroid;
   }
-
 
 // Add more device utility methods as per your specific requirements.
 }

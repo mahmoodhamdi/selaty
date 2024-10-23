@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:selaty/core/constants/colors.dart';
- import 'package:selaty/features/home/presentation/widgets/offer_item.dart';
+import 'package:selaty/features/home/presentation/widgets/offer_item.dart';
 
 class OffersGridView extends StatelessWidget {
   const OffersGridView({

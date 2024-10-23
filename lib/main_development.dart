@@ -7,9 +7,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await ScreenUtil.ensureScreenSize();
   runApp(DevicePreview(
-    enabled: true,
-    builder: (context) {
-      return const Selaty();
-    }
-  ));
+      enabled: true,
+      builder: (context) {
+        return const Selaty();
+      }));
 }

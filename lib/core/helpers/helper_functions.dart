@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:selaty/core/helpers/logger_helper.dart';
 
 class THelperFunctions {
   static void showSnackBar({
@@ -9,6 +10,8 @@ class THelperFunctions {
     Color backgroundColor = const Color(0xFF323232),
     Color textColor = Colors.white,
   }) {
+    LoggerHelper.info("Showing SnackBar: $message"); // Log SnackBar action
+
     final snackBar = SnackBar(
       content: Text(
         message,
@@ -22,6 +25,7 @@ class THelperFunctions {
         label: 'Dismiss',
         textColor: Colors.yellow,
         onPressed: () {
+          LoggerHelper.info("SnackBar dismissed by user."); // Log dismissal
           ScaffoldMessenger.of(context).hideCurrentSnackBar();
         },
       ),
@@ -38,6 +42,9 @@ class THelperFunctions {
     VoidCallback? primaryAction,
     VoidCallback? secondaryAction,
   }) {
+    LoggerHelper.info(
+        "Showing AlertDialog: Title - $title, Message - $message"); // Log Alert action
+
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -55,14 +62,24 @@ class THelperFunctions {
           actions: [
             if (secondaryButtonText != null)
               TextButton(
-                onPressed: secondaryAction ?? () => Navigator.of(context).pop(),
+                onPressed: secondaryAction ??
+                    () {
+                      LoggerHelper.info(
+                          "Alert secondary button pressed: $secondaryButtonText");
+                      Navigator.of(context).pop();
+                    },
                 child: Text(
                   secondaryButtonText,
                   style: const TextStyle(color: Colors.grey, fontSize: 16),
                 ),
               ),
             ElevatedButton(
-              onPressed: primaryAction ?? () => Navigator.of(context).pop(),
+              onPressed: primaryAction ??
+                  () {
+                    LoggerHelper.info(
+                        "Alert primary button pressed: ${primaryButtonText ?? 'OK'}");
+                    Navigator.of(context).pop();
+                  },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Theme.of(context).primaryColor,
                 shape: RoundedRectangleBorder(
@@ -80,6 +97,7 @@ class THelperFunctions {
   }
 
   static void navigateToScreen(BuildContext context, Widget screen) {
+    LoggerHelper.info("Navigating to screen: ${screen.runtimeType}");
     Navigator.push(
       context,
       MaterialPageRoute(builder: (_) => screen),
@@ -87,10 +105,13 @@ class THelperFunctions {
   }
 
   static void popScreen(BuildContext context) {
+    LoggerHelper.info("Popping current screen.");
     Navigator.pop(context);
   }
 
   static void navigateReplacementToScreen(BuildContext context, Widget screen) {
+    LoggerHelper.info(
+        "Navigating with replacement to screen: ${screen.runtimeType}");
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (_) => screen),
@@ -98,6 +119,7 @@ class THelperFunctions {
   }
 
   static String truncateText(String text, int maxLength) {
+    LoggerHelper.debug("Truncating text to max length $maxLength.");
     if (text.length <= maxLength) {
       return text;
     } else {
@@ -106,31 +128,43 @@ class THelperFunctions {
   }
 
   static bool isDarkMode(BuildContext context) {
-    return Theme.of(context).brightness == Brightness.dark;
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
+    LoggerHelper.info("Is dark mode: $isDark");
+    return isDark;
   }
 
   static Size screenSize(BuildContext context) {
-    return MediaQuery.of(context).size;
+    Size size = MediaQuery.of(context).size;
+    LoggerHelper.debug("Screen size: ${size.width}x${size.height}");
+    return size;
   }
 
   static double screenHeight(BuildContext context) {
-    return MediaQuery.sizeOf(context).height;
+    double height = MediaQuery.sizeOf(context).height;
+    LoggerHelper.debug("Screen height: $height");
+    return height;
   }
 
   static double screenWidth(BuildContext context) {
-    return MediaQuery.sizeOf(context).width;
+    double width = MediaQuery.sizeOf(context).width;
+    LoggerHelper.debug("Screen width: $width");
+    return width;
   }
 
   static String getFormattedDate(DateTime date,
       {String format = 'dd MMM yyyy'}) {
-    return DateFormat(format).format(date);
+    String formattedDate = DateFormat(format).format(date);
+    LoggerHelper.info("Formatted date: $formattedDate");
+    return formattedDate;
   }
 
   static List<T> removeDuplicates<T>(List<T> list) {
+    LoggerHelper.debug("Removing duplicates from list.");
     return list.toSet().toList();
   }
 
   static List<Widget> wrapWidgets(List<Widget> widgets, int rowSize) {
+    LoggerHelper.debug("Wrapping widgets into rows of size $rowSize.");
     final wrappedList = <Widget>[];
     for (var i = 0; i < widgets.length; i += rowSize) {
       final rowChildren = widgets.sublist(

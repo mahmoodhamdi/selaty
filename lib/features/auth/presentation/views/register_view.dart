@@ -12,8 +12,8 @@ import 'package:selaty/core/helpers/location_helper.dart';
 import 'package:selaty/core/validators/validator.dart';
 import 'package:selaty/features/auth/data/models/register_req_body.dart';
 import 'package:selaty/features/auth/domain/usecases/register_usecase.dart';
-import 'package:selaty/features/auth/presentation/bloc/register_cubit.dart';
-import 'package:selaty/features/auth/presentation/bloc/register_state.dart';
+import 'package:selaty/features/auth/presentation/bloc/register/register_cubit.dart';
+import 'package:selaty/features/auth/presentation/bloc/register/register_state.dart';
 import 'package:selaty/features/auth/presentation/views/login_view.dart';
 import 'package:selaty/features/auth/presentation/widgets/already_have_account.dart';
 import 'package:selaty/features/auth/presentation/widgets/register_header.dart';
@@ -46,11 +46,14 @@ class _RegisterViewState extends State<RegisterView> {
   }
 
   Future<void> getCurrentLocation() async {
-    String? address = await LocationHelper.getAddressFromCurrentLocation();
+    String? address =
+        await LocationHelper.getAddressFromCurrentLocation(context);
     if (address != null) {
       setState(() {
         fetchedAddress = address;
       });
+    } else {
+      getCurrentLocation();
     }
   }
 

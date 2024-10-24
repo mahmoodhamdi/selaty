@@ -1,22 +1,22 @@
 import 'package:dartz/dartz.dart';
 import 'package:selaty/core/depandancy_injection/service_locator.dart';
 import 'package:selaty/core/usecase/usecase.dart';
-import 'package:selaty/features/auth/data/models/register_req_body.dart';
+import 'package:selaty/features/auth/data/models/login_req_body.dart';
 import 'package:selaty/features/auth/domain/repository/auth_repo.dart';
 
-class RegisterUseCase extends UseCase<Either, RegisterParams> {
+class LoginUsecase extends UseCase<Either, LoginParms> {
   @override
-  Future<Either<dynamic, dynamic>> call({RegisterParams? param}) async {
+  Future<Either<dynamic, dynamic>> call({LoginParms? param}) async {
     if (param == null) throw ArgumentError('RegisterParams cannot be null');
 
     final Either result =
-        await sl<AuthRepo>().register(registerReqBody: param.registerReqBody);
+        await sl<AuthRepo>().login(loginReqBody: param.loginReqBody);
     return result.fold((error) => Left(error), (success) => Right(success));
   }
 }
 
-class RegisterParams {
-  final RegisterReqBody registerReqBody;
+class LoginParms {
+  final LoginReqBody loginReqBody;
 
-  RegisterParams({required this.registerReqBody});
+  LoginParms({required this.loginReqBody});
 }

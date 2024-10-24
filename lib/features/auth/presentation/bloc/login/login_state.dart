@@ -1,20 +1,20 @@
 import 'package:equatable/equatable.dart';
 import 'package:selaty/core/enums/status.dart';
 
-class RegisterState extends Equatable {
-  final RegisterStatus status;
+class LoginState extends Equatable {
+  final LoginStatus status;
   final String message; // Optional: for success/failure messages
 
-  const RegisterState({
-    this.status = RegisterStatus.initial,
+  const LoginState({
+    this.status = LoginStatus.initial,
     this.message = '',
   });
 
-  RegisterState copyWith({
-    RegisterStatus? status,
+  LoginState copyWith({
+    LoginStatus? status,
     String? message,
   }) {
-    return RegisterState(
+    return LoginState(
       status: status ?? this.status,
       message: message ?? this.message,
     );

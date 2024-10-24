@@ -6,7 +6,7 @@ import 'package:selaty/core/common/widgets/password_confirm_field.dart';
 import 'package:selaty/core/common/widgets/password_text_field.dart';
 import 'package:selaty/core/common/widgets/primary_button.dart';
 import 'package:selaty/core/constants/colors.dart';
-import 'package:selaty/core/enums/register_status.dart';
+import 'package:selaty/core/enums/status.dart';
 import 'package:selaty/core/helpers/helper_functions.dart';
 import 'package:selaty/core/helpers/location_helper.dart';
 import 'package:selaty/core/validators/validator.dart';

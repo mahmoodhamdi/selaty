@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:selaty/core/depandancy_injection/service_locator.dart';
-import 'package:selaty/core/enums/register_status.dart';
+import 'package:selaty/core/enums/status.dart';
 import 'package:selaty/features/auth/domain/usecases/register_usecase.dart';
 import 'package:selaty/features/auth/presentation/bloc/register/register_state.dart';
 

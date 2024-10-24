@@ -1,16 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:selaty/core/common/widgets/custom_app_bar.dart';
 import 'package:selaty/core/common/widgets/custom_text_field.dart';
 import 'package:selaty/core/common/widgets/horizontal_logo.dart';
-import 'package:selaty/core/common/widgets/password_text_field.dart';
 import 'package:selaty/core/common/widgets/primary_button.dart';
 import 'package:selaty/core/constants/colors.dart';
+import 'package:selaty/core/depandancy_injection/service_locator.dart';
+import 'package:selaty/core/enums/status.dart';
+import 'package:selaty/core/helpers/helper_functions.dart';
 import 'package:selaty/core/validators/validator.dart';
+import 'package:selaty/features/auth/data/models/login_req_body.dart';
+import 'package:selaty/features/auth/domain/usecases/login_usecase.dart';
+import 'package:selaty/features/auth/presentation/bloc/login/login_cubit.dart';
+import 'package:selaty/features/auth/presentation/bloc/login/login_state.dart';
+import 'package:selaty/features/auth/presentation/bloc/register/register_cubit.dart';
+import 'package:selaty/features/auth/presentation/views/register_view.dart';
 import 'package:selaty/features/auth/presentation/views/reset_password_view.dart';
 import 'package:selaty/features/auth/presentation/widgets/forgot_password_button.dart';
 import 'package:selaty/features/auth/presentation/widgets/not_have_account.dart';
 import 'package:selaty/features/auth/presentation/widgets/social_auth.dart';
-import 'package:selaty/features/home/presentation/views/main_view.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -37,80 +45,107 @@ class _LoginViewState extends State<LoginView> {
     final isPortrait =
         MediaQuery.of(context).orientation == Orientation.portrait;
 
-    return Scaffold(
-        backgroundColor: const Color(0xffFDFDFF),
-        appBar: CustomAppBar(
-          backgroundColor: const Color(0xffFDFDFF),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: isPortrait ? screenWidth / 12 : screenWidth / 10),
-            child: Form(
-              key: formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const HorizontalLogo(),
-                  const SizedBox(height: 30), // Make height responsive
-                  _buildInputFields(),
-                  ForgotPasswordButton(
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const ResetPasswordView()));
-                    },
-                  ),
-                  const SizedBox(height: 30), // Make height responsive
-                  _buildLoginButton(),
-                  const SizedBox(height: 20), // Make height responsive
-                  const SocialAuth(
-                    text: 'أو تسجيل الدخول باستخدام',
-                  ),
-                  const NotHaveAccount(),
-                ],
-              ),
+    return BlocListener<LoginCubit, LoginState>(
+        listener: (context, state) {
+          if (state.status == LoginStatus.success) {
+            THelperFunctions.showSnackBar(
+                context: context, message: state.message);
+
+            Future.delayed(const Duration(seconds: 1));
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => BlocProvider(
+                        create: (context) => sl<RegisterCubit>(),
+                        child: const RegisterView(),
+                      )),
+            );
+          }
+          if (state.status == LoginStatus.failure) {
+            THelperFunctions.showSnackBar(
+                context: context, message: state.message);
+          }
+        },
+        child: Scaffold(
+            backgroundColor: const Color(0xffFDFDFF),
+            appBar: CustomAppBar(
+              backgroundColor: const Color(0xffFDFDFF),
+              onPressed: () {
+                Navigator.pop(context);
+              },
             ),
-          ),
-        ));
-  }
-
-  Widget _buildInputFields() {
-    return Column(
-      children: [
-        CustomTextField(
-          controller: emailController,
-          width: double.infinity,
-          validator: (value) {
-            return TValidator.validateEmail(value);
-          },
-          text: 'عنوان البريد الالكتروني',
-        ),
-        const SizedBox(height: 10), // Make height responsive
-        PasswordTextFormField(
-          controller: passwordController,
-          width: double.infinity,
-          text: 'كلمة المرور',
-        ),
-      ],
-    );
-  }
-
-  Widget _buildLoginButton() {
-    return PrimaryButton(
-      text: 'تسجيل الدخول',
-      color: primaryGreen,
-      onTap: () {
-        if (formKey.currentState!.validate()) {
-          formKey.currentState!.save();
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const MainView()));
-        }
-      },
-    );
+            body: SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal:
+                        isPortrait ? screenWidth / 12 : screenWidth / 10),
+                child: Form(
+                  key: formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const HorizontalLogo(),
+                      const SizedBox(height: 30), // Make height responsive
+                      Column(
+                        children: [
+                          CustomTextField(
+                            controller: emailController,
+                            width: double.infinity,
+                            validator: (value) {
+                              return TValidator.validateEmail(value);
+                            },
+                            text: 'عنوان البريد الالكتروني',
+                          ),
+                          const SizedBox(height: 10), // Make height responsive
+                          CustomTextField(
+                            isPassword: true,
+                            controller: passwordController,
+                            width: double.infinity,
+                            text: 'كلمة المرور',
+                          ),
+                        ],
+                      ),
+                      ForgotPasswordButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const ResetPasswordView()));
+                        },
+                      ),
+                      const SizedBox(height: 30), // Make height responsive
+                      BlocBuilder<LoginCubit, LoginState>(
+                        builder: (context, state) {
+                          return PrimaryButton(
+                            text: state.status == LoginStatus.loading
+                                ? 'جاري تسجيل الدخول...'
+                                : 'تسجيل الدخول',
+                            color: primaryGreen,
+                            onTap: () {
+                              if (state.status != LoginStatus.loading &&
+                                  formKey.currentState!.validate()) {
+                                // Trigger registration
+                                final loginCubit = context.read<LoginCubit>();
+                                loginCubit.login(LoginParms(
+                                    loginReqBody: LoginReqBody(
+                                  password: passwordController.text.trim(),
+                                  phoneEmail: emailController.text.trim(),
+                                )));
+                              }
+                            },
+                          );
+                        },
+                      ),
+                      const SizedBox(height: 20), // Make height responsive
+                      const SocialAuth(
+                        text: 'أو تسجيل الدخول باستخدام',
+                      ),
+                      const NotHaveAccount(),
+                    ],
+                  ),
+                ),
+              ),
+            )));
   }
 }

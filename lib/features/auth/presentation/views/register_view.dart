@@ -46,11 +46,14 @@ class _RegisterViewState extends State<RegisterView> {
   }
 
   Future<void> getCurrentLocation() async {
-    String? address = await LocationHelper.getAddressFromCurrentLocation();
+    String? address =
+        await LocationHelper.getAddressFromCurrentLocation(context);
     if (address != null) {
       setState(() {
         fetchedAddress = address;
       });
+    } else {
+      getCurrentLocation();
     }
   }
 

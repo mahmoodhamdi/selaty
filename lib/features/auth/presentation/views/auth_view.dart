@@ -5,6 +5,7 @@ import 'package:selaty/core/common/widgets/primary_button.dart';
 import 'package:selaty/core/constants/colors.dart';
 import 'package:selaty/core/constants/text_strings.dart';
 import 'package:selaty/core/depandancy_injection/service_locator.dart';
+import 'package:selaty/features/auth/presentation/bloc/login/login_cubit.dart';
 import 'package:selaty/features/auth/presentation/bloc/register/register_cubit.dart';
 import 'package:selaty/features/auth/presentation/views/login_view.dart';
 import 'package:selaty/features/auth/presentation/views/register_view.dart';
@@ -37,8 +38,13 @@ class AuthView extends StatelessWidget {
               text: TTexts.loginTitle,
               color: primaryRed,
               onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const LoginView()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => BlocProvider<LoginCubit>(
+                              create: (context) => sl<LoginCubit>(),
+                              child: const LoginView(),
+                            )));
               },
             ),
             const SizedBox(

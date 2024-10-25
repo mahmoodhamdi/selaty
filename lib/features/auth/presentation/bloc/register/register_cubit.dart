@@ -10,7 +10,7 @@ class RegisterCubit extends Cubit<RegisterState> {
   Future<void> register(RegisterParams params) async {
     emit(state.copyWith(status: RegisterStatus.loading));
 
-    final result = await sl<RegisterUseCase>().call(param: params);
+    final result = await sl<RegisterUsecase>().call(param: params);
 
     result.fold(
       (error) {

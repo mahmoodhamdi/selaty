@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:selaty/core/enums/status.dart';
 
+
 class LoginState extends Equatable {
   final LoginStatus status;
   final String message; // Optional: for success/failure messages

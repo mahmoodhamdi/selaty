@@ -14,11 +14,11 @@ import 'package:selaty/features/auth/domain/usecases/login_usecase.dart';
 import 'package:selaty/features/auth/presentation/bloc/login/login_cubit.dart';
 import 'package:selaty/features/auth/presentation/bloc/login/login_state.dart';
 import 'package:selaty/features/auth/presentation/bloc/register/register_cubit.dart';
-import 'package:selaty/features/auth/presentation/views/register_view.dart';
 import 'package:selaty/features/auth/presentation/views/reset_password_view.dart';
 import 'package:selaty/features/auth/presentation/widgets/forgot_password_button.dart';
 import 'package:selaty/features/auth/presentation/widgets/not_have_account.dart';
 import 'package:selaty/features/auth/presentation/widgets/social_auth.dart';
+import 'package:selaty/features/home/presentation/views/main_view.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -57,7 +57,7 @@ class _LoginViewState extends State<LoginView> {
               MaterialPageRoute(
                   builder: (context) => BlocProvider(
                         create: (context) => sl<RegisterCubit>(),
-                        child: const RegisterView(),
+                        child: const MainView(),
                       )),
             );
           }
@@ -89,6 +89,7 @@ class _LoginViewState extends State<LoginView> {
                       Column(
                         children: [
                           CustomTextField(
+                            keyboardType: TextInputType.emailAddress,
                             controller: emailController,
                             width: double.infinity,
                             validator: (value) {
@@ -98,6 +99,7 @@ class _LoginViewState extends State<LoginView> {
                           ),
                           const SizedBox(height: 10), // Make height responsive
                           CustomTextField(
+                            keyboardType: TextInputType.visiblePassword,
                             isPassword: true,
                             controller: passwordController,
                             width: double.infinity,

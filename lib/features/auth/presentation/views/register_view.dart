@@ -6,12 +6,14 @@ import 'package:selaty/core/common/widgets/password_confirm_field.dart';
 import 'package:selaty/core/common/widgets/password_text_field.dart';
 import 'package:selaty/core/common/widgets/primary_button.dart';
 import 'package:selaty/core/constants/colors.dart';
+import 'package:selaty/core/depandancy_injection/service_locator.dart';
 import 'package:selaty/core/enums/status.dart';
 import 'package:selaty/core/helpers/helper_functions.dart';
 import 'package:selaty/core/helpers/location_helper.dart';
 import 'package:selaty/core/validators/validator.dart';
 import 'package:selaty/features/auth/data/models/register_req_body.dart';
 import 'package:selaty/features/auth/domain/usecases/register_usecase.dart';
+import 'package:selaty/features/auth/presentation/bloc/login/login_cubit.dart';
 import 'package:selaty/features/auth/presentation/bloc/register/register_cubit.dart';
 import 'package:selaty/features/auth/presentation/bloc/register/register_state.dart';
 import 'package:selaty/features/auth/presentation/views/login_view.dart';
@@ -75,10 +77,14 @@ class _RegisterViewState extends State<RegisterView> {
           THelperFunctions.showSnackBar(
               context: context, message: state.message);
 
-          Future.delayed(const Duration(seconds: 1));
+          Future.delayed(const Duration(microseconds: 500));
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => const LoginView()),
+            MaterialPageRoute(
+                builder: (context) => BlocProvider(
+                      create: (context) => sl<LoginCubit>(),
+                      child: const LoginView(),
+                    )),
           );
         }
         if (state.status == RegisterStatus.failure) {
@@ -106,6 +112,7 @@ class _RegisterViewState extends State<RegisterView> {
                   Column(
                     children: [
                       CustomTextField(
+                        keyboardType: TextInputType.name,
                         controller: nameController,
                         width: double.infinity,
                         text: 'الاسم',
@@ -113,6 +120,7 @@ class _RegisterViewState extends State<RegisterView> {
                       ),
                       const SizedBox(height: 10),
                       CustomTextField(
+                        keyboardType: TextInputType.emailAddress,
                         controller: emailController,
                         width: double.infinity,
                         text: 'عنوان البريد الالكتروني',
@@ -141,6 +149,8 @@ class _RegisterViewState extends State<RegisterView> {
                       ),
                       const SizedBox(height: 10),
                       CustomTextField(
+                        keyboardType: TextInputType.phone,
+
                         controller: mobileController,
                         width: double.infinity,
                         text: 'رقم الجوال',

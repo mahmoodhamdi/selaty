@@ -33,7 +33,9 @@ dependencies:
   get_it:
   geocoding:
   geolocator:
-  permission_handler: ^11.3.1
+  permission_handler: 
+  shared_preferences: 
+  cached_network_image: 
 
 dev_dependencies:
   flutter_lints:

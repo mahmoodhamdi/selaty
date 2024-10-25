@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 
 class CustomTextField extends StatelessWidget {
-  const CustomTextField({
-    super.key,
-    required this.text,
-    this.suffixIcon,
-    this.isPassword = false,
-    required this.width,
-    this.onSaved,
-    this.validator,
-    this.prefixIcon,
-    this.onChanged,
-    required this.controller,
-  });
+  const CustomTextField(
+      {super.key,
+      required this.text,
+      this.suffixIcon,
+      this.isPassword = false,
+      required this.width,
+      this.onSaved,
+      this.validator,
+      this.prefixIcon,
+      this.onChanged,
+      required this.controller,
+      required this.keyboardType});
 
   final String text;
   final Widget? suffixIcon;
@@ -23,12 +23,13 @@ class CustomTextField extends StatelessWidget {
   final void Function(String?)? onSaved;
   final Function(String)? onChanged;
   final TextEditingController controller;
-
+  final TextInputType? keyboardType;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: width,
       child: TextFormField(
+        keyboardType: keyboardType,
         controller: controller,
         onSaved: onSaved,
         onChanged: onChanged,

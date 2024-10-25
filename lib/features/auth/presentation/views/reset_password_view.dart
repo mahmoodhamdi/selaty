@@ -55,6 +55,7 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
                 ),
                 const SizedBox(height: 40),
                 CustomTextField(
+                  keyboardType: TextInputType.emailAddress,
                   text: 'البريد الالكتروني',
                   validator: TValidator.validateEmail,
                   width: double.infinity,

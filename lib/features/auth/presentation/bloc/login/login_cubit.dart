@@ -22,7 +22,7 @@ class LoginCubit extends Cubit<LoginState> {
       (success) {
         emit(state.copyWith(
           status: LoginStatus.success,
-          message: "تم إنشاء حسابك بنجاح", // Adjust based on response
+          message: "مرحباً بعودتك", // Adjust based on response
         ));
       },
     );

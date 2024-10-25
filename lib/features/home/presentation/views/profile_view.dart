@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 import 'package:selaty/core/common/widgets/custom_app_bar.dart';
+import 'package:selaty/core/depandancy_injection/service_locator.dart';
+import 'package:selaty/features/auth/presentation/bloc/logout/logout_cubit.dart';
 import 'package:selaty/features/home/presentation/views/home_view.dart';
 import 'package:selaty/features/home/presentation/widgets/profile_grid_view.dart';
 import 'package:selaty/features/home/presentation/widgets/profile_info.dart';
@@ -50,7 +53,10 @@ class ProfileView extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
-              const ProfileUtilBox(),
+              BlocProvider(
+                create: (context) => sl<LogoutCubit>(),
+                child: const ProfileUtilBox(),
+              ),
               const SizedBox(
                 height: 20,
               ),

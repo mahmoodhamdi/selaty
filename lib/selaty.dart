@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:selaty/core/common/cubits/onboarding/onboarding_cubit.dart';
-import 'package:selaty/features/onboarding/presentation/views/onboarding_view.dart';
+import 'package:selaty/core/depandancy_injection/service_locator.dart';
+import 'package:selaty/features/auth/presentation/bloc/login_status/login_status_cubit.dart';
+import 'package:selaty/splash/views/splash_view.dart';
 
 class Selaty extends StatelessWidget {
   const Selaty({super.key});
@@ -38,9 +39,10 @@ class Selaty extends StatelessWidget {
             );
           },
           home: BlocProvider(
-            create: (context) => OnboardingCubit(),
-            child: const OnboardingView(),
+            create: (context) => sl<LoginStatusCubit>(),
+            child: const SplashView(),
           ),
+
           theme: ThemeData(
             fontFamily: 'Cairo',
           ),

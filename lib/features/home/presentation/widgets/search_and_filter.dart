@@ -53,6 +53,7 @@ class _SearchAndFilterState extends State<SearchAndFilter> {
                 borderRadius: BorderRadius.all(Radius.circular(8)),
               ),
               child: CustomTextField(
+                  keyboardType: TextInputType.name,
                   text: 'البحث',
                   prefixIcon: IconButton(
                       onPressed: () {

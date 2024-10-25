@@ -23,6 +23,7 @@ class LoginResponse extends Equatable {
   }
 }
 
+
 class LoginUserData extends Equatable {
   final int id;
   final String name;
@@ -58,7 +59,19 @@ class LoginUserData extends Equatable {
         token,
         profilePhotoUrl,
       ];
-
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'mobile': mobile,
+      'email': email,
+      'role_id': roleId,
+      'address': address,
+      'profile_photo_path': profilePhotoPath,
+      'token': token,
+      'profile_photo_url': profilePhotoUrl,
+    };
+  }
   factory LoginUserData.fromJson(Map<String, dynamic> json) {
     return LoginUserData(
       id: json['id'],

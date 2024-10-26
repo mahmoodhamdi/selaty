@@ -8,19 +8,19 @@ import 'package:selaty/core/constants/styles.dart';
 import 'package:selaty/core/enums/status.dart';
 import 'package:selaty/core/helpers/helper_functions.dart';
 import 'package:selaty/core/validators/validator.dart';
-import 'package:selaty/features/auth/data/models/forget_password_req_body.dart';
-import 'package:selaty/features/auth/presentation/logic/forget_password/forget_password_cubit.dart';
-import 'package:selaty/features/auth/presentation/logic/forget_password/forget_password_state.dart';
+import 'package:selaty/features/auth/data/models/send_otp_req_body.dart';
+import 'package:selaty/features/auth/presentation/logic/forget_password/send_otp_cubit.dart';
+import 'package:selaty/features/auth/presentation/logic/forget_password/send_otp_state.dart';
 import 'package:selaty/features/auth/presentation/views/new_password_view.dart';
 
-class ResetPasswordView extends StatefulWidget {
-  const ResetPasswordView({super.key});
+class VerifyEmailView extends StatefulWidget {
+  const VerifyEmailView({super.key});
 
   @override
-  State<ResetPasswordView> createState() => _ResetPasswordViewState();
+  State<VerifyEmailView> createState() => _VerifyEmailViewState();
 }
 
-class _ResetPasswordViewState extends State<ResetPasswordView> {
+class _VerifyEmailViewState extends State<VerifyEmailView> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
 
@@ -35,17 +35,18 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
     final screenWidth = MediaQuery.of(context).size.width;
     final isPortrait =
         Orientation.portrait == MediaQuery.of(context).orientation;
-    return BlocListener<ForgetPasswordCubit, ForgetPasswordState>(
+    return BlocListener<SendOtpCubit, SendOtpState>(
       listener: (context, state) {
         if (state.status == ForgetPasswordStatus.success) {
           THelperFunctions.showSnackBar(
-              context: context, message: "تم التحقق من البريد الإلكتروني");
+              context: context, message: "تم إرسال رمز التحقق");
           Future.delayed(const Duration(microseconds: 500));
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
                 builder: (context) => NewPasswordView(
-                      email: state.email,
+                      token: state.response!.token,
+                      otp: state.response!.newPassword,
                     )),
           );
         }
@@ -86,20 +87,20 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
                     controller: emailController,
                   ),
                   const SizedBox(height: 30),
-                  BlocBuilder<ForgetPasswordCubit, ForgetPasswordState>(
+                  BlocBuilder<SendOtpCubit, SendOtpState>(
                       builder: (context, state) {
                     return PrimaryButton(
                       text: state.status == ForgetPasswordStatus.loading
-                          ? 'جاري التحقق من البريدالإلكتروني...'
-                          : 'تحقق من البريد الإلكتروني',
+                          ? 'جاري إرسال رمز التحقق ...'
+                          : 'إرسال رمز التحقق',
 
                       color: primaryGreen,
                       onTap: () {
                         if (state.status != ForgetPasswordStatus.loading &&
                             _formKey.currentState!.validate()) {
                           _formKey.currentState!.save();
-                          context.read<ForgetPasswordCubit>().resetPassword(
-                                ForgetPasswordReqBody(
+                          context.read<SendOtpCubit>().sendOtp(
+                                SendOtpReqBody(
                                   email: emailController.text.trim(),
                                 ),
                               );

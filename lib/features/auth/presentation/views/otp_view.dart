@@ -5,11 +5,12 @@ import 'package:selaty/core/common/widgets/primary_button.dart';
 import 'package:selaty/core/constants/colors.dart';
 import 'package:selaty/core/constants/styles.dart';
 import 'package:selaty/core/helpers/helper_functions.dart';
-import 'package:selaty/features/auth/presentation/views/new_password_view.dart';
 
 class OtpView extends StatefulWidget {
-  const OtpView({super.key, required this.email});
-  final String email;
+  const OtpView({super.key, required this.otp, required this.token});
+
+  final int otp;
+  final String token;
 
   @override
   State<OtpView> createState() => _OtpViewState();
@@ -119,11 +120,10 @@ class _OtpViewState extends State<OtpView> {
 
   void _handleOtpSubmit(String otp) {
     if (otp == '1234') {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-            builder: (context) => NewPasswordView(email: widget.email)),
-      );
+      // Navigator.pushReplacement(
+      //   context,
+      //MaterialPageRoute(   // builder: (context) => NewPasswordView(old_password: widget.email)),
+      //  );
     } else {
       THelperFunctions.showSnackBar(
           context: context, message: 'الكود غير صحيح');

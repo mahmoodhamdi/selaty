@@ -11,11 +11,11 @@ import 'package:selaty/core/helpers/helper_functions.dart';
 import 'package:selaty/core/validators/validator.dart';
 import 'package:selaty/features/auth/data/models/login_req_body.dart';
 import 'package:selaty/features/auth/domain/usecases/login_usecase.dart';
-import 'package:selaty/features/auth/presentation/logic/forget_password/forget_password_cubit.dart';
+import 'package:selaty/features/auth/presentation/logic/forget_password/send_otp_cubit.dart';
 import 'package:selaty/features/auth/presentation/logic/login/login_cubit.dart';
 import 'package:selaty/features/auth/presentation/logic/login/login_state.dart';
 import 'package:selaty/features/auth/presentation/logic/register/register_cubit.dart';
-import 'package:selaty/features/auth/presentation/views/reset_password_view.dart';
+import 'package:selaty/features/auth/presentation/views/verify_email_view.dart';
 import 'package:selaty/features/auth/presentation/widgets/forgot_password_button.dart';
 import 'package:selaty/features/auth/presentation/widgets/not_have_account.dart';
 import 'package:selaty/features/auth/presentation/widgets/social_auth.dart';
@@ -114,9 +114,8 @@ class _LoginViewState extends State<LoginView> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) => BlocProvider(
-                                        create: (context) =>
-                                            sl<ForgetPasswordCubit>(),
-                                        child: const ResetPasswordView(),
+                                        create: (context) => sl<SendOtpCubit>(),
+                                        child: const VerifyEmailView(),
                                       )));
                         },
                       ),

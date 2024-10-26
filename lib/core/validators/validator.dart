@@ -39,19 +39,19 @@ class TValidator {
     }
 
     // Check for uppercase letters
-    if (!value.contains(RegExp(r'[A-Z]'))) {
-      return 'يجب ان تحتوي كلمة المرور على حروف كبيرة';
-    }
+    // if (!value.contains(RegExp(r'[A-Z]'))) {
+    //   return 'يجب ان تحتوي كلمة المرور على حروف كبيرة';
+    // }
 
     // Check for numbers
-    if (!value.contains(RegExp(r'[0-9]'))) {
-      return 'يجب ان تحتوي كلمة المرور على رقم';
-    }
+    // if (!value.contains(RegExp(r'[0-9]'))) {
+    //   return 'يجب ان تحتوي كلمة المرور على رقم';
+    // }
 
     // Check for special characters
-    if (!value.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
-      return '!@#%^&*() يجب ان تحتوي كلمة المرور على رمز خاص مثل ';
-    }
+    // if (!value.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
+    //   return '!@#%^&*() يجب ان تحتوي كلمة المرور على رمز خاص مثل ';
+    // }
 
     return null;
   }

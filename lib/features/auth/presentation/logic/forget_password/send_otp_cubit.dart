@@ -2,18 +2,17 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:selaty/core/depandancy_injection/service_locator.dart';
 import 'package:selaty/core/enums/status.dart';
-import 'package:selaty/features/auth/data/models/forget_password_req_body.dart';
-import 'package:selaty/features/auth/domain/usecases/forget_password_usecase.dart';
-import 'package:selaty/features/auth/presentation/logic/forget_password/forget_password_state.dart';
+import 'package:selaty/features/auth/data/models/send_otp_req_body.dart';
+import 'package:selaty/features/auth/domain/usecases/send_otp_usecase.dart';
+import 'package:selaty/features/auth/presentation/logic/forget_password/send_otp_state.dart';
 
-class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
-  ForgetPasswordCubit() : super(const ForgetPasswordState());
+class SendOtpCubit extends Cubit<SendOtpState> {
+  SendOtpCubit() : super(const SendOtpState());
 
-  Future<void> resetPassword(
-      ForgetPasswordReqBody forgetPasswordReqBody) async {
+  Future<void> sendOtp(SendOtpReqBody forgetPasswordReqBody) async {
     emit(state.copyWith(status: ForgetPasswordStatus.loading));
 
-    final Either result = await sl<ForgetPasswordUsecase>().call(
+    final Either result = await sl<SendOtpUsecase>().call(
         param: ForgetPassParms(forgetPasswordReqBody: forgetPasswordReqBody));
 
     result.fold(
@@ -25,6 +24,6 @@ class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
   }
 
   void reset() {
-    emit(const ForgetPasswordState());
+    emit(const SendOtpState());
   }
 }

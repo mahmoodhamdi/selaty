@@ -2,10 +2,10 @@ import 'package:dartz/dartz.dart';
 import 'package:selaty/core/depandancy_injection/service_locator.dart';
 import 'package:selaty/features/auth/data/data_sources/auth_local_data_source.dart';
 import 'package:selaty/features/auth/data/data_sources/auth_remote_data_source.dart';
-import 'package:selaty/features/auth/data/models/forget_password_req_body.dart';
 import 'package:selaty/features/auth/data/models/login_req_body.dart';
 import 'package:selaty/features/auth/data/models/login_response.dart';
 import 'package:selaty/features/auth/data/models/register_req_body.dart';
+import 'package:selaty/features/auth/data/models/send_otp_req_body.dart';
 import 'package:selaty/features/auth/domain/repository/auth_repo.dart';
 
 class AuthRepoImpl implements AuthRepo {
@@ -56,10 +56,10 @@ class AuthRepoImpl implements AuthRepo {
   }
 
   @override
-  Future<Either> forgetPass(
-      {required ForgetPasswordReqBody forgetPasswordReqBody}) async {
+  Future<Either> sendOtp(
+      {required SendOtpReqBody forgetPasswordReqBody}) async {
     final result = await sl<AuthRemoteDataSource>()
-        .forgetPass(forgetPasswordReqBody: forgetPasswordReqBody);
+        .sendOtp(forgetPasswordReqBody: forgetPasswordReqBody);
     return result.fold(
       (error) => Left(error),
       (success) async {

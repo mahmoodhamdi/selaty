@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:selaty/core/depandancy_injection/service_locator.dart';
 import 'package:selaty/core/enums/status.dart';
 import 'package:selaty/features/auth/domain/usecases/get_cached_user_usecase.dart';
-import 'package:selaty/features/auth/presentation/bloc/get_cached_user/get_cached_user_state.dart';
+import 'package:selaty/features/auth/presentation/logic/get_cached_user/get_cached_user_state.dart';
 
 class CachedUserCubit extends Cubit<CachedUserState> {
   final GetCachedUserUsecase getCachedUserUsecase;

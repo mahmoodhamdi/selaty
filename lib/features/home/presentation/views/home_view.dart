@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart'; // Import ScreenUtil
 import 'package:selaty/features/home/presentation/views/categories_view.dart';
-import 'package:selaty/features/home/presentation/widgets/Interest_free_discount_grid_view.dart';
+import 'package:selaty/features/home/presentation/widgets/interest_free_discount_grid_view.dart';
 import 'package:selaty/features/home/presentation/widgets/ad_widget.dart';
 import 'package:selaty/features/home/presentation/widgets/best_seller_products_grid_view.dart';
 import 'package:selaty/features/home/presentation/widgets/best_value_products_list.dart';

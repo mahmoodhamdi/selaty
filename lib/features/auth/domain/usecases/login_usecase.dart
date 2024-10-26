@@ -9,9 +9,7 @@ class LoginUsecase extends UseCase<Either, LoginParms> {
   Future<Either<dynamic, dynamic>> call({LoginParms? param}) async {
     if (param == null) throw ArgumentError('RegisterParams cannot be null');
 
-    final Either result =
-        await sl<AuthRepo>().login(loginReqBody: param.loginReqBody);
-    return result.fold((error) => Left(error), (success) => Right(success));
+    return await sl<AuthRepo>().login(loginReqBody: param.loginReqBody);
   }
 }
 

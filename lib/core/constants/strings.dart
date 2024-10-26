@@ -1,5 +1,8 @@
 /// This class contains all the App Text in String formats.
-class TTexts {
+class Strings {
+  // --app title
+  static const String appTitle = 'Selaty';
+
   // -- OnBoarding Texts
   static const String onBoardingTitle1 = 'البحث بالقرب منك';
   static const String onBoardingTitle2 = 'عروض طازجة وجودة';

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:selaty/core/constants/colors.dart';
 import 'package:selaty/core/enums/status.dart';
-import 'package:selaty/features/auth/presentation/bloc/logout/logout_cubit.dart';
-import 'package:selaty/features/auth/presentation/bloc/logout/logout_state.dart';
+import 'package:selaty/features/auth/presentation/logic/logout/logout_cubit.dart';
+import 'package:selaty/features/auth/presentation/logic/logout/logout_state.dart';
 import 'package:selaty/features/auth/presentation/views/auth_view.dart';
 import 'package:selaty/features/home/presentation/widgets/profile_util_box_item.dart';
 

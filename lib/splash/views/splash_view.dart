@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:selaty/core/common/cubits/onboarding/onboarding_cubit.dart';
 import 'package:selaty/core/constants/colors.dart';
-import 'package:selaty/features/auth/presentation/bloc/login_status/login_status_cubit.dart';
-import 'package:selaty/features/auth/presentation/bloc/login_status/login_status_state.dart';
+import 'package:selaty/features/auth/presentation/logic/login_status/login_status_cubit.dart';
+import 'package:selaty/features/auth/presentation/logic/login_status/login_status_state.dart';
 import 'package:selaty/features/home/presentation/views/main_view.dart';
 import 'package:selaty/features/onboarding/presentation/views/onboarding_view.dart';
 

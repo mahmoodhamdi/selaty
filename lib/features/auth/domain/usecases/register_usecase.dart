@@ -9,9 +9,8 @@ class RegisterUsecase extends UseCase<Either, RegisterParams> {
   Future<Either<dynamic, dynamic>> call({RegisterParams? param}) async {
     if (param == null) throw ArgumentError('RegisterParams cannot be null');
 
-    final Either result =
-        await sl<AuthRepo>().register(registerReqBody: param.registerReqBody);
-    return result.fold((error) => Left(error), (success) => Right(success));
+    return await sl<AuthRepo>()
+        .register(registerReqBody: param.registerReqBody);
   }
 }
 

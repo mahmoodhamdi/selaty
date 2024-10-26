@@ -8,9 +8,10 @@ import 'package:selaty/core/helpers/helper_functions.dart';
 import 'package:selaty/features/auth/presentation/views/password_changed_successfully.dart';
 
 class NewPasswordView extends StatefulWidget {
-  const NewPasswordView({super.key, required this.email});
+  const NewPasswordView({super.key, required this.otp, required this.token});
 
-  final String email;
+  final int otp;
+  final String token;
 
   @override
   State<NewPasswordView> createState() => _NewPasswordViewState();

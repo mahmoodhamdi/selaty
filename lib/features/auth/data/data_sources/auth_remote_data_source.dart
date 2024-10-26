@@ -6,19 +6,19 @@ import 'package:selaty/core/depandancy_injection/service_locator.dart';
 import 'package:selaty/core/helpers/dio_exception_helper.dart';
 import 'package:selaty/core/helpers/platform_exception_helper.dart';
 import 'package:selaty/core/network/dio_client.dart';
-import 'package:selaty/features/auth/data/models/forget_pass_response.dart';
-import 'package:selaty/features/auth/data/models/forget_password_req_body.dart';
 import 'package:selaty/features/auth/data/models/login_req_body.dart';
 import 'package:selaty/features/auth/data/models/login_response.dart';
 import 'package:selaty/features/auth/data/models/register_req_body.dart';
 import 'package:selaty/features/auth/data/models/register_response.dart';
+import 'package:selaty/features/auth/data/models/send_otp_req_body.dart';
+import 'package:selaty/features/auth/data/models/send_otp_response.dart';
 
 abstract class AuthRemoteDataSource {
   Future<Either<String, RegisterUserData>> register(
       {required RegisterReqBody registerReqBody});
   Future<Either<String, LoginUserData>> login(
       {required LoginReqBody loginReqBody});
-  Future<Either> forgetPass({required ForgetPasswordReqBody forgetPasswordReqBody});
+  Future<Either> sendOtp({required SendOtpReqBody forgetPasswordReqBody});
 }
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
@@ -80,12 +80,13 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   }
 
   @override
-  Future<Either> forgetPass({required ForgetPasswordReqBody forgetPasswordReqBody}) async {
+  Future<Either> sendOtp(
+      {required SendOtpReqBody forgetPasswordReqBody}) async {
     try {
-      var response = await sl<DioClient>()
-          .post(ApiConstants.forgotPasswordUrl, data: forgetPasswordReqBody.toJson());
-      ForgetPassResponse forgetPassResponse =
-          ForgetPassResponse.fromJson(response.data);
+      var response = await sl<DioClient>().post(ApiConstants.forgotPasswordUrl,
+          data: forgetPasswordReqBody.toJson());
+      SendOtpResponse forgetPassResponse =
+          SendOtpResponse.fromJson(response.data);
       if (forgetPassResponse.status) {
         return Right(forgetPassResponse.data);
       } else {

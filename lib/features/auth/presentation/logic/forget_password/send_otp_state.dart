@@ -1,27 +1,27 @@
 import 'package:equatable/equatable.dart';
 import 'package:selaty/core/enums/status.dart';
-import 'package:selaty/features/auth/data/models/forget_pass_response.dart';
+import 'package:selaty/features/auth/data/models/send_otp_response.dart';
 
-class ForgetPasswordState extends Equatable {
+class SendOtpState extends Equatable {
   final ForgetPasswordStatus status;
   final String email;
-  final ForgetPasswordResponseData? response; // Now holds the entire response object
+  final SendOtpResponseData? response; // Now holds the entire response object
   final String? message;
 
-  const ForgetPasswordState({
+  const SendOtpState({
     this.status = ForgetPasswordStatus.initial,
     this.email = '',
     this.response,
     this.message,
   });
 
-  ForgetPasswordState copyWith({
+  SendOtpState copyWith({
     ForgetPasswordStatus? status,
     String? email,
-    ForgetPasswordResponseData? response,
+    SendOtpResponseData? response,
     String? message,
   }) {
-    return ForgetPasswordState(
+    return SendOtpState(
       status: status ?? this.status,
       email: email ?? this.email,
       response: response ?? this.response,

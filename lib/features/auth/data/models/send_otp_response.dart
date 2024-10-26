@@ -1,11 +1,11 @@
 import 'package:equatable/equatable.dart';
 
-class ForgetPassResponse extends Equatable {
+class SendOtpResponse extends Equatable {
   final bool status;
   final String message;
-  final ForgetPasswordResponseData? data;
+  final SendOtpResponseData? data;
 
-  const ForgetPassResponse({
+  const SendOtpResponse({
     required this.status,
     required this.message,
     this.data,
@@ -14,11 +14,13 @@ class ForgetPassResponse extends Equatable {
   @override
   List<Object?> get props => [status, message, data];
 
-  factory ForgetPassResponse.fromJson(Map<String, dynamic> json) {
-    return ForgetPassResponse(
+  factory SendOtpResponse.fromJson(Map<String, dynamic> json) {
+    return SendOtpResponse(
       status: json['status'] ?? false,
       message: json['message'] ?? '',
-      data: json['data'] != null ? ForgetPasswordResponseData.fromJson(json['data']) : null,
+      data: json['data'] != null
+          ? SendOtpResponseData.fromJson(json['data'])
+          : null,
     );
   }
 
@@ -33,7 +35,7 @@ class ForgetPassResponse extends Equatable {
   }
 }
 
-class ForgetPasswordResponseData extends Equatable {
+class SendOtpResponseData extends Equatable {
   final int id;
   final int userTypeId;
   final int roleId;
@@ -64,7 +66,7 @@ class ForgetPasswordResponseData extends Equatable {
   final String token;
   final String profilePhotoUrl;
 
-  const ForgetPasswordResponseData({
+  const SendOtpResponseData({
     required this.id,
     required this.userTypeId,
     required this.roleId,
@@ -129,8 +131,8 @@ class ForgetPasswordResponseData extends Equatable {
         profilePhotoUrl,
       ];
 
-  factory ForgetPasswordResponseData.fromJson(Map<String, dynamic> json) {
-    return ForgetPasswordResponseData(
+  factory SendOtpResponseData.fromJson(Map<String, dynamic> json) {
+    return SendOtpResponseData(
       id: json['id'],
       userTypeId: json['user_type_id'],
       roleId: json['role_id'],
@@ -149,7 +151,7 @@ class ForgetPasswordResponseData extends Equatable {
       activationCode: json['activitation_code'],
       isConnect: json['is_connect'],
       lastConnectedAt: json['last_connected_at'],
-      onesignalId: json['onesignal_id']??"",
+      onesignalId: json['onesignal_id'] ?? "",
       userBalance: json['user_balance'],
       userLang: json['user_lang'],
       changeUserType: json['change_user_type'],

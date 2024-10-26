@@ -1,9 +1,9 @@
 import 'package:equatable/equatable.dart';
 
-class ForgetPasswordReqBody extends Equatable {
+class SendOtpReqBody extends Equatable {
   final String email;
 
-  const ForgetPasswordReqBody({required this.email});
+  const SendOtpReqBody({required this.email});
 
   // Convert the Dart object to JSON (Map)
   Map<String, dynamic> toJson() {
@@ -13,8 +13,8 @@ class ForgetPasswordReqBody extends Equatable {
   }
 
   // Create a factory constructor to create an instance from JSON
-  factory ForgetPasswordReqBody.fromJson(Map<String, dynamic> json) {
-    return ForgetPasswordReqBody(
+  factory SendOtpReqBody.fromJson(Map<String, dynamic> json) {
+    return SendOtpReqBody(
       email: json['email'],
     );
   }

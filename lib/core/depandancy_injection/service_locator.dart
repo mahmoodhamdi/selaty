@@ -4,16 +4,18 @@ import 'package:selaty/features/auth/data/data_sources/auth_local_data_source.da
 import 'package:selaty/features/auth/data/data_sources/auth_remote_data_source.dart';
 import 'package:selaty/features/auth/data/repository/auth_repo_impl.dart';
 import 'package:selaty/features/auth/domain/repository/auth_repo.dart';
+import 'package:selaty/features/auth/domain/usecases/forget_password_usecase.dart';
 import 'package:selaty/features/auth/domain/usecases/get_cached_user_usecase.dart';
 import 'package:selaty/features/auth/domain/usecases/is_logged_in_usecase.dart';
 import 'package:selaty/features/auth/domain/usecases/login_usecase.dart';
 import 'package:selaty/features/auth/domain/usecases/logout_usecase.dart';
 import 'package:selaty/features/auth/domain/usecases/register_usecase.dart';
-import 'package:selaty/features/auth/presentation/bloc/get_cached_user/get_cached_user_cubit.dart';
-import 'package:selaty/features/auth/presentation/bloc/login/login_cubit.dart';
-import 'package:selaty/features/auth/presentation/bloc/login_status/login_status_cubit.dart';
-import 'package:selaty/features/auth/presentation/bloc/logout/logout_cubit.dart';
-import 'package:selaty/features/auth/presentation/bloc/register/register_cubit.dart';
+import 'package:selaty/features/auth/presentation/logic/forget_password/forget_password_cubit.dart';
+import 'package:selaty/features/auth/presentation/logic/get_cached_user/get_cached_user_cubit.dart';
+import 'package:selaty/features/auth/presentation/logic/login/login_cubit.dart';
+import 'package:selaty/features/auth/presentation/logic/login_status/login_status_cubit.dart';
+import 'package:selaty/features/auth/presentation/logic/logout/logout_cubit.dart';
+import 'package:selaty/features/auth/presentation/logic/register/register_cubit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final sl = GetIt.instance;
@@ -37,6 +39,7 @@ Future<void> setupServiceLocator() async {
   sl.registerLazySingleton<GetCachedUserUsecase>(() => GetCachedUserUsecase());
   sl.registerLazySingleton<IsLoggedInUsecase>(() => IsLoggedInUsecase());
   sl.registerLazySingleton<LogoutUsecase>(() => LogoutUsecase());
+  sl.registerLazySingleton<ForgetPasswordUsecase>(() => ForgetPasswordUsecase());
 // cubits
   sl.registerFactory<RegisterCubit>(
     () => RegisterCubit(),
@@ -47,4 +50,5 @@ Future<void> setupServiceLocator() async {
   sl.registerFactory<CachedUserCubit>(() => CachedUserCubit());
   sl.registerFactory<LoginStatusCubit>(() => LoginStatusCubit());
   sl.registerFactory<LogoutCubit>(() => LogoutCubit());
+  sl.registerFactory<ForgetPasswordCubit>(() => ForgetPasswordCubit());
 }

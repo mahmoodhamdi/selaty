@@ -5,8 +5,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:selaty/core/constants/colors.dart';
 import 'package:selaty/core/constants/styles.dart';
 import 'package:selaty/core/enums/status.dart';
-import 'package:selaty/features/auth/presentation/bloc/get_cached_user/get_cached_user_cubit.dart';
-import 'package:selaty/features/auth/presentation/bloc/get_cached_user/get_cached_user_state.dart';
+import 'package:selaty/features/auth/presentation/logic/get_cached_user/get_cached_user_cubit.dart';
+import 'package:selaty/features/auth/presentation/logic/get_cached_user/get_cached_user_state.dart';
 import 'package:selaty/features/home/presentation/views/profile_view.dart';
 
 class UserInfo extends StatelessWidget {

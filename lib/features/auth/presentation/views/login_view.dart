@@ -11,9 +11,10 @@ import 'package:selaty/core/helpers/helper_functions.dart';
 import 'package:selaty/core/validators/validator.dart';
 import 'package:selaty/features/auth/data/models/login_req_body.dart';
 import 'package:selaty/features/auth/domain/usecases/login_usecase.dart';
-import 'package:selaty/features/auth/presentation/bloc/login/login_cubit.dart';
-import 'package:selaty/features/auth/presentation/bloc/login/login_state.dart';
-import 'package:selaty/features/auth/presentation/bloc/register/register_cubit.dart';
+import 'package:selaty/features/auth/presentation/logic/forget_password/forget_password_cubit.dart';
+import 'package:selaty/features/auth/presentation/logic/login/login_cubit.dart';
+import 'package:selaty/features/auth/presentation/logic/login/login_state.dart';
+import 'package:selaty/features/auth/presentation/logic/register/register_cubit.dart';
 import 'package:selaty/features/auth/presentation/views/reset_password_view.dart';
 import 'package:selaty/features/auth/presentation/widgets/forgot_password_button.dart';
 import 'package:selaty/features/auth/presentation/widgets/not_have_account.dart';
@@ -112,8 +113,11 @@ class _LoginViewState extends State<LoginView> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) =>
-                                      const ResetPasswordView()));
+                                  builder: (context) => BlocProvider(
+                                        create: (context) =>
+                                            sl<ForgetPasswordCubit>(),
+                                        child: const ResetPasswordView(),
+                                      )));
                         },
                       ),
                       const SizedBox(height: 30), // Make height responsive

@@ -3,10 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:selaty/core/common/widgets/horizontal_logo.dart';
 import 'package:selaty/core/common/widgets/primary_button.dart';
 import 'package:selaty/core/constants/colors.dart';
-import 'package:selaty/core/constants/text_strings.dart';
+import 'package:selaty/core/constants/strings.dart';
 import 'package:selaty/core/depandancy_injection/service_locator.dart';
-import 'package:selaty/features/auth/presentation/bloc/login/login_cubit.dart';
-import 'package:selaty/features/auth/presentation/bloc/register/register_cubit.dart';
+import 'package:selaty/features/auth/presentation/logic/login/login_cubit.dart';
+import 'package:selaty/features/auth/presentation/logic/register/register_cubit.dart';
 import 'package:selaty/features/auth/presentation/views/login_view.dart';
 import 'package:selaty/features/auth/presentation/views/register_view.dart';
 
@@ -35,7 +35,7 @@ class AuthView extends StatelessWidget {
             PrimaryButton(
               height: isPortrait ? screenWidth / 7 : 60,
               width: isPortrait ? double.infinity : screenWidth / 2,
-              text: TTexts.loginTitle,
+              text: Strings.loginTitle,
               color: primaryRed,
               onTap: () {
                 Navigator.push(
@@ -53,7 +53,7 @@ class AuthView extends StatelessWidget {
             PrimaryButton(
               height: isPortrait ? screenWidth / 7 : 60,
               width: isPortrait ? double.infinity : screenWidth / 2,
-              text: TTexts.registerTitle,
+              text: Strings.registerTitle,
               color: primaryGreen,
               onTap: () {
                 Navigator.push(

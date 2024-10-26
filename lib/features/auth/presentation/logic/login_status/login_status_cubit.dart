@@ -2,7 +2,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:selaty/core/depandancy_injection/service_locator.dart';
 import 'package:selaty/features/auth/domain/usecases/is_logged_in_usecase.dart';
-import 'package:selaty/features/auth/presentation/bloc/login_status/login_status_state.dart';
+import 'package:selaty/features/auth/presentation/logic/login_status/login_status_state.dart';
 
 class LoginStatusCubit extends Cubit<LoginStatusState> {
   final IsLoggedInUsecase isLoggedInUsecase;

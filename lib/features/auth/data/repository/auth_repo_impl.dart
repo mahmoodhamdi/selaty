@@ -2,19 +2,17 @@ import 'package:dartz/dartz.dart';
 import 'package:selaty/core/depandancy_injection/service_locator.dart';
 import 'package:selaty/features/auth/data/data_sources/auth_local_data_source.dart';
 import 'package:selaty/features/auth/data/data_sources/auth_remote_data_source.dart';
+import 'package:selaty/features/auth/data/models/forget_password_req_body.dart';
 import 'package:selaty/features/auth/data/models/login_req_body.dart';
 import 'package:selaty/features/auth/data/models/login_response.dart';
 import 'package:selaty/features/auth/data/models/register_req_body.dart';
 import 'package:selaty/features/auth/domain/repository/auth_repo.dart';
 
 class AuthRepoImpl implements AuthRepo {
- 
-
-  
   @override
   Future<Either> register({required RegisterReqBody registerReqBody}) async {
-    final result =
-        await sl<AuthRemoteDataSource>().register(registerReqBody: registerReqBody);
+    final result = await sl<AuthRemoteDataSource>()
+        .register(registerReqBody: registerReqBody);
     return result.fold(
       (error) => Left(error),
       (userData) async {
@@ -27,7 +25,8 @@ class AuthRepoImpl implements AuthRepo {
 
   @override
   Future<Either> login({required LoginReqBody loginReqBody}) async {
-    final result = await sl<AuthRemoteDataSource>().login(loginReqBody: loginReqBody);
+    final result =
+        await sl<AuthRemoteDataSource>().login(loginReqBody: loginReqBody);
     return result.fold(
       (error) => Left(error),
       (userData) async {
@@ -54,5 +53,18 @@ class AuthRepoImpl implements AuthRepo {
   @override
   Future<bool> isLoggedIn() async {
     return await sl<AuthLocalDataSource>().isLoggedIn();
+  }
+
+  @override
+  Future<Either> forgetPass(
+      {required ForgetPasswordReqBody forgetPasswordReqBody}) async {
+    final result = await sl<AuthRemoteDataSource>()
+        .forgetPass(forgetPasswordReqBody: forgetPasswordReqBody);
+    return result.fold(
+      (error) => Left(error),
+      (success) async {
+        return Right(success);
+      },
+    );
   }
 }

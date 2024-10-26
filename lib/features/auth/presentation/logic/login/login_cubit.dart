@@ -2,7 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:selaty/core/depandancy_injection/service_locator.dart';
 import 'package:selaty/core/enums/status.dart';
 import 'package:selaty/features/auth/domain/usecases/login_usecase.dart';
-import 'package:selaty/features/auth/presentation/bloc/login/login_state.dart';
+import 'package:selaty/features/auth/presentation/logic/login/login_state.dart';
 
 class LoginCubit extends Cubit<LoginState> {
   LoginCubit() : super(const LoginState());

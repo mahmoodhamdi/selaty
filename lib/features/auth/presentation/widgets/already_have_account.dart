@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:selaty/core/constants/colors.dart';
 import 'package:selaty/core/constants/styles.dart';
 import 'package:selaty/core/depandancy_injection/service_locator.dart';
-import 'package:selaty/features/auth/presentation/bloc/login/login_cubit.dart';
+import 'package:selaty/features/auth/presentation/logic/login/login_cubit.dart';
 import 'package:selaty/features/auth/presentation/views/login_view.dart';
 
 class AlreadyHaveAccount extends StatelessWidget {

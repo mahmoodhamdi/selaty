@@ -50,7 +50,7 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
                     )),
           );
         }
-        if (state.status == ForgetPasswordStatus.error) {
+        if (state.status == ForgetPasswordStatus.failure) {
           THelperFunctions.showSnackBar(
               context: context, message: state.message!);
         }

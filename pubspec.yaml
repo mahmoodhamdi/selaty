@@ -38,6 +38,7 @@ dependencies:
   cached_network_image: 
   mailer: 
   flutter_dotenv: 
+  shimmer: 
 
 dev_dependencies:
   flutter_lints:

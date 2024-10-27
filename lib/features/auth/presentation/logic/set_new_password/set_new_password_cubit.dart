@@ -20,8 +20,8 @@ class SetNewPasswordCubit extends Cubit<SetNewPasswordState> {
     );
 
     result.fold(
-      (failure) => emit(
-          state.copyWith(status: SetNewPasswordStatus.error, message: failure)),
+      (failure) => emit(state.copyWith(
+          status: SetNewPasswordStatus.failure, message: failure)),
       (success) async {
         emit(state.copyWith(
           status: SetNewPasswordStatus.success,

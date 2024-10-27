@@ -2,10 +2,12 @@ enum RegisterStatus { initial, loading, success, failure }
 
 enum LoginStatus { initial, loading, success, failure }
 
-enum CachedUserStatus { initial, loading, loaded, error }
+enum CachedUserStatus { initial, loading, success, failure }
 
-enum LogoutStatus { initial, loading, success, error }
+enum LogoutStatus { initial, loading, success, failure }
 
-enum ForgetPasswordStatus { initial, loading, success, error }
+enum ForgetPasswordStatus { initial, loading, success, failure }
 
-enum SetNewPasswordStatus { initial, loading, success, error }
+enum SetNewPasswordStatus { initial, loading, success, failure }
+
+enum SliderImagesStatus { initial, loading, success, failure }

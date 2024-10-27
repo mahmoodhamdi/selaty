@@ -11,7 +11,7 @@ import 'package:selaty/core/validators/validator.dart';
 import 'package:selaty/features/auth/data/models/send_otp_req_body.dart';
 import 'package:selaty/features/auth/presentation/logic/forget_password/send_otp_cubit.dart';
 import 'package:selaty/features/auth/presentation/logic/forget_password/send_otp_state.dart';
-import 'package:selaty/features/auth/presentation/views/new_password_view.dart';
+import 'package:selaty/features/auth/presentation/views/otp_view.dart';
 
 class VerifyEmailView extends StatefulWidget {
   const VerifyEmailView({super.key});
@@ -36,7 +36,7 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
     final isPortrait =
         Orientation.portrait == MediaQuery.of(context).orientation;
     return BlocListener<SendOtpCubit, SendOtpState>(
-      listener: (context, state) {
+      listener: (context, state) async {
         if (state.status == ForgetPasswordStatus.success) {
           THelperFunctions.showSnackBar(
               context: context, message: "تم إرسال رمز التحقق");
@@ -44,7 +44,7 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-                builder: (context) => NewPasswordView(
+                builder: (context) => OtpView(
                       token: state.response!.token,
                       otp: state.response!.newPassword,
                     )),

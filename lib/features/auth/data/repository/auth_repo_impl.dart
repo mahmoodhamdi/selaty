@@ -6,6 +6,7 @@ import 'package:selaty/features/auth/data/models/login_req_body.dart';
 import 'package:selaty/features/auth/data/models/login_response.dart';
 import 'package:selaty/features/auth/data/models/register_req_body.dart';
 import 'package:selaty/features/auth/data/models/send_otp_req_body.dart';
+import 'package:selaty/features/auth/data/models/send_otp_response.dart';
 import 'package:selaty/features/auth/domain/repository/auth_repo.dart';
 
 class AuthRepoImpl implements AuthRepo {
@@ -56,13 +57,15 @@ class AuthRepoImpl implements AuthRepo {
   }
 
   @override
-  Future<Either> sendOtp(
+  Future<Either<String,SendOtpResponseData>> sendOtp(
       {required SendOtpReqBody forgetPasswordReqBody}) async {
     final result = await sl<AuthRemoteDataSource>()
         .sendOtp(forgetPasswordReqBody: forgetPasswordReqBody);
     return result.fold(
       (error) => Left(error),
       (success) async {
+        
+        
         return Right(success);
       },
     );

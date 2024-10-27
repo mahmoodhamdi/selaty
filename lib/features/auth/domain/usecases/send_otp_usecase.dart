@@ -2,11 +2,12 @@ import 'package:dartz/dartz.dart';
 import 'package:selaty/core/depandancy_injection/service_locator.dart';
 import 'package:selaty/core/usecase/usecase.dart';
 import 'package:selaty/features/auth/data/models/send_otp_req_body.dart';
+import 'package:selaty/features/auth/data/models/send_otp_response.dart';
 import 'package:selaty/features/auth/domain/repository/auth_repo.dart';
 
-class SendOtpUsecase extends UseCase<Either, ForgetPassParms> {
+class SendOtpUsecase extends UseCase<Either, SendOtpParms> {
   @override
-  Future<Either<dynamic, dynamic>> call({ForgetPassParms? param}) async {
+  Future<Either<String, SendOtpResponseData>> call({SendOtpParms? param}) async {
     if (param == null) throw ArgumentError('RegisterParams cannot be null');
 
     return await sl<AuthRepo>()
@@ -14,8 +15,8 @@ class SendOtpUsecase extends UseCase<Either, ForgetPassParms> {
   }
 }
 
-class ForgetPassParms {
+class SendOtpParms {
   final SendOtpReqBody forgetPasswordReqBody;
 
-  ForgetPassParms({required this.forgetPasswordReqBody});
+  SendOtpParms({required this.forgetPasswordReqBody});
 }

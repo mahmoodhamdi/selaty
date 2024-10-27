@@ -80,7 +80,8 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   }
 
   @override
-  Future<Either> sendOtp(
+
+  Future<Either<String, SendOtpResponseData>> sendOtp(
       {required SendOtpReqBody forgetPasswordReqBody}) async {
     try {
       var response = await sl<DioClient>().post(ApiConstants.forgotPasswordUrl,
@@ -88,7 +89,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       SendOtpResponse forgetPassResponse =
           SendOtpResponse.fromJson(response.data);
       if (forgetPassResponse.status) {
-        return Right(forgetPassResponse.data);
+        return Right(forgetPassResponse.data!);
       } else {
         return Left(forgetPassResponse.message);
       }

@@ -5,6 +5,7 @@ import 'package:selaty/core/common/widgets/primary_button.dart';
 import 'package:selaty/core/constants/colors.dart';
 import 'package:selaty/core/constants/styles.dart';
 import 'package:selaty/core/helpers/helper_functions.dart';
+import 'package:selaty/features/auth/presentation/views/new_password_view.dart';
 
 class OtpView extends StatefulWidget {
   const OtpView({super.key, required this.otp, required this.token});
@@ -27,7 +28,7 @@ class _OtpViewState extends State<OtpView> {
 
     // Responsive sizing
     final baseSize = size.width * (isPortrait ? 0.17 : 0.1);
-    final pinFieldSize = baseSize.clamp(50.0, 70.0);
+    final pinFieldSize = baseSize.clamp(40.0, 50.0);
     final horizontalPadding = size.width * (isPortrait ? 0.04 : 0.09);
     final verticalPadding = size.height * (isPortrait ? 0.04 : 0.07);
 
@@ -58,8 +59,9 @@ class _OtpViewState extends State<OtpView> {
                 Directionality(
                   textDirection: TextDirection.ltr,
                   child: PinCodeTextField(
+                    keyboardType: TextInputType.number,
                     appContext: context,
-                    length: 4,
+                    length: 6,
                     obscureText: false,
                     animationType: AnimationType.fade,
                     pinTheme: PinTheme(
@@ -119,11 +121,15 @@ class _OtpViewState extends State<OtpView> {
   }
 
   void _handleOtpSubmit(String otp) {
-    if (otp == '1234') {
-      // Navigator.pushReplacement(
-      //   context,
-      //MaterialPageRoute(   // builder: (context) => NewPasswordView(old_password: widget.email)),
-      //  );
+    if (otp == widget.otp.toString()) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+            builder: (context) => NewPasswordView(
+                  otp: widget.otp,
+                  token: widget.token,
+                )),
+      );
     } else {
       THelperFunctions.showSnackBar(
           context: context, message: 'الكود غير صحيح');

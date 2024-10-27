@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:selaty/core/common/widgets/custom_app_bar.dart';
 import 'package:selaty/core/common/widgets/primary_button.dart';
 import 'package:selaty/core/constants/colors.dart';
 import 'package:selaty/core/constants/styles.dart';
+import 'package:selaty/core/depandancy_injection/service_locator.dart';
+import 'package:selaty/features/auth/presentation/logic/login/login_cubit.dart';
 import 'package:selaty/features/auth/presentation/views/login_view.dart';
 
 class PasswordChangedSuccessfullyView extends StatelessWidget {
@@ -66,8 +69,10 @@ class PasswordChangedSuccessfullyView extends StatelessWidget {
                 onTap: () {
                   Navigator.of(context).pushAndRemoveUntil(
                     MaterialPageRoute(
-                      builder: (context) => const LoginView(),
-                    ),
+                        builder: (context) => BlocProvider(
+                              create: (context) => sl<LoginCubit>(),
+                              child: const LoginView(),
+                            )),
                     (Route<dynamic> route) => false,
                   );
                 },

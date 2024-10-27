@@ -6,6 +6,8 @@ import 'package:selaty/core/depandancy_injection/service_locator.dart';
 import 'package:selaty/core/helpers/dio_exception_helper.dart';
 import 'package:selaty/core/helpers/platform_exception_helper.dart';
 import 'package:selaty/core/network/dio_client.dart';
+import 'package:selaty/features/auth/data/models/change_password_req_body.dart';
+import 'package:selaty/features/auth/data/models/change_password_response.dart';
 import 'package:selaty/features/auth/data/models/login_req_body.dart';
 import 'package:selaty/features/auth/data/models/login_response.dart';
 import 'package:selaty/features/auth/data/models/register_req_body.dart';
@@ -18,7 +20,10 @@ abstract class AuthRemoteDataSource {
       {required RegisterReqBody registerReqBody});
   Future<Either<String, LoginUserData>> login(
       {required LoginReqBody loginReqBody});
-  Future<Either> sendOtp({required SendOtpReqBody forgetPasswordReqBody});
+  Future<Either<String, SendOtpResponseData>> sendOtp(
+      {required SendOtpReqBody forgetPasswordReqBody});
+  Future<Either<String, ChangePasswordResponseData>> setNewPassword(
+      {required ChangePasswordReqBody changePasswordReqBody});
 }
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
@@ -80,7 +85,6 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   }
 
   @override
-
   Future<Either<String, SendOtpResponseData>> sendOtp(
       {required SendOtpReqBody forgetPasswordReqBody}) async {
     try {
@@ -92,6 +96,41 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         return Right(forgetPassResponse.data!);
       } else {
         return Left(forgetPassResponse.message);
+      }
+    } on DioException catch (e) {
+      // Handle the DioException using DioExceptionHelper
+      return Left(DioExceptionHelper.handleDioError(e));
+    } on PlatformException catch (e) {
+      // Handle the PlatformException using PlatformExceptionHelper
+      return Left(PlatformExceptionHelper.handlePlatformError(e));
+    } catch (e) {
+      return Left(
+          'حدث خطأ غير متوقع: $e'); // Arabic for "An unexpected error occurred"
+    }
+  }
+
+  @override
+  Future<Either<String, ChangePasswordResponseData>> setNewPassword(
+      {required ChangePasswordReqBody changePasswordReqBody}) async {
+    try {
+      String token = changePasswordReqBody.token;
+      var response = await sl<DioClient>().post(
+        ApiConstants.resetPasswordUrl,
+        data: changePasswordReqBody.toJson(),
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token', // Add the token here
+            'Content-Type':
+                'application/json', // Optionally set the content type
+          },
+        ),
+      );
+      ChangePasswordResponse changePasswordResponse =
+          ChangePasswordResponse.fromJson(response.data);
+      if (changePasswordResponse.status) {
+        return Right(changePasswordResponse.data!);
+      } else {
+        return Left(changePasswordResponse.message);
       }
     } on DioException catch (e) {
       // Handle the DioException using DioExceptionHelper

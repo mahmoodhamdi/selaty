@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:selaty/core/common/widgets/custom_app_bar.dart';
 import 'package:selaty/core/common/widgets/primary_button.dart';
 import 'package:selaty/core/constants/colors.dart';
 import 'package:selaty/core/constants/styles.dart';
+import 'package:selaty/core/depandancy_injection/service_locator.dart';
 import 'package:selaty/core/helpers/helper_functions.dart';
+import 'package:selaty/features/auth/presentation/logic/set_new_password/set_new_password_cubit.dart';
 import 'package:selaty/features/auth/presentation/views/new_password_view.dart';
 
 class OtpView extends StatefulWidget {
@@ -125,9 +128,12 @@ class _OtpViewState extends State<OtpView> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-            builder: (context) => NewPasswordView(
-                  otp: widget.otp,
-                  token: widget.token,
+            builder: (context) => BlocProvider(
+                  create: (context) => sl<SetNewPasswordCubit>(),
+                  child: NewPasswordView(
+                    otp: widget.otp,
+                    token: widget.token,
+                  ),
                 )),
       );
     } else {

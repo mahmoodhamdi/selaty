@@ -1,7 +1,11 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:selaty/core/depandancy_injection/service_locator.dart';
+import 'package:selaty/core/helpers/send_mail_helper.dart';
 import 'package:selaty/features/auth/data/data_sources/auth_local_data_source.dart';
 import 'package:selaty/features/auth/data/data_sources/auth_remote_data_source.dart';
+import 'package:selaty/features/auth/data/models/change_password_req_body.dart';
+import 'package:selaty/features/auth/data/models/change_password_response.dart';
 import 'package:selaty/features/auth/data/models/login_req_body.dart';
 import 'package:selaty/features/auth/data/models/login_response.dart';
 import 'package:selaty/features/auth/data/models/register_req_body.dart';
@@ -57,15 +61,34 @@ class AuthRepoImpl implements AuthRepo {
   }
 
   @override
-  Future<Either<String,SendOtpResponseData>> sendOtp(
+  Future<Either<String, SendOtpResponseData>> sendOtp(
       {required SendOtpReqBody forgetPasswordReqBody}) async {
     final result = await sl<AuthRemoteDataSource>()
         .sendOtp(forgetPasswordReqBody: forgetPasswordReqBody);
     return result.fold(
       (error) => Left(error),
       (success) async {
-        
-        
+        String username = 'hmdy7486@gmail.com';
+        String password = dotenv.env['APP_PASSWORD'] ?? '';
+
+        final sendMailHelper =
+            SendMailHelper(username: username, password: password);
+        await sendMailHelper.sendOtpEmail(
+            success.email, success.newPassword.toString());
+
+        return Right(success);
+      },
+    );
+  }
+
+  @override
+  Future<Either<String, ChangePasswordResponseData>> setNewPassword(
+      {required ChangePasswordReqBody changePasswordReqBody}) async {
+    final result = await sl<AuthRemoteDataSource>()
+        .setNewPassword(changePasswordReqBody: changePasswordReqBody);
+    return result.fold(
+      (error) => Left(error),
+      (success) async {
         return Right(success);
       },
     );

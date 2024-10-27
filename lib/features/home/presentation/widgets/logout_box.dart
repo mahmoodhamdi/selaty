@@ -7,9 +7,8 @@ import 'package:selaty/features/auth/presentation/logic/logout/logout_state.dart
 import 'package:selaty/features/auth/presentation/views/auth_view.dart';
 import 'package:selaty/features/home/presentation/widgets/profile_util_box_item.dart';
 
-class ProfileUtilBox extends StatelessWidget {
-  // profile_util_box.dart
-  const ProfileUtilBox({
+class LogoutBox extends StatelessWidget {
+  const LogoutBox({
     super.key,
   });
 

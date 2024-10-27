@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:selaty/core/common/cubits/onboarding/onboarding_cubit.dart';
 import 'package:selaty/core/constants/colors.dart';
+import 'package:selaty/core/helpers/first_time_helper.dart';
 import 'package:selaty/features/auth/presentation/logic/login_status/login_status_cubit.dart';
 import 'package:selaty/features/auth/presentation/logic/login_status/login_status_state.dart';
+import 'package:selaty/features/auth/presentation/views/auth_view.dart';
 import 'package:selaty/features/home/presentation/views/main_view.dart';
 import 'package:selaty/features/onboarding/presentation/views/onboarding_view.dart';
 
@@ -24,12 +26,17 @@ class _SplashViewState extends State<SplashView> with TickerProviderStateMixin {
   late Animation<double> _textSlideAnimation;
   late Animation<double> _textFadeAnimation;
   late Animation<double> _shapeAnimation;
-
+  late bool isFirst;
   @override
   void initState() {
     super.initState();
     _setupAnimations();
     _startAnimationSequence();
+    isFirstTime();
+  }
+
+  Future<void> isFirstTime() async {
+    isFirst = await FirstTimeHelper.isFirstTime();
   }
 
   void _setupAnimations() {
@@ -127,12 +134,14 @@ class _SplashViewState extends State<SplashView> with TickerProviderStateMixin {
         } else if (state.status == AuthStatus.unauthenticated) {
           Navigator.pushReplacement(
               context,
-              MaterialPageRoute(
-                builder: (context) => BlocProvider(
-                  create: (context) => OnboardingCubit(),
-                  child: const OnboardingView(),
-                ),
-              ));
+              isFirst
+                  ? MaterialPageRoute(
+                      builder: (context) => BlocProvider(
+                        create: (context) => OnboardingCubit(),
+                        child: const OnboardingView(),
+                      ),
+                    )
+                  : MaterialPageRoute(builder: (context) => const AuthView()));
         }
       },
       child: Scaffold(

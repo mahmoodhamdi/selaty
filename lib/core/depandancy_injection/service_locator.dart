@@ -10,12 +10,14 @@ import 'package:selaty/features/auth/domain/usecases/login_usecase.dart';
 import 'package:selaty/features/auth/domain/usecases/logout_usecase.dart';
 import 'package:selaty/features/auth/domain/usecases/register_usecase.dart';
 import 'package:selaty/features/auth/domain/usecases/send_otp_usecase.dart';
+import 'package:selaty/features/auth/domain/usecases/set_new_password_usecase.dart';
 import 'package:selaty/features/auth/presentation/logic/forget_password/send_otp_cubit.dart';
 import 'package:selaty/features/auth/presentation/logic/get_cached_user/get_cached_user_cubit.dart';
 import 'package:selaty/features/auth/presentation/logic/login/login_cubit.dart';
 import 'package:selaty/features/auth/presentation/logic/login_status/login_status_cubit.dart';
 import 'package:selaty/features/auth/presentation/logic/logout/logout_cubit.dart';
 import 'package:selaty/features/auth/presentation/logic/register/register_cubit.dart';
+import 'package:selaty/features/auth/presentation/logic/set_new_password/set_new_password_cubit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final sl = GetIt.instance;
@@ -40,6 +42,8 @@ Future<void> setupServiceLocator() async {
   sl.registerLazySingleton<IsLoggedInUsecase>(() => IsLoggedInUsecase());
   sl.registerLazySingleton<LogoutUsecase>(() => LogoutUsecase());
   sl.registerLazySingleton<SendOtpUsecase>(() => SendOtpUsecase());
+  sl.registerLazySingleton<SetNewPasswordUsecase>(
+      () => SetNewPasswordUsecase());
 // cubits
   sl.registerFactory<RegisterCubit>(
     () => RegisterCubit(),
@@ -51,4 +55,5 @@ Future<void> setupServiceLocator() async {
   sl.registerFactory<LoginStatusCubit>(() => LoginStatusCubit());
   sl.registerFactory<LogoutCubit>(() => LogoutCubit());
   sl.registerFactory<SendOtpCubit>(() => SendOtpCubit());
+  sl.registerFactory<SetNewPasswordCubit>(() => SetNewPasswordCubit());
 }

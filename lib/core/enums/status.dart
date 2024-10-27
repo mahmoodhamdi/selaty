@@ -7,3 +7,5 @@ enum CachedUserStatus { initial, loading, loaded, error }
 enum LogoutStatus { initial, loading, success, error }
 
 enum ForgetPasswordStatus { initial, loading, success, error }
+
+enum SetNewPasswordStatus { initial, loading, success, error }

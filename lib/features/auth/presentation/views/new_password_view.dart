@@ -59,7 +59,7 @@ class _NewPasswordViewState extends State<NewPasswordView> {
                 builder: (context) => const PasswordChangedSuccessfullyView()),
           );
         }
-        if (state.status == SetNewPasswordStatus.error) {
+        if (state.status == SetNewPasswordStatus.failure) {
           THelperFunctions.showSnackBar(
               context: context, message: state.message!);
         }

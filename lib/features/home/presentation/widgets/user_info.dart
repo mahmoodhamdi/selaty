@@ -19,7 +19,7 @@ class UserInfo extends StatelessWidget {
         // Show loading or error message based on the state
         if (state.status == CachedUserStatus.loading) {
           return const CircularProgressIndicator();
-        } else if (state.status == CachedUserStatus.error) {
+        } else if (state.status == CachedUserStatus.failure) {
           return Text(state.errorMessage ?? 'Error loading user data');
         }
 

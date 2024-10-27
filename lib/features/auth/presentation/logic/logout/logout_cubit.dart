@@ -20,7 +20,7 @@ class LogoutCubit extends Cubit<LogoutState> {
       emit(state.copyWith(status: LogoutStatus.success));
     } catch (e) {
       emit(state.copyWith(
-        status: LogoutStatus.error,
+        status: LogoutStatus.failure,
         errorMessage: 'حدث خطأ أثناء تسجيل الخروج: $e', // Error during logout
       ));
     }

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 import 'package:selaty/core/constants/colors.dart';
+import 'package:selaty/core/depandancy_injection/service_locator.dart';
+import 'package:selaty/features/home/presentation/logic/slider_images_cubit.dart';
 import 'package:selaty/features/home/presentation/views/favourites_view.dart';
 import 'package:selaty/features/home/presentation/views/home_view.dart';
 import 'package:selaty/features/home/presentation/views/notifications_view.dart';
@@ -27,7 +30,10 @@ class _MainViewState extends State<MainView> {
     return [
       const ProfileView(),
       const NotificationsView(),
-      const HomeView(),
+      BlocProvider(
+        create: (context) => sl<SliderImagesCubit>()..fetchSliderImages(),
+        child: const HomeView(),
+      ),
       const FavouritesView(),
       const SearchView(),
     ];

@@ -16,8 +16,8 @@ class SendOtpCubit extends Cubit<SendOtpState> {
         param: SendOtpParms(forgetPasswordReqBody: forgetPasswordReqBody));
 
     result.fold(
-      (failure) => emit(
-          state.copyWith(status: ForgetPasswordStatus.error, message: failure)),
+      (failure) => emit(state.copyWith(
+          status: ForgetPasswordStatus.failure, message: failure)),
       (success) async {
         emit(state.copyWith(
             status: ForgetPasswordStatus.success, response: success));

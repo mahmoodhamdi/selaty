@@ -22,19 +22,19 @@ class CachedUserCubit extends Cubit<CachedUserState> {
       final userData = await getCachedUserUsecase.call();
       if (userData != null) {
         emit(state.copyWith(
-          status: CachedUserStatus.loaded,
+          status: CachedUserStatus.success,
           userData: userData,
         ));
       } else {
         emit(state.copyWith(
-          status: CachedUserStatus.error,
+          status: CachedUserStatus.failure,
           errorMessage:
               'لا يوجد بيانات مستخدم محفوظة', // No cached user data found
         ));
       }
     } catch (e) {
       emit(state.copyWith(
-        status: CachedUserStatus.error,
+        status: CachedUserStatus.failure,
         errorMessage:
             'حدث خطأ أثناء جلب بيانات المستخدم: $e', // Error fetching user data
       ));

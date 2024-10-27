@@ -19,8 +19,8 @@ class ProfileUtilBoxItem extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width: 100,
-        height: 100,
+        width: 120,
+        height: 120,
         decoration: BoxDecoration(
           borderRadius: const BorderRadius.all(Radius.circular(24)),
           color: color,

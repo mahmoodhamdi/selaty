@@ -9,35 +9,34 @@ import 'package:selaty/features/auth/data/models/change_password_response.dart';
 import 'package:selaty/features/auth/data/models/login_req_body.dart';
 import 'package:selaty/features/auth/data/models/login_response.dart';
 import 'package:selaty/features/auth/data/models/register_req_body.dart';
+import 'package:selaty/features/auth/data/models/register_response.dart';
 import 'package:selaty/features/auth/data/models/send_otp_req_body.dart';
 import 'package:selaty/features/auth/data/models/send_otp_response.dart';
 import 'package:selaty/features/auth/domain/repository/auth_repo.dart';
 
 class AuthRepoImpl implements AuthRepo {
   @override
-  Future<Either> register({required RegisterReqBody registerReqBody}) async {
+  Future<Either<String, RegisterUserData>> register(
+      {required RegisterReqBody registerReqBody}) async {
     final result = await sl<AuthRemoteDataSource>()
         .register(registerReqBody: registerReqBody);
     return result.fold(
       (error) => Left(error),
       (userData) async {
-        // If registration is successful, you might want to automatically log in
-        // or handle the registration response differently
         return Right(userData);
       },
     );
   }
 
   @override
-  Future<Either> login({required LoginReqBody loginReqBody}) async {
+  Future<Either<String, LoginUserData>> login(
+      {required LoginReqBody loginReqBody}) async {
     final result =
         await sl<AuthRemoteDataSource>().login(loginReqBody: loginReqBody);
     return result.fold(
       (error) => Left(error),
       (userData) async {
-        // Cache user data locally on successful login
         await sl<AuthLocalDataSource>().cacheUserData(userData);
-        // If your API returns a token, save it
         await sl<AuthLocalDataSource>().saveToken(userData.token);
         return Right(userData);
       },

@@ -39,6 +39,7 @@ dependencies:
   mailer: 
   flutter_dotenv: 
   shimmer: 
+  carousel_slider: 
 
 dev_dependencies:
   flutter_lints:

@@ -18,10 +18,13 @@ import 'package:selaty/features/auth/presentation/logic/login_status/login_statu
 import 'package:selaty/features/auth/presentation/logic/logout/logout_cubit.dart';
 import 'package:selaty/features/auth/presentation/logic/register/register_cubit.dart';
 import 'package:selaty/features/auth/presentation/logic/set_new_password/set_new_password_cubit.dart';
+import 'package:selaty/features/home/data/data_sources/home_local_data_source.dart';
 import 'package:selaty/features/home/data/data_sources/home_remote_data_source.dart';
 import 'package:selaty/features/home/data/repository/home_repo_impl.dart';
 import 'package:selaty/features/home/domain/repository/home_repo.dart';
+import 'package:selaty/features/home/domain/usecases/get_categories_usecase.dart';
 import 'package:selaty/features/home/domain/usecases/get_slider_images_usecase.dart';
+import 'package:selaty/features/home/presentation/logic/categories_cubit.dart';
 import 'package:selaty/features/home/presentation/logic/slider_images_cubit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -39,6 +42,7 @@ Future<void> setupServiceLocator() async {
   sl.registerSingleton<HomeRemoteDataSource>(HomeRemoteDataSourceImpl());
   sl.registerSingleton<AuthLocalDataSource>(
       AuthLocalDataSourceImpl(sharedPreferences: sharedPreferences));
+  sl.registerSingleton<HomeLocalDataSource>(HomeLocalDataSourceImpl());
 // Repositories
   sl.registerSingleton<AuthRepo>(AuthRepoImpl());
   sl.registerSingleton<HomeRepo>(HomeRepoImpl());
@@ -68,6 +72,8 @@ Future<void> setupServiceLocator() async {
   //home use cases
   sl.registerLazySingleton<GetSliderImagesUseCase>(
       () => GetSliderImagesUseCase());
+  sl.registerLazySingleton<GetCategoriesUsecase>(() => GetCategoriesUsecase());
 //home cubits
   sl.registerFactory<SliderImagesCubit>(() => SliderImagesCubit());
+  sl.registerFactory<CategoriesCubit>(() => CategoriesCubit());
 }

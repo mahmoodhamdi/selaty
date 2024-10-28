@@ -1,9 +1,14 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:selaty/core/constants/styles.dart';
 import 'package:selaty/features/home/presentation/views/category_products_view.dart';
+import 'package:shimmer/shimmer.dart';
 
 class CategoriesViewItem extends StatelessWidget {
-  const CategoriesViewItem({super.key});
+  final String categoryName;
+  final String imageUrl;
+  const CategoriesViewItem(
+      {super.key, required this.categoryName, required this.imageUrl});
 
   @override
   Widget build(BuildContext context) {
@@ -29,8 +34,8 @@ class CategoriesViewItem extends StatelessWidget {
             const SizedBox(
               height: 30,
             ),
-            const Text(
-              'فواكه',
+            Text(
+              categoryName,
               style: Styles.textStyle18,
             ),
             const Spacer(),
@@ -38,20 +43,31 @@ class CategoriesViewItem extends StatelessWidget {
               clipBehavior: Clip.none,
               children: [
                 Container(
-                    height: 60,
-                    width: double.infinity,
-                    clipBehavior: Clip.hardEdge,
-                    decoration: const BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(8),
-                        bottomRight: Radius.circular(8),
+                  height: 60,
+                  width: double.infinity,
+                  clipBehavior: Clip.hardEdge,
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(8),
+                      bottomRight: Radius.circular(8),
+                    ),
+                  ),
+                  child: CachedNetworkImage(
+                    imageUrl: 'https://marketappmaster.com/uploads/$imageUrl',
+                    fit: BoxFit.cover,
+                    placeholder: (context, url) => Shimmer.fromColors(
+                      baseColor: Colors.grey[300]!,
+                      highlightColor: Colors.grey[100]!,
+                      child: Container(
+                        height: 60,
+                        color: Colors.white,
                       ),
                     ),
-                    child: Image.asset(
-                      'assets/images/fruits_category.jpg',
-                      fit: BoxFit.cover,
-                    )),
+                    errorWidget: (context, url, error) =>
+                        const Icon(Icons.error),
+                  ),
+                ),
                 Positioned(
                   bottom: 30,
                   left:

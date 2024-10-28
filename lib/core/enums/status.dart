@@ -11,3 +11,5 @@ enum ForgetPasswordStatus { initial, loading, success, failure }
 enum SetNewPasswordStatus { initial, loading, success, failure }
 
 enum SliderImagesStatus { initial, loading, success, failure }
+
+enum CategoriesStatus { initial, loading, success, failure }

@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart'; // Import ScreenUtil
+import 'package:selaty/core/depandancy_injection/service_locator.dart';
+import 'package:selaty/features/home/presentation/logic/categories_cubit.dart';
 import 'package:selaty/features/home/presentation/views/categories_view.dart';
-import 'package:selaty/features/home/presentation/widgets/interest_free_discount_grid_view.dart';
 import 'package:selaty/features/home/presentation/widgets/ad_widget.dart';
 import 'package:selaty/features/home/presentation/widgets/best_seller_products_grid_view.dart';
 import 'package:selaty/features/home/presentation/widgets/best_value_products_list.dart';
 import 'package:selaty/features/home/presentation/widgets/categories_list_view.dart';
 import 'package:selaty/features/home/presentation/widgets/fresh_products_grid_view.dart';
 import 'package:selaty/features/home/presentation/widgets/header_section.dart';
+import 'package:selaty/features/home/presentation/widgets/interest_free_discount_grid_view.dart';
 import 'package:selaty/features/home/presentation/widgets/offers_grid_view.dart';
 import 'package:selaty/features/home/presentation/widgets/see_all_widget.dart';
 
@@ -56,12 +59,17 @@ class HomeView extends StatelessWidget {
             ),
             SliverToBoxAdapter(
               child: SeeAllWidget(
-                  title: 'التصنيفات',
+                
+                  title: 'أفضل التصنيفات',
                   onTap: () {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const CategoriesView()));
+                            builder: (context) => BlocProvider.value(
+                                  value: sl<CategoriesCubit>()
+                                    ..fetchCategories(),
+                                  child: const CategoriesView(),
+                                )));
                   }),
             ),
             SliverToBoxAdapter(
@@ -70,7 +78,7 @@ class HomeView extends StatelessWidget {
               ),
             ),
             const SliverToBoxAdapter(
-              child: CategoriesListView(),
+              child: TopCategoriesListView(),
             ),
             SliverToBoxAdapter(
               child: SizedBox(

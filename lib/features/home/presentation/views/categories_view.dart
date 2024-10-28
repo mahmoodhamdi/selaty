@@ -5,9 +5,10 @@ import 'package:selaty/core/enums/status.dart';
 import 'package:selaty/features/home/presentation/logic/categories_cubit.dart';
 import 'package:selaty/features/home/presentation/logic/categories_state.dart';
 import 'package:selaty/features/home/presentation/widgets/categories_view_item.dart';
+import 'package:shimmer/shimmer.dart';
 
-class CategoriesView extends StatelessWidget {
-  const CategoriesView({super.key});
+class AllCategoriesView extends StatelessWidget {
+  const AllCategoriesView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,25 +20,46 @@ class CategoriesView extends StatelessWidget {
         title: 'التصنيفات',
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
+        padding: const EdgeInsets.symmetric(horizontal: 16),
         child: BlocBuilder<CategoriesCubit, CategoriesState>(
           builder: (context, state) {
             if (state.status == CategoriesStatus.loading) {
-              return const Center(child: CircularProgressIndicator());
+              return GridView.builder(
+                itemCount: 6, // Placeholder count for shimmer
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount:
+                      MediaQuery.of(context).orientation == Orientation.portrait
+                          ? 2
+                          : 4,
+                  childAspectRatio: 1 / 1.2, // Adjusted aspect ratio
+                  mainAxisSpacing: 16,
+                  crossAxisSpacing: 16,
+                ),
+                itemBuilder: (context, index) {
+                  return Shimmer.fromColors(
+                    baseColor: Colors.grey[300]!,
+                    highlightColor: Colors.grey[100]!,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                  );
+                },
+              );
             } else if (state.status == CategoriesStatus.success) {
               return CustomScrollView(
                 slivers: [
                   const SliverToBoxAdapter(
-                    child: SizedBox(
-                      height: 20,
-                    ),
+                    child: SizedBox(height: 20),
                   ),
                   SliverGrid(
                     delegate: SliverChildBuilderDelegate(
                       childCount: state.categories?.length ?? 0,
                       (context, index) {
                         final category = state.categories![index];
-                        return CategoriesViewItem(
+                        return AllCategoriesViewItem(
                           categoryName: category.name,
                           imageUrl: category.img,
                         );
@@ -48,9 +70,9 @@ class CategoriesView extends StatelessWidget {
                               Orientation.portrait
                           ? 2
                           : 4,
-                      childAspectRatio: 1 / 1,
-                      mainAxisSpacing: 20,
-                      crossAxisSpacing: 20,
+                      childAspectRatio: 1 / 1.2, // Adjusted aspect ratio
+                      mainAxisSpacing: 16,
+                      crossAxisSpacing: 16,
                     ),
                   ),
                 ],

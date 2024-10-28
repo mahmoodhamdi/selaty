@@ -5,6 +5,7 @@ import 'package:selaty/core/common/widgets/custom_app_bar.dart';
 import 'package:selaty/core/constants/colors.dart';
 import 'package:selaty/core/depandancy_injection/service_locator.dart';
 import 'package:selaty/features/auth/presentation/logic/logout/logout_cubit.dart';
+import 'package:selaty/features/home/presentation/logic/categories_cubit.dart';
 import 'package:selaty/features/home/presentation/logic/slider_images_cubit.dart';
 import 'package:selaty/features/home/presentation/views/home_view.dart';
 import 'package:selaty/features/home/presentation/widgets/logout_box.dart';
@@ -29,9 +30,17 @@ class ProfileView extends StatelessWidget {
           } else {
             PersistentNavBarNavigator.pushNewScreen(
               context,
-              screen: BlocProvider(
-                create: (context) =>
-                    sl<SliderImagesCubit>()..fetchSliderImages(),
+              screen: MultiBlocProvider(
+                providers: [
+                  BlocProvider(
+                    create: (context) =>
+                        sl<SliderImagesCubit>()..fetchSliderImages(),
+                  ),
+                  BlocProvider(
+                    create: (context) =>
+                        sl<CategoriesCubit>()..fetchCategories(),
+                  ),
+                ],
                 child: const HomeView(),
               ),
               withNavBar: true,

@@ -59,7 +59,6 @@ class HomeView extends StatelessWidget {
             ),
             SliverToBoxAdapter(
               child: SeeAllWidget(
-                
                   title: 'أفضل التصنيفات',
                   onTap: () {
                     Navigator.push(
@@ -68,7 +67,7 @@ class HomeView extends StatelessWidget {
                             builder: (context) => BlocProvider.value(
                                   value: sl<CategoriesCubit>()
                                     ..fetchCategories(),
-                                  child: const CategoriesView(),
+                                  child: const AllCategoriesView(),
                                 )));
                   }),
             ),

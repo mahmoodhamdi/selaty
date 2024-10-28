@@ -6,7 +6,7 @@ import 'package:selaty/features/home/presentation/logic/categories_cubit.dart';
 import 'package:selaty/features/home/presentation/views/categories_view.dart';
 import 'package:selaty/features/home/presentation/widgets/ad_widget.dart';
 import 'package:selaty/features/home/presentation/widgets/best_seller_products_grid_view.dart';
-import 'package:selaty/features/home/presentation/widgets/best_value_products_list.dart';
+import 'package:selaty/features/home/presentation/widgets/ads_image_slider.dart';
 import 'package:selaty/features/home/presentation/widgets/categories_list_view.dart';
 import 'package:selaty/features/home/presentation/widgets/fresh_products_grid_view.dart';
 import 'package:selaty/features/home/presentation/widgets/header_section.dart';
@@ -38,19 +38,8 @@ class HomeView extends StatelessWidget {
                 height: 18.h, // Use ScreenUtil for spacing
               ),
             ),
-            SliverToBoxAdapter(
-              child: SeeAllWidget(
-                  title: 'القيمه الافضل',
-                  subTitle: 'اعلى المبيعات',
-                  onTap: () {}),
-            ),
-            SliverToBoxAdapter(
-              child: SizedBox(
-                height: 8.h, // Use ScreenUtil for spacing
-              ),
-            ),
             const SliverToBoxAdapter(
-              child: BestValueProductsList(),
+              child: AdsImageSlider(),
             ),
             SliverToBoxAdapter(
               child: SizedBox(

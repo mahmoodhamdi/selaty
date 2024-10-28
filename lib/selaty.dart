@@ -6,7 +6,7 @@ import 'package:selaty/core/constants/strings.dart';
 import 'package:selaty/core/depandancy_injection/service_locator.dart';
 import 'package:selaty/core/theme/app_theme.dart';
 import 'package:selaty/features/auth/presentation/logic/login_status/login_status_cubit.dart';
-import 'package:selaty/splash/views/splash_view.dart';
+import 'package:selaty/features/splash/views/splash_view.dart';
 
 class Selaty extends StatelessWidget {
   const Selaty({super.key});

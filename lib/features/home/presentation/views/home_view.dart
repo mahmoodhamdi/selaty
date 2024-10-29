@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart'; // Import ScreenUtil
+import 'package:selaty/core/depandancy_injection/service_locator.dart';
+import 'package:selaty/features/home/presentation/logic/category_name_for_product_cubit.dart';
 import 'package:selaty/features/home/presentation/widgets/ad_widget.dart';
 import 'package:selaty/features/home/presentation/widgets/ads_image_slider.dart';
 import 'package:selaty/features/home/presentation/widgets/best_seller_products_grid_view.dart';
@@ -58,8 +61,11 @@ class HomeView extends StatelessWidget {
                 height: 8.h, // Use ScreenUtil for spacing
               ),
             ),
-            const SliverToBoxAdapter(
-              child: BestSellerProductsGridView(),
+            SliverToBoxAdapter(
+              child: BlocProvider(
+                create: (context) => sl<CategoryNameCubit>(),
+                child: const BestSellerProductsGridView(),
+              ),
             ),
             SliverToBoxAdapter(
               child: SizedBox(

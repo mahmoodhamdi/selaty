@@ -52,6 +52,7 @@ class ProductData {
 }
 
 class Product {
+  String?categoryName;
   int id;
   int userId;
   int type;

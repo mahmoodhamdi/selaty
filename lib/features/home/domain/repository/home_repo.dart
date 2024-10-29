@@ -8,5 +8,6 @@ abstract class HomeRepo {
 
   Future<Either<String, List<Category>>> getCategories();
   Future<Either<String, List<Product>>> getProducts({required int page});
-
+  Future<Either<String, List<String>>> getCategoryNamesForProducts(
+      List<Product> products);
 }

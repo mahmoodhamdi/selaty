@@ -9,8 +9,9 @@ import 'package:shimmer/shimmer.dart';
 
 class BestSellerProductCard extends StatelessWidget {
   final Product product;
-
-  const BestSellerProductCard({super.key, required this.product});
+  final List<String> categoryNames;
+  const BestSellerProductCard(
+      {super.key, required this.product, required this.categoryNames});
 
   @override
   Widget build(BuildContext context) {

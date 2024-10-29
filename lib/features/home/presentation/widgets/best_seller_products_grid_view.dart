@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:selaty/core/enums/status.dart';
-import 'package:selaty/features/home/presentation/logic/category_name_for_product_cubit.dart';
 import 'package:selaty/features/home/presentation/logic/product_cubit.dart';
 import 'package:selaty/features/home/presentation/logic/product_state.dart';
 import 'package:selaty/features/home/presentation/widgets/best_sellerproduct_card.dart';
@@ -35,13 +34,6 @@ class BestSellerProductsGridView extends StatelessWidget {
           );
         } else if (state.status == ProductStatus.success &&
             state.products != null) {
-          context.read<CategoryNameCubit>().fetchCategoryNames(state.products!);
-
-          List<String> categoryNames = [];
-          if (state.status == CategoryNameStatus.success) {
-            categoryNames =
-                context.read<CategoryNameCubit>().state.categoryNames;
-          }
           // Display products once loaded
           return Padding(
             padding: const EdgeInsets.only(right: 10),
@@ -60,7 +52,6 @@ class BestSellerProductsGridView extends StatelessWidget {
                   final product = state.products![index + 1];
                   return BestSellerProductCard(
                     product: product,
-                    categoryNames: categoryNames,
                   );
                 },
               ),

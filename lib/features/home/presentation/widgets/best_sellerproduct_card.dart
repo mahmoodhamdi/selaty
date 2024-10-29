@@ -9,9 +9,7 @@ import 'package:shimmer/shimmer.dart';
 
 class BestSellerProductCard extends StatelessWidget {
   final Product product;
-  final List<String> categoryNames;
-  const BestSellerProductCard(
-      {super.key, required this.product, required this.categoryNames});
+  const BestSellerProductCard({super.key, required this.product});
 
   @override
   Widget build(BuildContext context) {
@@ -35,25 +33,8 @@ class BestSellerProductCard extends StatelessWidget {
         child: Column(
           children: [
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Container(
-                  width: isPortrait ? 35 : 35,
-                  height: isPortrait ? 20 : 20,
-                  decoration: const BoxDecoration(
-                    color: primaryGreen,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(50),
-                      bottomLeft: Radius.circular(50),
-                    ),
-                  ),
-                  child: Center(
-                    child: Text(
-                      'جديد',
-                      style: Styles.textStyle12.copyWith(color: Colors.white),
-                    ),
-                  ),
-                ),
                 IconButton(
                   onPressed: () {},
                   icon: Icon(
@@ -89,34 +70,21 @@ class BestSellerProductCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                      height: 20,
-                      width: 50,
-                      padding: const EdgeInsets.only(right: 6),
-                      alignment: Alignment.centerRight,
-                      decoration: const BoxDecoration(
-                        color: Colors.orange,
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(50.0),
-                        ),
-                      ),
-                      child: Text(
-                        product.categoryId.toString(),
-                        style: Styles.textStyle12.copyWith(
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
                     Text(
+                      maxLines: 2,
                       product.name,
                       style: Styles.textStyle12.copyWith(
                         color: Colors.grey.shade600,
                       ),
                     ),
                     Text(
-                      ' متبقي ${product.quantity}',
+                      product.quantity == 0
+                          ? 'غير متوفر'
+                          : ' متبقي ${product.quantity}',
                       style: Styles.textStyle12.copyWith(
-                        color: Colors.grey.shade600,
+                        color: product.quantity == 0
+                            ? primaryRed
+                            : Colors.grey.shade600,
                       ),
                     ),
                   ],
@@ -144,27 +112,11 @@ class BestSellerProductCard extends StatelessWidget {
                 padding:
                     const EdgeInsets.only(top: 4, right: 8, left: 8, bottom: 4),
                 child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
                       '${product.price} EGP',
                       style: Styles.textStyle12Bold,
-                    ),
-                    Container(
-                      height: isPortrait ? 30 : 30,
-                      width: isPortrait ? 30 : 30,
-                      decoration: const BoxDecoration(
-                        color: primaryRed,
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(50),
-                        ),
-                      ),
-                      child: const Icon(
-                        FontAwesomeIcons.calendarPlus,
-                        color: Colors.white,
-                        size: 14,
-                      ),
                     ),
                   ],
                 ),

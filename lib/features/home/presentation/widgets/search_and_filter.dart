@@ -1,83 +1,78 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:selaty/core/common/widgets/custom_text_field.dart';
-import 'package:selaty/core/constants/colors.dart';
 
-class SearchAndFilter extends StatefulWidget {
-  const SearchAndFilter({
-    super.key,
-  });
+class SearchBarWidget extends StatefulWidget {
+  const SearchBarWidget({super.key});
 
   @override
-  State<SearchAndFilter> createState() => _SearchAndFilterState();
+  State<SearchBarWidget> createState() => _SearchBarWidgetState();
 }
 
-class _SearchAndFilterState extends State<SearchAndFilter> {
+class _SearchBarWidgetState extends State<SearchBarWidget> {
   final TextEditingController _searchController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+    // Get screen width for responsiveness
+    final screenWidth = MediaQuery.of(context).size.width;
+
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Container(
-            width: 50, // Adjust the width as needed
-            height: 50, // Adjust the height as needed
-            decoration: BoxDecoration(
-              color: primaryRed,
-              borderRadius: BorderRadius.circular(8),
+      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
+      child: Container(
+        height: 40,
+        decoration: BoxDecoration(
+          color: Colors.grey.shade200, // Light flat background
+          borderRadius: BorderRadius.circular(30), // Rounded corners
+          border: Border.all(
+              color: Colors.grey.shade400), // Thin border for modern look
+        ),
+        child: Row(
+          children: [
+            // Clear button
+            IconButton(
+              onPressed: () {
+                _searchController.clear();
+              },
+              icon: const Icon(
+                FontAwesomeIcons.xmark,
+                color: Colors.black54,
+                size: 18,
+              ),
+              padding: const EdgeInsets.symmetric(horizontal: 12),
             ),
-            child: Center(
-              child: IconButton(
-                onPressed: () {
-                  // Your onPressed logic here
-                },
-                iconSize: 24, // Adjust the icon size as needed
-                icon: const Icon(
-                  FontAwesomeIcons.sliders,
-                  color: Colors.white,
+            // Search input field
+            Expanded(
+              child: TextFormField(
+                controller: _searchController,
+                keyboardType: TextInputType.text,
+                decoration: InputDecoration(
+                  hintText: 'البحث',
+                  border: InputBorder.none,
+                  contentPadding: EdgeInsets.symmetric(
+                    vertical: screenWidth < 400 ? 12.0 : 16.0,
+                    horizontal: 8.0,
+                  ),
                 ),
-                color: Colors.black, // Set the icon color
+                style: TextStyle(
+                  fontSize: screenWidth < 400 ? 14 : 16,
+                  color: Colors.black87,
+                ),
               ),
             ),
-          ),
-          const SizedBox(
-            width: 10,
-          ),
-          Expanded(
-            child: Container(
-              height: 50,
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.all(Radius.circular(8)),
+            // Search icon button
+            IconButton(
+              onPressed: () {
+                // Your search action logic here
+              },
+              icon: const Icon(
+                FontAwesomeIcons.magnifyingGlass,
+                color: Colors.black54,
+                size: 18,
               ),
-              child: CustomTextField(
-                  keyboardType: TextInputType.name,
-                  text: 'البحث',
-                  prefixIcon: IconButton(
-                      onPressed: () {
-                        _searchController.clear();
-                      },
-                      icon: const Icon(
-                        FontAwesomeIcons.xmark,
-                        color: Colors.black,
-                        size: 12,
-                      )),
-                  suffixIcon: IconButton(
-                      onPressed: () {
-                        // Your onPressed logic here
-                      },
-                      icon: const Icon(
-                        FontAwesomeIcons.magnifyingGlass,
-                        color: Colors.grey,
-                        size: 18,
-                      )),
-                  width: double.infinity,
-                  controller: _searchController),
+              padding: const EdgeInsets.symmetric(horizontal: 12),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

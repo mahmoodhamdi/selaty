@@ -3,6 +3,7 @@ import 'package:selaty/core/depandancy_injection/service_locator.dart';
 import 'package:selaty/features/home/data/data_sources/home_local_data_source.dart';
 import 'package:selaty/features/home/data/data_sources/home_remote_data_source.dart';
 import 'package:selaty/features/home/data/models/categories_response.dart';
+import 'package:selaty/features/home/data/models/product_reesponse_model.dart';
 import 'package:selaty/features/home/data/models/slider_response.dart';
 import 'package:selaty/features/home/domain/repository/home_repo.dart';
 
@@ -23,5 +24,10 @@ class HomeRepoImpl extends HomeRepo {
   @override
   Future<Either<String, List<Category>>> getCategories() async {
     return await sl<HomeRemoteDataSource>().getCategories();
+  }
+
+  @override
+  Future<Either<String, List<Product>>> getProducts({required int page}) async {
+    return await sl<HomeRemoteDataSource>().getProducts(page: page);
   }
 }

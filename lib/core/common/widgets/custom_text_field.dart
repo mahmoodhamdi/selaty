@@ -29,6 +29,7 @@ class CustomTextField extends StatelessWidget {
     return SizedBox(
       width: width,
       child: TextFormField(
+        
         keyboardType: keyboardType,
         controller: controller,
         onSaved: onSaved,
@@ -36,6 +37,7 @@ class CustomTextField extends StatelessWidget {
         validator: validator,
         obscureText: isPassword,
         decoration: InputDecoration(
+        
           prefixIcon: prefixIcon,
           contentPadding:
               const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),

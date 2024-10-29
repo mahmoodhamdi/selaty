@@ -50,7 +50,7 @@ class TopCategoriesListView extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                         builder: (context) => CategoryProductsView(
-                          categoryName: category.name,
+                          category: category,
                         ),
                       ),
                     );

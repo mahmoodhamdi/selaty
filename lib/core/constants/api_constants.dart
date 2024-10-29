@@ -12,7 +12,6 @@ class ApiConstants {
   static const getUserOrdersUrl = '${baseURL}user_orders/t/ar';
   static const userFavoritesUrl = '${baseURL}user_favorite/t/ar';
   static const addUserFavoriteUrl = '${baseURL}user_favorite';
-  static const productsUrl = '${baseURL}products/t/ar/0/41/0';
   static const categoriesUrl = '${baseURL}categories/t/ar/0/0';
   static const sliderUrl = '${baseURL}advertising/t/ar/0';
   static const categoriesWithSubUrl =
@@ -20,4 +19,8 @@ class ApiConstants {
   static const productsInCategoriesUrl =
       '${baseURL}categories/get_with_product_sub/ar/0/0';
   static const imageUrl = 'https://marketappmaster.com/uploads/';
+ static getProductsByPageUrl(String page) =>
+      '${baseURL}products/t/ar/0/0/0?page=$page';
+ static  getProductsBySearchUrl(String term) =>
+      "${baseURL}products/t/ar/0/0/0?search=$term";
 }

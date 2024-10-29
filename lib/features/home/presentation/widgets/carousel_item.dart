@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/material.dart';
+
 import 'shimmer_loader.dart';
 
 class CarouselItem extends StatelessWidget {
@@ -7,8 +8,7 @@ class CarouselItem extends StatelessWidget {
   final Animation<double> animation;
 
   const CarouselItem(
-      {required this.imageUrl, required this.animation, Key? key})
-      : super(key: key);
+      {required this.imageUrl, required this.animation, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,13 +21,6 @@ class CarouselItem extends StatelessWidget {
             margin: const EdgeInsets.symmetric(horizontal: 5),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.2),
-                  blurRadius: 15,
-                  offset: const Offset(0, 5),
-                ),
-              ],
             ),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20),

@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:selaty/core/enums/status.dart';
 import 'package:selaty/features/home/presentation/logic/categories_cubit.dart';
 import 'package:selaty/features/home/presentation/logic/categories_state.dart';
-import 'package:selaty/features/home/presentation/views/category_products_view.dart';
+import 'package:selaty/features/home/presentation/views/sub_categorios_view.dart';
 import 'package:selaty/features/home/presentation/widgets/category_item.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -49,7 +49,7 @@ class TopCategoriesListView extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => CategoryProductsView(
+                        builder: (context) => SubCategoriesView(
                           category: category,
                         ),
                       ),

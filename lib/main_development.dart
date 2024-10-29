@@ -10,9 +10,5 @@ void main() async {
   await ScreenUtil.ensureScreenSize();
   await setupServiceLocator();
   await dotenv.load(fileName: ".env");
-  runApp(DevicePreview(
-      enabled: true,
-      builder: (context) {
-        return const Selaty();
-      }));
+  runApp(const Selaty());
 }

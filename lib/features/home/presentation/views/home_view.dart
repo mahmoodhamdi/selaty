@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart'; // Import ScreenUtil
-import 'package:selaty/core/depandancy_injection/service_locator.dart';
-import 'package:selaty/features/home/presentation/logic/category_name_for_product_cubit.dart';
 import 'package:selaty/features/home/presentation/widgets/ad_widget.dart';
 import 'package:selaty/features/home/presentation/widgets/ads_image_slider.dart';
 import 'package:selaty/features/home/presentation/widgets/best_seller_products_grid_view.dart';
@@ -11,7 +8,7 @@ import 'package:selaty/features/home/presentation/widgets/fresh_products_grid_vi
 import 'package:selaty/features/home/presentation/widgets/header_section.dart';
 import 'package:selaty/features/home/presentation/widgets/interest_free_discount_grid_view.dart';
 import 'package:selaty/features/home/presentation/widgets/offers_grid_view.dart';
-import 'package:selaty/features/home/presentation/widgets/see_all_widget.dart';
+import 'package:selaty/features/home/presentation/widgets/sections_header.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
@@ -46,6 +43,16 @@ class HomeView extends StatelessWidget {
               ),
             ),
             const SliverToBoxAdapter(
+              child: SectionsHeader(
+                title: 'التصنيفات',
+              ),
+            ),
+            SliverToBoxAdapter(
+              child: SizedBox(
+                height: 8.h, // Use ScreenUtil for spacing
+              ),
+            ),
+            const SliverToBoxAdapter(
               child: TopCategoriesListView(),
             ),
             SliverToBoxAdapter(
@@ -53,27 +60,28 @@ class HomeView extends StatelessWidget {
                 height: 18.h, // Use ScreenUtil for spacing
               ),
             ),
-            SliverToBoxAdapter(
-              child: SeeAllWidget(title: 'الأكثر مبيعا', onTap: () {}),
+            const SliverToBoxAdapter(
+              child: SectionsHeader(
+                title: 'الأكثر مبيعا',
+              ),
             ),
             SliverToBoxAdapter(
               child: SizedBox(
                 height: 8.h, // Use ScreenUtil for spacing
               ),
             ),
-            SliverToBoxAdapter(
-              child: BlocProvider(
-                create: (context) => sl<CategoryNameCubit>(),
-                child: const BestSellerProductsGridView(),
-              ),
+            const SliverToBoxAdapter(
+              child: BestSellerProductsGridView(),
             ),
             SliverToBoxAdapter(
               child: SizedBox(
                 height: 18.h, // Use ScreenUtil for spacing
               ),
             ),
-            SliverToBoxAdapter(
-              child: SeeAllWidget(title: 'تسوق حسب العروض', onTap: () {}),
+            const SliverToBoxAdapter(
+              child: SectionsHeader(
+                title: 'تسوق حسب العروض',
+              ),
             ),
             SliverToBoxAdapter(
               child: SizedBox(
@@ -88,8 +96,10 @@ class HomeView extends StatelessWidget {
                 height: 18.h, // Use ScreenUtil for spacing
               ),
             ),
-            SliverToBoxAdapter(
-              child: SeeAllWidget(title: 'طازج وسريع', onTap: () {}),
+            const SliverToBoxAdapter(
+              child: SectionsHeader(
+                title: 'طازج وسريع',
+              ),
             ),
             SliverToBoxAdapter(
               child: SizedBox(
@@ -112,8 +122,10 @@ class HomeView extends StatelessWidget {
                 height: 10.h, // Use ScreenUtil for spacing
               ),
             ),
-            SliverToBoxAdapter(
-              child: SeeAllWidget(title: 'انتهز الفرصه', onTap: () {}),
+            const SliverToBoxAdapter(
+              child: SectionsHeader(
+                title: 'انتهز الفرصه',
+              ),
             ),
             SliverToBoxAdapter(
               child: SizedBox(

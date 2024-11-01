@@ -25,7 +25,9 @@ import 'package:selaty/features/home/domain/repository/home_repo.dart';
 import 'package:selaty/features/home/domain/usecases/get_categories_usecase.dart';
 import 'package:selaty/features/home/domain/usecases/get_products_usecase.dart';
 import 'package:selaty/features/home/domain/usecases/get_slider_images_usecase.dart';
+import 'package:selaty/features/home/domain/usecases/get_user_favourites_usecase.dart';
 import 'package:selaty/features/home/presentation/logic/categories_cubit.dart';
+import 'package:selaty/features/home/presentation/logic/get_user_favourites_cubit.dart';
 import 'package:selaty/features/home/presentation/logic/product_cubit.dart';
 import 'package:selaty/features/home/presentation/logic/slider_images_cubit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -76,9 +78,12 @@ Future<void> setupServiceLocator() async {
       () => GetSliderImagesUseCase());
   sl.registerLazySingleton<GetCategoriesUsecase>(() => GetCategoriesUsecase());
   sl.registerLazySingleton<GetProductsUsecase>(() => GetProductsUsecase());
+  sl.registerLazySingleton<GetUserFavouritesUsecase>(
+      () => GetUserFavouritesUsecase());
 
 //home cubits
   sl.registerFactory<SliderImagesCubit>(() => SliderImagesCubit());
   sl.registerFactory<CategoriesCubit>(() => CategoriesCubit());
   sl.registerFactory<ProductCubit>(() => ProductCubit());
+  sl.registerFactory<GetUserFavouritesCubit>(() => GetUserFavouritesCubit());
 }

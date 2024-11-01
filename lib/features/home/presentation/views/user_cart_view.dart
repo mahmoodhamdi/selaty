@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class NotificationsView extends StatelessWidget {
-  const NotificationsView({super.key});
+class UserCartView extends StatelessWidget {
+  const UserCartView({super.key});
 
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
       body: Center(
-        child: Text("لا توجد اشعارات"),
+        child: Text("لا توجد منتجات في السلة"),
       ),
     );
   }

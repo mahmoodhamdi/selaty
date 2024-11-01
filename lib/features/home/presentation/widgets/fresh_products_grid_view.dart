@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:selaty/features/home/presentation/widgets/product_card.dart';
+import 'package:selaty/features/home/presentation/widgets/product_ui_card.dart';
 
 class FreshProductsGridView extends StatelessWidget {
   const FreshProductsGridView({
@@ -21,7 +21,7 @@ class FreshProductsGridView extends StatelessWidget {
               childAspectRatio: 2 / 1.2,
               mainAxisSpacing: 20,
               crossAxisSpacing: 20),
-          itemBuilder: (context, index) => const ProductCard(),
+          itemBuilder: (context, index) => const ProductUiCard(),
         ),
       ),
     );

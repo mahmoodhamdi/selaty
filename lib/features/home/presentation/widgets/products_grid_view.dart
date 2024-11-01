@@ -3,11 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:selaty/core/enums/status.dart';
 import 'package:selaty/features/home/presentation/logic/product_cubit.dart';
 import 'package:selaty/features/home/presentation/logic/product_state.dart';
-import 'package:selaty/features/home/presentation/widgets/best_sellerproduct_card.dart';
+import 'package:selaty/features/home/presentation/widgets/product_card.dart';
 import 'package:shimmer/shimmer.dart';
 
-class BestSellerProductsGridView extends StatelessWidget {
-  const BestSellerProductsGridView({super.key});
+class ProductsGridView extends StatelessWidget {
+  const ProductsGridView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +50,7 @@ class BestSellerProductsGridView extends StatelessWidget {
                     crossAxisSpacing: 10),
                 itemBuilder: (context, index) {
                   final product = state.products![index + 1];
-                  return BestSellerProductCard(
+                  return ProductCard(
                     product: product,
                   );
                 },

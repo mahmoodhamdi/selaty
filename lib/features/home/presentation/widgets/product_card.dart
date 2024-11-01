@@ -1,11 +1,15 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:selaty/core/constants/colors.dart';
 import 'package:selaty/core/constants/styles.dart';
+import 'package:selaty/features/home/data/models/product_reesponse_model.dart';
 import 'package:selaty/features/home/presentation/views/cart_view.dart';
+import 'package:shimmer/shimmer.dart';
 
 class ProductCard extends StatelessWidget {
-  const ProductCard({super.key});
+  final Product product;
+  const ProductCard({super.key, required this.product});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +19,9 @@ class ProductCard extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => const CartView()));
+          context,
+          MaterialPageRoute(builder: (context) => const CartView()),
+        );
       },
       child: Container(
         decoration: const BoxDecoration(
@@ -27,90 +33,65 @@ class ProductCard extends StatelessWidget {
         child: Column(
           children: [
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Container(
-                  width: isPortrait ? 35 : 35,
-                  height: isPortrait ? 20 : 20, // Adjusted width
-                  decoration: const BoxDecoration(
-                    color: primaryGreen,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(50),
-                      bottomLeft: Radius.circular(50),
-                    ),
-                  ),
-                  child: Center(
-                    child: Text(
-                      'جديد',
-                      style: Styles.textStyle12.copyWith(color: Colors.white),
-                    ),
-                  ),
-                ),
                 IconButton(
                   onPressed: () {},
                   icon: Icon(
-                    FontAwesomeIcons.solidHeart,
+                    product.isFavorite == 1
+                        ? FontAwesomeIcons.solidHeart
+                        : FontAwesomeIcons.heart,
                     color: primaryGreen,
-                    size: isPortrait ? 25 : 25, // Adjusted size
+                    size: isPortrait ? 25 : 25,
                   ),
                 ),
               ],
             ),
             Expanded(
-              child: Image.asset(
-                'assets/images/fruits.png',
-                // Adjusted width
+              flex: 3,
+              child: CachedNetworkImage(
+                imageUrl: "https://marketappmaster.com/uploads/${product.img}",
+                placeholder: (context, url) => Shimmer.fromColors(
+                    baseColor: Colors.grey[300]!,
+                    highlightColor: Colors.grey[100]!,
+                    child: Container(
+                      color: Colors.grey[200],
+                      height: 100,
+                    )),
+                errorWidget: (context, url, error) => const Icon(Icons.error),
+                fit: BoxFit.cover,
               ),
             ),
-            const SizedBox(
-              height: 8, // Adjusted space
-            ),
+            const SizedBox(height: 8),
             Align(
               alignment: Alignment.centerRight,
               child: Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 8), // Adjusted padding
+                padding: const EdgeInsets.symmetric(horizontal: 8),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                      height: 20,
-                      width: 50, // Adjusted height
-                      padding:
-                          const EdgeInsets.only(right: 6), // Adjusted padding
-                      alignment: Alignment.centerRight,
-                      decoration: const BoxDecoration(
-                        color: Colors.orange,
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(50.0),
-                        ),
-                      ),
-                      child: Text(
-                        'فواكه',
-                        style: Styles.textStyle12.copyWith(
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
                     Text(
-                      'طبق فواكه',
+                      maxLines: 2,
+                      product.name,
                       style: Styles.textStyle12.copyWith(
                         color: Colors.grey.shade600,
                       ),
                     ),
                     Text(
-                      '1 كيلو',
+                      product.quantity == 0
+                          ? 'غير متوفر'
+                          : ' متبقي ${product.quantity}',
                       style: Styles.textStyle12.copyWith(
-                        color: Colors.grey.shade600,
+                        color: product.quantity == 0
+                            ? primaryRed
+                            : Colors.grey.shade600,
                       ),
                     ),
                   ],
                 ),
               ),
             ),
-            const SizedBox(
-              height: 8, // Adjusted space
-            ),
+            const SizedBox(height: 8),
             Container(
               decoration: BoxDecoration(
                 boxShadow: [
@@ -128,31 +109,14 @@ class ProductCard extends StatelessWidget {
                 ),
               ),
               child: Padding(
-                padding: const EdgeInsets.only(
-                    top: 4, right: 8, left: 8, bottom: 4), // Adjusted padding
+                padding:
+                    const EdgeInsets.only(top: 4, right: 8, left: 8, bottom: 4),
                 child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text(
-                      textDirection: TextDirection.ltr,
-                      '40 EGP',
+                    Text(
+                      '${product.price} EGP',
                       style: Styles.textStyle12Bold,
-                    ),
-                    Container(
-                      height: isPortrait ? 30 : 30, // Adjusted height
-                      width: isPortrait ? 30 : 30, // Adjusted width
-                      decoration: const BoxDecoration(
-                        color: primaryRed,
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(50),
-                        ),
-                      ),
-                      child: const Icon(
-                        FontAwesomeIcons.calendarPlus,
-                        color: Colors.white,
-                        size: 14, // Adjusted size
-                      ),
                     ),
                   ],
                 ),

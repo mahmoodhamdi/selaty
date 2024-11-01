@@ -17,3 +17,9 @@ enum CategoriesStatus { initial, loading, success, failure }
 enum ProductStatus { initial, loading, success, failure }
 
 enum CategoryNameStatus { initial, loading, success, failure }
+enum GetUserFavouritesStatus {
+  initial,
+  loading,
+  success,
+  error,
+}

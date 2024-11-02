@@ -18,9 +18,10 @@ class ApiConstants {
       '${baseURL}categories/get_with_sub/ar/0/0';
   static const productsInCategoriesUrl =
       '${baseURL}categories/get_with_product_sub/ar/0/0';
-  static const imageUrl = 'https://marketappmaster.com/uploads/';
- static getProductsByPageUrl(String page) =>
+
+  static const imageUrl = 'https://master-market.masool.net/uploads/';
+  static getProductsByPageUrl(String page) =>
       '${baseURL}products/t/ar/0/0/0?page=$page';
- static  getProductsBySearchUrl(String term) =>
+  static getProductsBySearchUrl(String term) =>
       "${baseURL}products/t/ar/0/0/0?search=$term";
 }

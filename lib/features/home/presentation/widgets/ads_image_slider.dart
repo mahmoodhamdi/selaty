@@ -2,8 +2,8 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:selaty/core/enums/status.dart';
-import 'package:selaty/features/home/presentation/logic/slider_images_cubit.dart';
-import 'package:selaty/features/home/presentation/logic/slider_images_state.dart';
+import 'package:selaty/features/home/presentation/logic/slider_images/slider_images_cubit.dart';
+import 'package:selaty/features/home/presentation/logic/slider_images/slider_images_state.dart';
 
 import 'carousel_item.dart';
 import 'custom_indicators.dart';

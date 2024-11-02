@@ -4,22 +4,20 @@ import 'package:selaty/core/depandancy_injection/service_locator.dart';
 import 'package:selaty/core/enums/status.dart';
 import 'package:selaty/features/home/data/models/product_reesponse_model.dart';
 import 'package:selaty/features/home/domain/usecases/get_products_usecase.dart';
-import 'package:selaty/features/home/presentation/logic/product_state.dart';
+import 'package:selaty/features/home/presentation/logic/product/product_state.dart';
 
 class ProductCubit extends Cubit<ProductState> {
   ProductCubit() : super(const ProductState());
 
-  // Keep track of the current page and whether there's more data to load
-  int _currentPage = 1;
+   int _currentPage = 1;
   bool _hasMoreData = true;
 
   Future<void> fetchProducts({bool loadMore = false}) async {
-    // If loading more and either already loading or no more data, return
-    if (loadMore && (state.status == ProductStatus.loading || !_hasMoreData)) {
+     if (loadMore && (state.status == ProductStatus.loading || !_hasMoreData)) {
       return;
     }
 
-    // If not loading more, reset pagination
+    
     if (!loadMore) {
       _currentPage = 1;
       _hasMoreData = true;

@@ -1,5 +1,10 @@
+import 'dart:io';
+
 import 'package:dartz/dartz.dart';
 import 'package:selaty/core/depandancy_injection/service_locator.dart';
+import 'package:selaty/features/auth/data/data_sources/auth_remote_data_source.dart';
+import 'package:selaty/features/auth/data/models/update_profile_request_model.dart';
+import 'package:selaty/features/auth/data/models/update_profile_response_model.dart';
 import 'package:selaty/features/home/data/data_sources/home_local_data_source.dart';
 import 'package:selaty/features/home/data/data_sources/home_remote_data_source.dart';
 import 'package:selaty/features/home/data/models/categories_response.dart';
@@ -117,6 +122,22 @@ class HomeRepoImpl extends HomeRepo {
         );
 
         return Right(successMessage);
+      },
+    );
+  }
+
+  
+  @override
+  Future<Either<String, UpdateProfileResponseData>> updateProfile({
+    required UpdateProfileRequest request,
+    required File profilePhoto,
+  }) async {
+    final result = await sl<HomeRemoteDataSource>()
+        .updateProfile(request: request, profilePhoto: profilePhoto);
+    return result.fold(
+      (error) => Left(error),
+      (success) async {
+        return Right(success);
       },
     );
   }

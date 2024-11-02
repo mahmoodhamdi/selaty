@@ -1,12 +1,17 @@
+import 'dart:developer';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:selaty/core/constants/api_constants.dart';
 import 'package:selaty/core/constants/colors.dart';
 import 'package:selaty/core/constants/styles.dart';
+import 'package:selaty/core/depandancy_injection/service_locator.dart';
 import 'package:selaty/core/enums/status.dart';
 import 'package:selaty/features/auth/presentation/logic/get_cached_user/get_cached_user_cubit.dart';
 import 'package:selaty/features/auth/presentation/logic/get_cached_user/get_cached_user_state.dart';
+import 'package:selaty/features/home/presentation/logic/update_profile/update_profile_cubit.dart';
 import 'package:selaty/features/home/presentation/views/profile_view.dart';
 
 class UserInfo extends StatelessWidget {
@@ -14,6 +19,7 @@ class UserInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return BlocBuilder<CachedUserCubit, CachedUserState>(
       builder: (context, state) {
         // Show loading or error message based on the state
@@ -24,6 +30,7 @@ class UserInfo extends StatelessWidget {
         }
 
         final userData = state.userData;
+        log('user data: ${userData!.profilePhotoPath}');
         if (userData == null) {
           return const Text('No user data available');
         }
@@ -37,7 +44,17 @@ class UserInfo extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const ProfileView()),
+                        builder: (context) => MultiBlocProvider(
+                              providers: [
+                                BlocProvider(
+                                  create: (context) => sl<UpdateProfileCubit>(),
+                                ),
+                                BlocProvider(
+                                  create: (context) => sl<CachedUserCubit>(),
+                                ),
+                              ],
+                              child: const ProfileView(),
+                            )),
                   );
                 },
                 child: CircleAvatar(
@@ -49,7 +66,8 @@ class UserInfo extends StatelessWidget {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(50),
                       child: CachedNetworkImage(
-                        imageUrl: userData.profilePhotoUrl,
+                        imageUrl:
+                            "${ApiConstants.imageUrl}${userData.profilePhotoPath}",
                         fit: BoxFit.cover,
                         width: 50,
                         height: 50,

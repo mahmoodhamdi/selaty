@@ -5,7 +5,7 @@ import 'package:selaty/core/enums/status.dart';
 import 'package:selaty/core/usecase/usecase.dart';
 import 'package:selaty/features/home/data/models/categories_response.dart';
 import 'package:selaty/features/home/domain/usecases/get_categories_usecase.dart';
-import 'package:selaty/features/home/presentation/logic/categories_state.dart';
+import 'package:selaty/features/home/presentation/logic/categories/categories_state.dart';
 
 class CategoriesCubit extends Cubit<CategoriesState> {
 

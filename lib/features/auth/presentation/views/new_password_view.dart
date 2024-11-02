@@ -110,6 +110,8 @@ class _NewPasswordViewState extends State<NewPasswordView> {
                           onTap: () {
                             if (state.status != ForgetPasswordStatus.loading &&
                                 _formKey.currentState!.validate()) {
+                              THelperFunctions.hideKeyboard(context);
+
                               if (_passwordController.text ==
                                   _confirmPasswordController.text) {
                                 _formKey.currentState!.save();

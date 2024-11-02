@@ -4,59 +4,23 @@ import 'package:dartz/dartz.dart';
 import 'package:selaty/core/depandancy_injection/service_locator.dart';
 import 'package:selaty/core/helpers/logger_helper.dart';
 import 'package:selaty/features/home/data/models/categories_response.dart';
+import 'package:selaty/features/home/data/models/get_user_favourite_response.dart';
 import 'package:selaty/features/home/data/models/product_reesponse_model.dart';
-import 'package:selaty/features/home/data/models/slider_response.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class HomeLocalDataSource {
-  Future<Either<String, List<SliderResponseData>>> getSliderImages();
-  Future<Either<String, void>> cacheSliderImages(
-      List<SliderResponseData> images);
   Future<Either<String, List<Category>>> getCategories();
   Future<Either<String, void>> cacheCategories(List<Category> categories);
   Future<Either<String, List<Product>>> getProducts();
   Future<Either<String, void>> cacheProducts(List<Product> products);
+  Future<Either<String, void>> cacheUserFavourites(
+      List<FavouriteData> favourites);
+  Future<Either<String, List<FavouriteData>>> getUserFavourites();
 
   Future<Either<String, void>> clearCache();
 }
 
 class HomeLocalDataSourceImpl implements HomeLocalDataSource {
-  @override
-  Future<Either<String, List<SliderResponseData>>> getSliderImages() async {
-    final jsonString = sl<SharedPreferences>().getString('slider_images');
-    if (jsonString != null) {
-      try {
-        final List<dynamic> jsonList = json.decode(jsonString);
-        final List<SliderResponseData> images =
-            jsonList.map((json) => SliderResponseData.fromJson(json)).toList();
-        LoggerHelper.info(
-            "Loaded cached slider images from Shared Preferences");
-        return Right(images);
-      } catch (e) {
-        LoggerHelper.error("Failed to decode cached images: $e");
-        return const Left("Failed to decode cached images");
-      }
-    } else {
-      LoggerHelper.warning("No cached images found");
-      return const Left("No cached images found");
-    }
-  }
-
-  @override
-  Future<Either<String, void>> cacheSliderImages(
-      List<SliderResponseData> sliderResponseList) async {
-    try {
-      final jsonString = json
-          .encode(sliderResponseList.map((image) => image.toJson()).toList());
-      await sl<SharedPreferences>().setString('slider_images', jsonString);
-      LoggerHelper.info("Cached slider images in Shared Preferences");
-      return const Right(null);
-    } catch (e) {
-      LoggerHelper.error("Failed to cache images: $e");
-      return const Left("Failed to cache images");
-    }
-  }
-
   @override
   Future<Either<String, void>> cacheCategories(
       List<Category> categories) async {
@@ -135,6 +99,41 @@ class HomeLocalDataSourceImpl implements HomeLocalDataSource {
     } catch (e) {
       LoggerHelper.error("Failed to cache products: $e");
       return const Left("Failed to cache products");
+    }
+  }
+
+  @override
+  Future<Either<String, List<FavouriteData>>> getUserFavourites() async {
+    try {
+      final jsonString = sl<SharedPreferences>().getString('favourites');
+      if (jsonString != null) {
+        final List<dynamic> jsonList = json.decode(jsonString);
+        final List<FavouriteData> favourites =
+            jsonList.map((json) => FavouriteData.fromJson(json)).toList();
+        LoggerHelper.info("Loaded cached favourites from Shared Preferences");
+        return Right(favourites);
+      } else {
+        LoggerHelper.warning("No cached favourites found");
+        return const Left("No cached favourites found");
+      }
+    } catch (e) {
+      LoggerHelper.error("Failed to decode cached favourites: $e");
+      return const Left("Failed to decode cached favourites");
+    }
+  }
+
+  @override
+  Future<Either<String, void>> cacheUserFavourites(
+      List<FavouriteData> favourites) async {
+    try {
+      final jsonString = json
+          .encode(favourites.map((favourite) => favourite.toJson()).toList());
+      sl<SharedPreferences>().setString('favourites', jsonString);
+      LoggerHelper.info("Cached favourites in Shared Preferences");
+      return const Right(null);
+    } catch (e) {
+      LoggerHelper.error("Failed to cache favourites: $e");
+      return const Left("Failed to cache favourites");
     }
   }
 }

@@ -7,6 +7,7 @@ import 'package:selaty/core/helpers/dio_exception_helper.dart';
 import 'package:selaty/core/helpers/platform_exception_helper.dart';
 import 'package:selaty/core/network/dio_client.dart';
 import 'package:selaty/features/auth/data/data_sources/auth_local_data_source.dart';
+import 'package:selaty/features/home/data/models/add_to_favourite_response.dart';
 import 'package:selaty/features/home/data/models/categories_response.dart';
 import 'package:selaty/features/home/data/models/get_user_favourite_response.dart'; // Import the model
 import 'package:selaty/features/home/data/models/product_reesponse_model.dart';
@@ -16,6 +17,7 @@ abstract class HomeRemoteDataSource {
   Future<Either<String, List<SliderResponseData>>> getSliderImages();
   Future<Either<String, List<Category>>> getCategories();
   Future<Either<String, List<Product>>> getProducts({required int page});
+  Future<Either<String, String>> addToFavourites({required int productId});
   Future<Either<String, List<FavouriteData>>> getUserFavourites();
 }
 
@@ -83,7 +85,6 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
 
   @override
   Future<Either<String, List<FavouriteData>>> getUserFavourites() async {
-    // Add this implementation
     try {
       final token = await sl<AuthLocalDataSource>().getToken();
       var response = await sl<DioClient>().get(ApiConstants.userFavoritesUrl,
@@ -107,6 +108,33 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
       return Left(PlatformExceptionHelper.handlePlatformError(e));
     } catch (e) {
       return Left('حدث خطأ غير متوقع: $e');
+    }
+  }
+
+  @override
+  Future<Either<String, String>> addToFavourites(
+      {required int productId}) async {
+    try {
+      final token = await sl<AuthLocalDataSource>().getToken();
+      var response = await sl<DioClient>().post(ApiConstants.addUserFavoriteUrl,
+          data: {"favo_id": productId},
+          options: Options(headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json',
+          }));
+      AddToFavouriteResponse addFavouriteResponse =
+          AddToFavouriteResponse.fromJson(response.data);
+      if (addFavouriteResponse.result) {
+        return Right(addFavouriteResponse.errorMessage);
+      } else {
+        return Left(addFavouriteResponse.errorMessage);
+      }
+    } on DioException catch (e) {
+      return Left(DioExceptionHelper.handleDioError(e));
+    } on PlatformException catch (e) {
+      return Left(PlatformExceptionHelper.handlePlatformError(e));
+    } catch (e) {
+      return Left('حدث خطاء غير متوقع: $e');
     }
   }
 }

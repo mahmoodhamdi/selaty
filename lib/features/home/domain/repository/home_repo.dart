@@ -10,4 +10,5 @@ abstract class HomeRepo {
   Future<Either<String, List<Category>>> getCategories();
   Future<Either<String, List<Product>>> getProducts({required int page});
   Future<Either<String, List<FavouriteData>>> getUserFavourites();
+  Future<Either<String, String>> addToFavourites({required int productId});
 }

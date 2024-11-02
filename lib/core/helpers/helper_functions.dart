@@ -173,4 +173,9 @@ class THelperFunctions {
     }
     return wrappedList;
   }
+    static void hideKeyboard(BuildContext context) {
+    LoggerHelper.info("Hiding keyboard");
+    FocusScope.of(context).unfocus();
+  }
+
 }

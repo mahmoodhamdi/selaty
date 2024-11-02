@@ -89,25 +89,6 @@ class UserInfo extends StatelessWidget {
                   ),
                 ],
               ),
-              const Spacer(),
-              Container(
-                width: 35.0,
-                height: 35.0,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Center(
-                  child: IconButton(
-                    onPressed: () {
-                      // Your onPressed logic here
-                    },
-                    iconSize: 16,
-                    icon: const Icon(Icons.camera_alt_outlined),
-                    color: Colors.black,
-                  ),
-                ),
-              ),
             ],
           ),
         );

@@ -8,8 +8,8 @@ import 'package:selaty/features/home/presentation/logic/add_to_favourites_cubit.
 import 'package:selaty/features/home/presentation/logic/add_to_favourites_state.dart';
 import 'package:selaty/features/home/presentation/logic/product_cubit.dart';
 import 'package:selaty/features/home/presentation/logic/product_state.dart';
-import 'package:selaty/features/home/presentation/widgets/favourites_loading.dart';
 import 'package:selaty/features/home/presentation/widgets/product_card.dart';
+import 'package:selaty/features/home/presentation/widgets/shimmer_loading_product_card.dart';
 
 class ProductsGridView extends StatelessWidget {
   const ProductsGridView({super.key});
@@ -20,16 +20,19 @@ class ProductsGridView extends StatelessWidget {
       create: (context) => sl<AddToFavouritesCubit>(),
       child: BlocBuilder<ProductCubit, ProductState>(
         builder: (context, state) {
-          if (state.status == ProductStatus.loading) {
-            // Show shimmer effect while products are loading
+          if (state.status == ProductStatus.initial||
+              state.products == null ||
+              state.products!.isEmpty) {
             return const ShimmerLoading();
-          } else if (state.status == ProductStatus.success &&
-              state.products != null) {
-            return ProductGrid(products: state.products!);
-          } else if (state.status == ProductStatus.failure) {
+          }
+
+          if (state.status == ProductStatus.failure && state.products == null) {
             return Center(child: Text('Error: ${state.errorMessage}'));
           }
-          return const Center(child: Text('No products available'));
+
+        
+
+          return ProductGrid(products: state.products!);
         },
       ),
     );
@@ -64,43 +67,18 @@ class ProductGrid extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.only(right: 10),
         child: GridView.builder(
-          shrinkWrap: true, // Enable dynamic height
-          physics:
-              const NeverScrollableScrollPhysics(), // Disable GridView's scrolling
-
-          itemCount: products.length - 1,
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: products.length ,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              childAspectRatio: 1 / 1.5,
-              mainAxisSpacing: 20,
-              crossAxisSpacing: 10),
+            crossAxisCount: 2,
+            childAspectRatio: 1 / 1.5,
+            mainAxisSpacing: 20,
+            crossAxisSpacing: 10,
+          ),
           itemBuilder: (context, index) {
-            return ProductCard(product: products[index + 1]);
+            return ProductCard(product: products[index ]);
           },
-        ),
-      ),
-    );
-  }
-}
-
-class ShimmerLoading extends StatelessWidget {
-  const ShimmerLoading({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(right: 10),
-      child: SizedBox(
-        height: 500,
-        child: GridView.builder(
-          scrollDirection: Axis.horizontal,
-          itemCount: 6,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              childAspectRatio: 2.1 / 1.2,
-              mainAxisSpacing: 20,
-              crossAxisSpacing: 10),
-          itemBuilder: (context, index) => const ShimmerProductCard(),
         ),
       ),
     );

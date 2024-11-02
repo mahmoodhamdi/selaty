@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:selaty/core/common/widgets/custom_refresh_indicator.dart';
 import 'package:selaty/core/constants/colors.dart';
+import 'package:selaty/core/depandancy_injection/service_locator.dart';
 import 'package:selaty/core/enums/status.dart';
+import 'package:selaty/features/home/presentation/logic/add_to_favourites_cubit.dart';
 import 'package:selaty/features/home/presentation/logic/get_user_favourites_cubit.dart';
 import 'package:selaty/features/home/presentation/logic/get_user_favourites_state.dart';
 import 'package:selaty/features/home/presentation/widgets/favourites_empty.dart';
@@ -20,6 +22,7 @@ class FavouritesView extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
+        automaticallyImplyLeading: false,
         centerTitle: true,
         title: const Text(
           "المفضلة",
@@ -27,10 +30,6 @@ class FavouritesView extends StatelessWidget {
             color: primaryGreen,
             fontWeight: FontWeight.bold,
           ),
-        ),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: primaryGreen),
-          onPressed: () => Navigator.of(context).pop(),
         ),
       ),
       body: CustomRefreshIndicator(
@@ -53,7 +52,10 @@ class FavouritesView extends StatelessWidget {
               if (favourites == null || favourites.isEmpty) {
                 return const FavouritesEmpty();
               }
-              return FavouritesGrid(favourites: favourites);
+              return BlocProvider(
+                create: (context) => sl<AddToFavouritesCubit>(),
+                child: FavouritesGrid(initialFavourites: favourites),
+              );
             }
             return const Center(child: Text("لا توجد المفضلات"));
           },

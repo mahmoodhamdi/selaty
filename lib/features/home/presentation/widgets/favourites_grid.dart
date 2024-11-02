@@ -9,59 +9,58 @@ import 'package:selaty/features/home/presentation/logic/add_to_favourites_state.
 import 'package:selaty/features/home/presentation/widgets/favourite_product_card.dart';
 
 class FavouritesGrid extends StatelessWidget {
-  final List<FavouriteData> favourites;
+  final List<FavouriteData> initialFavourites;
 
-  const FavouritesGrid({super.key, required this.favourites});
+  const FavouritesGrid({super.key, required this.initialFavourites});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => sl<AddToFavouritesCubit>(),
-      child: Padding(
-        padding: const EdgeInsets.all(10),
-        child: GridView.builder(
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            childAspectRatio: 0.50 / 0.95,
-            mainAxisSpacing: 10,
-            crossAxisSpacing: 10,
-          ),
-          itemCount: favourites.length,
-          itemBuilder: (context, index) {
-            final favouriteData = favourites[index];
-            final favouriteProduct = favouriteData.product;
-            if (favouriteProduct == null) {
-              return const SizedBox.shrink();
-            }
-            return BlocListener<AddToFavouritesCubit, AddToFavouritesState>(
-              listener: (context, state) {
-                if (state.status == AddToFavouritesStatus.success) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(state.message!),
-                      backgroundColor: primaryGreen,
-                    ),
-                  );
-                } else if (state.status == AddToFavouritesStatus.failure) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(state.message ?? 'حدث خطأ'),
-                      backgroundColor: primaryRed,
-                    ),
-                  );
-                }
-              },
-              child: FavouriteProductCard(
-                favouriteProduct: favouriteProduct,
-                onRemoveFavorite: () {
-                  context
-                      .read<AddToFavouritesCubit>()
-                      .addToFavourites(favouriteProduct.id);
-                },
+      create: (context) => sl<AddToFavouritesCubit>()
+        ..emit(AddToFavouritesState(favouriteList: initialFavourites)),
+      child: BlocBuilder<AddToFavouritesCubit, AddToFavouritesState>(
+        builder: (context, state) {
+          return Padding(
+            padding: const EdgeInsets.all(10),
+            child: GridView.builder(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: 0.50 / 0.95,
+                mainAxisSpacing: 10,
+                crossAxisSpacing: 10,
               ),
-            );
-          },
-        ),
+              itemCount: state.favouriteList.length,
+              itemBuilder: (context, index) {
+                final favouriteData = state.favouriteList[index];
+                final favouriteProduct = favouriteData.product;
+
+                if (favouriteProduct == null) {
+                  return const SizedBox.shrink();
+                }
+
+                return BlocListener<AddToFavouritesCubit, AddToFavouritesState>(
+                  listener: (context, state) {
+                    if (state.status == AddToFavouritesStatus.success) {
+                    } else if (state.status == AddToFavouritesStatus.failure) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(state.message ?? 'حدث خطأ'),
+                          backgroundColor: primaryRed,
+                        ),
+                      );
+                    }
+                  },
+                  child: FavouriteProductCard(
+                    favouriteProduct: favouriteProduct,
+                    onRemoveFavorite: () => context
+                        .read<AddToFavouritesCubit>()
+                        .addToFavourites(favouriteProduct.id),
+                  ),
+                );
+              },
+            ),
+          );
+        },
       ),
     );
   }

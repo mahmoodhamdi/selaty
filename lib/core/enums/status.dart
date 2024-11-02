@@ -14,7 +14,13 @@ enum SliderImagesStatus { initial, loading, success, failure }
 
 enum CategoriesStatus { initial, loading, success, failure }
 
-enum ProductStatus { initial, loading, success, failure }
+enum ProductStatus {
+  initial,
+  loading,
+  loadingMore, // New status for pagination loading
+  success,
+  failure,
+}
 
 enum CategoryNameStatus { initial, loading, success, failure }
 

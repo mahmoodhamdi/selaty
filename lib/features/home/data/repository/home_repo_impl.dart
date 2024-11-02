@@ -54,32 +54,7 @@ class HomeRepoImpl extends HomeRepo {
 
   @override
   Future<Either<String, List<Product>>> getProducts({required int page}) async {
-    final localResult = await sl<HomeLocalDataSource>().getProducts();
-    return localResult.fold(
-      (error) async {
-        final remoteResult =
-            await sl<HomeRemoteDataSource>().getProducts(page: page);
-        return remoteResult.fold(
-          (error) => Left(error),
-          (products) async {
-            sl<HomeLocalDataSource>().cacheProducts(products);
-            return Right(products);
-          },
-        );
-      },
-      (products) async {
-        if (products.isEmpty) {
-          final remoteResult =
-              await sl<HomeRemoteDataSource>().getProducts(page: page);
-          return remoteResult.fold((error) => Left(error), (products) async {
-            sl<HomeLocalDataSource>().cacheProducts(products);
-            return Right(products);
-          });
-        } else {
-          return Right(products);
-        }
-      },
-    );
+    return await sl<HomeRemoteDataSource>().getProducts(page: page);
   }
 
   @override

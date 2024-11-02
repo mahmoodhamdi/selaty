@@ -90,5 +90,7 @@ Future<void> setupServiceLocator() async {
   sl.registerFactory<CategoriesCubit>(() => CategoriesCubit());
   sl.registerFactory<ProductCubit>(() => ProductCubit());
   sl.registerFactory<GetUserFavouritesCubit>(() => GetUserFavouritesCubit());
-  sl.registerFactory<AddToFavouritesCubit>(() => AddToFavouritesCubit());
+  sl.registerFactory<AddToFavouritesCubit>(() => AddToFavouritesCubit(
+        [],
+      ));
 }

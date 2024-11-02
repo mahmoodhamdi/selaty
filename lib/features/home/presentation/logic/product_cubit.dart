@@ -9,17 +9,61 @@ import 'package:selaty/features/home/presentation/logic/product_state.dart';
 class ProductCubit extends Cubit<ProductState> {
   ProductCubit() : super(const ProductState());
 
-  Future<void> fetchProducts(int page) async {
-    emit(state.copyWith(status: ProductStatus.loading)); // Start loading
+  // Keep track of the current page and whether there's more data to load
+  int _currentPage = 1;
+  bool _hasMoreData = true;
+
+  Future<void> fetchProducts({bool loadMore = false}) async {
+    // If loading more and either already loading or no more data, return
+    if (loadMore && (state.status == ProductStatus.loading || !_hasMoreData)) {
+      return;
+    }
+
+    // If not loading more, reset pagination
+    if (!loadMore) {
+      _currentPage = 1;
+      _hasMoreData = true;
+      emit(state.copyWith(status: ProductStatus.loading));
+    } else {
+      // If loading more, show loading more status
+      emit(state.copyWith(status: ProductStatus.loadingMore));
+    }
 
     final Either<String, List<Product>> result = await sl<GetProductsUsecase>()
-        .call(param: GetProductsParams(page: page));
+        .call(param: GetProductsParams(page: _currentPage));
 
     result.fold(
       (error) => emit(state.copyWith(
-          status: ProductStatus.failure, errorMessage: error)), // Handle error
-      (products) => emit(state.copyWith(
-          status: ProductStatus.success, products: products)), // Handle success
+        status: ProductStatus.failure,
+        errorMessage: error,
+      )),
+      (newProducts) {
+        // If no new products, mark as no more data
+        if (newProducts.isEmpty) {
+          _hasMoreData = false;
+          emit(state.copyWith(
+            status: ProductStatus.success,
+          ));
+          return;
+        }
+
+        final List<Product> updatedProducts = loadMore
+            ? [...(state.products ?? []), ...newProducts]
+            : newProducts;
+
+        _currentPage++;
+
+        emit(state.copyWith(
+          status: ProductStatus.success,
+          products: updatedProducts,
+          hasMoreData: _hasMoreData,
+        ));
+      },
     );
+  }
+
+  // Method to load more products
+  Future<void> loadMore() async {
+    await fetchProducts(loadMore: true);
   }
 }

@@ -2,10 +2,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:selaty/core/depandancy_injection/service_locator.dart';
 import 'package:selaty/core/enums/status.dart';
 import 'package:selaty/features/home/domain/usecases/get_slider_images_usecase.dart';
-import 'package:selaty/features/home/presentation/logic/slider_images_state.dart';
+import 'package:selaty/features/home/presentation/logic/slider_images/slider_images_state.dart';
 
 class SliderImagesCubit extends Cubit<SliderImagesState> {
-
   SliderImagesCubit()
       : super(SliderImagesState(status: SliderImagesStatus.initial));
 

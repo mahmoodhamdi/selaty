@@ -7,19 +7,13 @@ import 'package:selaty/features/auth/domain/usecases/get_cached_user_usecase.dar
 import 'package:selaty/features/auth/presentation/logic/get_cached_user/get_cached_user_state.dart';
 
 class CachedUserCubit extends Cubit<CachedUserState> {
-  final GetCachedUserUsecase getCachedUserUsecase;
-
-  CachedUserCubit({
-    GetCachedUserUsecase? getCachedUserUsecase,
-  })  : getCachedUserUsecase =
-            getCachedUserUsecase ?? sl<GetCachedUserUsecase>(),
-        super(const CachedUserState());
+  CachedUserCubit() : super(const CachedUserState());
 
   Future<void> getCachedUser() async {
     emit(state.copyWith(status: CachedUserStatus.loading));
 
     try {
-      final userData = await getCachedUserUsecase.call();
+      final userData = await sl<GetCachedUserUsecase>().call();
       if (userData != null) {
         emit(state.copyWith(
           status: CachedUserStatus.success,

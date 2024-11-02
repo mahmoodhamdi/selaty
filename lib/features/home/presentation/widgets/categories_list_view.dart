@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:selaty/core/enums/status.dart';
-import 'package:selaty/features/home/presentation/logic/categories_cubit.dart';
-import 'package:selaty/features/home/presentation/logic/categories_state.dart';
+import 'package:selaty/features/home/presentation/logic/categories/categories_cubit.dart';
+import 'package:selaty/features/home/presentation/logic/categories/categories_state.dart';
 import 'package:selaty/features/home/presentation/views/sub_categorios_view.dart';
 import 'package:selaty/features/home/presentation/widgets/category_item.dart';
 import 'package:shimmer/shimmer.dart';

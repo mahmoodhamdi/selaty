@@ -2,7 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:selaty/core/depandancy_injection/service_locator.dart';
 import 'package:selaty/core/enums/status.dart';
 import 'package:selaty/features/home/domain/usecases/get_user_favourites_usecase.dart';
-import 'package:selaty/features/home/presentation/logic/get_user_favourites_state.dart';
+import 'package:selaty/features/home/presentation/logic/get_user_favourites/get_user_favourites_state.dart';
 
 class GetUserFavouritesCubit extends Cubit<GetUserFavouritesState> {
   GetUserFavouritesCubit() : super(GetUserFavouritesState.initial());

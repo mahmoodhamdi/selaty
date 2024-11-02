@@ -93,9 +93,9 @@ class _LoginViewState extends State<LoginView> {
                             keyboardType: TextInputType.emailAddress,
                             controller: emailController,
                             width: double.infinity,
-                            validator: (value) {
-                              return TValidator.validateEmail(value);
-                            },
+                            // validator: (value) {
+                            //   return TValidator.validateEmail(value);
+                            // },
                             text: 'عنوان البريد الالكتروني',
                           ),
                           const SizedBox(height: 10), // Make height responsive

@@ -4,10 +4,10 @@ import 'package:selaty/core/constants/colors.dart';
 import 'package:selaty/core/depandancy_injection/service_locator.dart';
 import 'package:selaty/core/enums/status.dart';
 import 'package:selaty/features/home/data/models/product_reesponse_model.dart';
-import 'package:selaty/features/home/presentation/logic/add_to_favourites_cubit.dart';
-import 'package:selaty/features/home/presentation/logic/add_to_favourites_state.dart';
-import 'package:selaty/features/home/presentation/logic/product_cubit.dart';
-import 'package:selaty/features/home/presentation/logic/product_state.dart';
+import 'package:selaty/features/home/presentation/logic/add_to_favourites/add_to_favourites_cubit.dart';
+import 'package:selaty/features/home/presentation/logic/add_to_favourites/add_to_favourites_state.dart';
+import 'package:selaty/features/home/presentation/logic/product/product_cubit.dart';
+import 'package:selaty/features/home/presentation/logic/product/product_state.dart';
 import 'package:selaty/features/home/presentation/widgets/product_card.dart';
 import 'package:selaty/features/home/presentation/widgets/shimmer_loading_product_card.dart';
 

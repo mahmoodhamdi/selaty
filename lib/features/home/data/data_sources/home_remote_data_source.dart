@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/services.dart';
@@ -7,6 +9,8 @@ import 'package:selaty/core/helpers/dio_exception_helper.dart';
 import 'package:selaty/core/helpers/platform_exception_helper.dart';
 import 'package:selaty/core/network/dio_client.dart';
 import 'package:selaty/features/auth/data/data_sources/auth_local_data_source.dart';
+import 'package:selaty/features/auth/data/models/update_profile_request_model.dart';
+import 'package:selaty/features/auth/data/models/update_profile_response_model.dart';
 import 'package:selaty/features/home/data/models/add_to_favourite_response.dart';
 import 'package:selaty/features/home/data/models/categories_response.dart';
 import 'package:selaty/features/home/data/models/get_user_favourite_response.dart'; // Import the model
@@ -19,6 +23,10 @@ abstract class HomeRemoteDataSource {
   Future<Either<String, List<Product>>> getProducts({required int page});
   Future<Either<String, String>> addToFavourites({required int productId});
   Future<Either<String, List<FavouriteData>>> getUserFavourites();
+  Future<Either<String, UpdateProfileResponseData>> updateProfile({
+    required UpdateProfileRequest request,
+    required File profilePhoto,
+  });
 }
 
 class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
@@ -135,6 +143,44 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
       return Left(PlatformExceptionHelper.handlePlatformError(e));
     } catch (e) {
       return Left('حدث خطاء غير متوقع: $e');
+    }
+  }
+
+  @override
+  Future<Either<String, UpdateProfileResponseData>> updateProfile({
+    required UpdateProfileRequest request,
+    required File profilePhoto,
+  }) async {
+    try {
+      final token = await sl<AuthLocalDataSource>().getToken();
+      var response = await sl<DioClient>().post(
+        ApiConstants.updateProfileUrl,
+        data: FormData.fromMap({
+          'name': request.name,
+          'mobile': request.mobile,
+          'email': request.email,
+          'profile_photo': await MultipartFile.fromFile(profilePhoto.path),
+        }),
+        options: Options(headers: {
+          'Authorization': 'Bearer $token',
+          'Content-Type': 'application/json',
+        }),
+      );
+
+      UpdateProfileResponse updateProfileResponse =
+          UpdateProfileResponse.fromJson(response.data);
+
+      if (updateProfileResponse.status) {
+        return Right(updateProfileResponse.data!);
+      } else {
+        return Left(updateProfileResponse.errorMessage ?? 'Unknown error');
+      }
+    } on DioException catch (e) {
+      return Left(DioExceptionHelper.handleDioError(e));
+    } on PlatformException catch (e) {
+      return Left(PlatformExceptionHelper.handlePlatformError(e));
+    } catch (e) {
+      return Left('حدث خطأ غير متوقع: $e');
     }
   }
 }

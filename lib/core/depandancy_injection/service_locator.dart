@@ -11,7 +11,6 @@ import 'package:selaty/features/auth/domain/usecases/logout_usecase.dart';
 import 'package:selaty/features/auth/domain/usecases/register_usecase.dart';
 import 'package:selaty/features/auth/domain/usecases/send_otp_usecase.dart';
 import 'package:selaty/features/auth/domain/usecases/set_new_password_usecase.dart';
-import 'package:selaty/features/home/domain/usecases/update_profile_usecase.dart';
 import 'package:selaty/features/auth/presentation/logic/forget_password/send_otp_cubit.dart';
 import 'package:selaty/features/auth/presentation/logic/get_cached_user/get_cached_user_cubit.dart';
 import 'package:selaty/features/auth/presentation/logic/login/login_cubit.dart';
@@ -19,7 +18,6 @@ import 'package:selaty/features/auth/presentation/logic/login_status/login_statu
 import 'package:selaty/features/auth/presentation/logic/logout/logout_cubit.dart';
 import 'package:selaty/features/auth/presentation/logic/register/register_cubit.dart';
 import 'package:selaty/features/auth/presentation/logic/set_new_password/set_new_password_cubit.dart';
-import 'package:selaty/features/home/presentation/logic/update_profile/update_profile_cubit.dart';
 import 'package:selaty/features/home/data/data_sources/home_local_data_source.dart';
 import 'package:selaty/features/home/data/data_sources/home_remote_data_source.dart';
 import 'package:selaty/features/home/data/repository/home_repo_impl.dart';
@@ -27,13 +25,17 @@ import 'package:selaty/features/home/domain/repository/home_repo.dart';
 import 'package:selaty/features/home/domain/usecases/add_to_favourites_usecase.dart';
 import 'package:selaty/features/home/domain/usecases/get_categories_usecase.dart';
 import 'package:selaty/features/home/domain/usecases/get_products_usecase.dart';
+import 'package:selaty/features/home/domain/usecases/get_profile_usecase.dart';
 import 'package:selaty/features/home/domain/usecases/get_slider_images_usecase.dart';
 import 'package:selaty/features/home/domain/usecases/get_user_favourites_usecase.dart';
+import 'package:selaty/features/home/domain/usecases/update_profile_usecase.dart';
 import 'package:selaty/features/home/presentation/logic/add_to_favourites/add_to_favourites_cubit.dart';
 import 'package:selaty/features/home/presentation/logic/categories/categories_cubit.dart';
 import 'package:selaty/features/home/presentation/logic/get_user_favourites/get_user_favourites_cubit.dart';
 import 'package:selaty/features/home/presentation/logic/product/product_cubit.dart';
+import 'package:selaty/features/home/presentation/logic/profile/get_profile_cubit.dart';
 import 'package:selaty/features/home/presentation/logic/slider_images/slider_images_cubit.dart';
+import 'package:selaty/features/home/presentation/logic/update_profile/update_profile_cubit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final sl = GetIt.instance;
@@ -79,6 +81,7 @@ Future<void> setupServiceLocator() async {
   sl.registerFactory<SendOtpCubit>(() => SendOtpCubit());
   sl.registerFactory<SetNewPasswordCubit>(() => SetNewPasswordCubit());
   sl.registerFactory<UpdateProfileCubit>(() => UpdateProfileCubit());
+  sl.registerFactory<GetProfileCubit>(() => GetProfileCubit());
   //home use cases
   sl.registerLazySingleton<GetSliderImagesUseCase>(
       () => GetSliderImagesUseCase());
@@ -88,6 +91,7 @@ Future<void> setupServiceLocator() async {
       () => GetUserFavouritesUsecase());
   sl.registerLazySingleton<AddToFavouritesUsecase>(
       () => AddToFavouritesUsecase());
+  sl.registerLazySingleton<GetProfileUsecase>(() => GetProfileUsecase());
 
 //home cubits
   sl.registerFactory<SliderImagesCubit>(() => SliderImagesCubit());

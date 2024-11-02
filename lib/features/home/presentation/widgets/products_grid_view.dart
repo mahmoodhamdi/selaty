@@ -20,7 +20,7 @@ class ProductsGridView extends StatelessWidget {
       create: (context) => sl<AddToFavouritesCubit>(),
       child: BlocBuilder<ProductCubit, ProductState>(
         builder: (context, state) {
-          if (state.status == ProductStatus.initial||
+          if (state.status == ProductStatus.initial ||
               state.products == null ||
               state.products!.isEmpty) {
             return const ShimmerLoading();
@@ -29,8 +29,6 @@ class ProductsGridView extends StatelessWidget {
           if (state.status == ProductStatus.failure && state.products == null) {
             return Center(child: Text('Error: ${state.errorMessage}'));
           }
-
-        
 
           return ProductGrid(products: state.products!);
         },
@@ -69,7 +67,7 @@ class ProductGrid extends StatelessWidget {
         child: GridView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          itemCount: products.length ,
+          itemCount: products.length,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
             childAspectRatio: 1 / 1.5,
@@ -77,7 +75,7 @@ class ProductGrid extends StatelessWidget {
             crossAxisSpacing: 10,
           ),
           itemBuilder: (context, index) {
-            return ProductCard(product: products[index ]);
+            return ProductCard(product: products[index]);
           },
         ),
       ),

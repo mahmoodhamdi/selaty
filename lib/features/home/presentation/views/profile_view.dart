@@ -7,12 +7,14 @@ import 'package:selaty/core/constants/api_constants.dart';
 import 'package:selaty/core/constants/colors.dart';
 import 'package:selaty/core/depandancy_injection/service_locator.dart';
 import 'package:selaty/core/enums/status.dart';
-import 'package:selaty/features/auth/data/models/login_response.dart';
 import 'package:selaty/features/auth/data/models/update_profile_request_model.dart';
-import 'package:selaty/features/auth/presentation/logic/get_cached_user/get_cached_user_cubit.dart';
-import 'package:selaty/features/auth/presentation/logic/get_cached_user/get_cached_user_state.dart';
 import 'package:selaty/features/auth/presentation/logic/logout/logout_cubit.dart';
+import 'package:selaty/features/auth/presentation/logic/logout/logout_state.dart';
+import 'package:selaty/features/auth/presentation/views/auth_view.dart';
+import 'package:selaty/features/home/data/models/get_profile_response.dart';
 import 'package:selaty/features/home/domain/usecases/update_profile_usecase.dart';
+import 'package:selaty/features/home/presentation/logic/profile/get_profile_cubit.dart';
+import 'package:selaty/features/home/presentation/logic/profile/get_profile_state.dart';
 import 'package:selaty/features/home/presentation/logic/update_profile/update_profile_cubit.dart';
 import 'package:selaty/features/home/presentation/logic/update_profile/update_profile_state.dart';
 
@@ -36,7 +38,7 @@ class _ProfileViewState extends State<ProfileView> {
   @override
   void initState() {
     super.initState();
-    context.read<CachedUserCubit>().getCachedUser();
+    context.read<GetProfileCubit>().fetchProfile(context);
   }
 
   @override
@@ -47,7 +49,7 @@ class _ProfileViewState extends State<ProfileView> {
     super.dispose();
   }
 
-  void _initializeUserData(LoginUserData userData) {
+  void _initializeUserData(ProfileData userData) {
     _nameController.text = userData.name;
     _emailController.text = userData.email;
     _mobileController.text = userData.mobile;
@@ -152,28 +154,27 @@ class _ProfileViewState extends State<ProfileView> {
                 if (state.status == UpdateProfileStatus.success) {
                   _showSuccessSnackBar('تم تحديث الملف الشخصي بنجاح!');
                   setState(() => _isEditing = false);
-                  // Refresh cached user data after successful update
-                  context.read<CachedUserCubit>().getCachedUser();
+                  context.read<GetProfileCubit>().fetchProfile(context);
                 } else if (state.status == UpdateProfileStatus.failure) {
                   _showErrorSnackBar(state.message ?? 'فشل التحديث');
                 }
               },
             ),
-            BlocListener<CachedUserCubit, CachedUserState>(
+            BlocListener<GetProfileCubit, GetProfileState>(
               listener: (context, state) {
-                if (state.status == CachedUserStatus.success &&
-                    state.userData != null) {
-                  _initializeUserData(state.userData!);
-                } else if (state.status == CachedUserStatus.failure) {
+                if (state.status == ProfileStatus.success &&
+                    state.profileData != null) {
+                  _initializeUserData(state.profileData!);
+                } else if (state.status == ProfileStatus.failure) {
                   _showErrorSnackBar(
                       state.errorMessage ?? 'فشل في تحميل بيانات المستخدم');
                 }
               },
             ),
           ],
-          child: BlocBuilder<CachedUserCubit, CachedUserState>(
+          child: BlocBuilder<GetProfileCubit, GetProfileState>(
             builder: (context, state) {
-              if (state.status == CachedUserStatus.loading) {
+              if (state.status == ProfileStatus.loading) {
                 return const Center(
                   child: CircularProgressIndicator(
                     valueColor: AlwaysStoppedAnimation<Color>(primaryBlue),
@@ -267,8 +268,9 @@ class _ProfileViewState extends State<ProfileView> {
                             enabled: _isEditing,
                             prefixIcon: Icons.email_outlined,
                             validator: (value) {
-                              if (value?.isEmpty ?? true)
+                              if (value?.isEmpty ?? true) {
                                 return 'البريد الإلكتروني مطلوب';
+                              }
                               if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
                                   .hasMatch(value!)) {
                                 return 'أدخل بريد إلكتروني صحيح';
@@ -283,8 +285,9 @@ class _ProfileViewState extends State<ProfileView> {
                             enabled: _isEditing,
                             prefixIcon: Icons.phone_outlined,
                             validator: (value) {
-                              if (value?.isEmpty ?? true)
+                              if (value?.isEmpty ?? true) {
                                 return 'رقم الجوال مطلوب';
+                              }
                               if (!RegExp(r'^\+?[\d\s-]{10,}$')
                                   .hasMatch(value!)) {
                                 return 'أدخل رقم جوال صحيح';
@@ -296,14 +299,28 @@ class _ProfileViewState extends State<ProfileView> {
                           if (!_isEditing) ...[
                             Row(
                               children: [
-                                Expanded(
-                                  child: _buildActionButton(
-                                    onTap: () =>
-                                        context.read<LogoutCubit>().logout(),
-                                    color: secondaryPurple.withOpacity(0.1),
-                                    icon: Icons.logout_rounded,
-                                    title: 'تسجيل خروج',
-                                    textColor: secondaryPurple,
+                                BlocListener<LogoutCubit, LogoutState>(
+                                  listener: (context, state) {
+                                    if (state.status == LogoutStatus.success) {
+                                      Future.delayed(
+                                          const Duration(seconds: 1));
+                                      Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const AuthView()),
+                                      );
+                                    }
+                                  },
+                                  child: Expanded(
+                                    child: _buildActionButton(
+                                      onTap: () =>
+                                          context.read<LogoutCubit>().logout(),
+                                      color: secondaryPurple.withOpacity(0.1),
+                                      icon: Icons.logout_rounded,
+                                      title: 'تسجيل خروج',
+                                      textColor: secondaryPurple,
+                                    ),
                                   ),
                                 ),
                                 const SizedBox(width: 16),

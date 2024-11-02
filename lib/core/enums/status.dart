@@ -23,3 +23,5 @@ enum GetUserFavouritesStatus { initial, loading, success, failure }
 enum AddToFavouritesStatus { initial, loading, success, failure }
 
 enum UpdateProfileStatus { initial, loading, success, failure }
+
+enum ProfileStatus { initial, loading, success, failure }

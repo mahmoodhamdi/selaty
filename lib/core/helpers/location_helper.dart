@@ -6,6 +6,7 @@ import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:selaty/core/constants/colors.dart';
+import 'package:selaty/core/helpers/helper_functions.dart';
 import 'package:selaty/core/helpers/logger_helper.dart';
 
 class LocationHelper {
@@ -510,11 +511,8 @@ class LocationHelper {
           Placemark place = placemarks.first;
           // Create a more detailed address string
           List<String?> addressComponents = [
-            place.street,
-            place.subLocality,
             place.locality,
             place.administrativeArea,
-            place.country,
           ]
               .where((component) => component != null && component.isNotEmpty)
               .toList();
@@ -525,38 +523,10 @@ class LocationHelper {
               .replaceAll(RegExp(r'^\s*,\s*|\s*,\s*$'), '');
 
           // Show success snackbar
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              behavior: SnackBarBehavior.floating,
-              margin: const EdgeInsets.all(16),
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-              backgroundColor: primaryGreen,
-              content: const Row(
-                children: [
-                  Icon(
-                    Icons.check_circle_outline,
-                    color: Colors.white,
-                  ),
-                  SizedBox(width: 12),
-                  Expanded(
-                    child: Text(
-                      'تم تحديد موقعك بنجاح',
-                      textAlign: TextAlign.right,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              duration: const Duration(seconds: 3),
-            ),
+          THelperFunctions.showSnackBar(
+            context: context,
+            message: 'تم تحديد موقعك بنجاح',
           );
-
           LoggerHelper.info("تم العثور على العنوان: $address");
           return address;
         }

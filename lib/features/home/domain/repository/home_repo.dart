@@ -4,6 +4,7 @@ import 'package:dartz/dartz.dart';
 import 'package:selaty/features/auth/data/models/update_profile_request_model.dart';
 import 'package:selaty/features/auth/data/models/update_profile_response_model.dart';
 import 'package:selaty/features/home/data/models/categories_response.dart';
+import 'package:selaty/features/home/data/models/get_profile_response.dart';
 import 'package:selaty/features/home/data/models/get_user_favourite_response.dart';
 import 'package:selaty/features/home/data/models/product_reesponse_model.dart';
 import 'package:selaty/features/home/data/models/slider_response.dart';
@@ -19,4 +20,5 @@ abstract class HomeRepo {
     required UpdateProfileRequest request,
     required File profilePhoto,
   });
+  Future<Either<String, ProfileData>> getProfile();
 }

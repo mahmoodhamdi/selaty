@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:selaty/core/constants/colors.dart';
 import 'package:selaty/core/constants/styles.dart';
+import 'package:selaty/core/depandancy_injection/service_locator.dart';
 import 'package:selaty/features/home/data/models/product_reesponse_model.dart';
 import 'package:selaty/features/home/presentation/logic/add_to_favourites/add_to_favourites_cubit.dart';
 import 'package:selaty/features/home/presentation/views/product_details_view.dart';
@@ -22,10 +23,13 @@ class ProductCard extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Navigator.push(
-  context,
-  MaterialPageRoute(
-    builder: (context) => ProductDetailsView(product: product),
-  ));
+            context,
+            MaterialPageRoute(
+              builder: (context) => BlocProvider(
+                create: (context) => sl<AddToFavouritesCubit>(),
+                child: ProductDetailsView(product: product),
+              ),
+            ));
       },
       child: Container(
         decoration: const BoxDecoration(

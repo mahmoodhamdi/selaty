@@ -13,6 +13,7 @@ import 'package:selaty/features/auth/data/models/update_profile_request_model.da
 import 'package:selaty/features/auth/data/models/update_profile_response_model.dart';
 import 'package:selaty/features/home/data/models/add_to_favourite_response.dart';
 import 'package:selaty/features/home/data/models/categories_response.dart';
+import 'package:selaty/features/home/data/models/get_profile_response.dart';
 import 'package:selaty/features/home/data/models/get_user_favourite_response.dart'; // Import the model
 import 'package:selaty/features/home/data/models/product_reesponse_model.dart';
 import 'package:selaty/features/home/data/models/slider_response.dart';
@@ -27,9 +28,38 @@ abstract class HomeRemoteDataSource {
     required UpdateProfileRequest request,
     required File profilePhoto,
   });
+  Future<Either<String, ProfileData>> getProfile();
 }
 
 class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
+  @override
+  Future<Either<String, ProfileData>> getProfile() async {
+    try {
+      final token = await sl<AuthLocalDataSource>().getToken();
+      var response = await sl<DioClient>().get(
+        ApiConstants.userProfileUrl,
+        options: Options(headers: {
+          'Authorization': 'Bearer $token',
+          'Content-Type': 'application/json',
+        }),
+      );
+
+      GetProfileResponse getProfileResponse =
+          GetProfileResponse.fromJson(response.data);
+      if (getProfileResponse.status) {
+        return Right(getProfileResponse.data!);
+      } else {
+        return Left(getProfileResponse.message ?? 'Unknown error');
+      }
+    } on DioException catch (e) {
+      return Left(DioExceptionHelper.handleDioError(e));
+    } on PlatformException catch (e) {
+      return Left(PlatformExceptionHelper.handlePlatformError(e));
+    } catch (e) {
+      return Left('حدث خطأ غير متوقع: $e');
+    }
+  }
+
   @override
   Future<Either<String, List<SliderResponseData>>> getSliderImages() async {
     try {
@@ -159,7 +189,7 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
           'name': request.name,
           'mobile': request.mobile,
           'email': request.email,
-          'profile_photo': await MultipartFile.fromFile(profilePhoto.path),
+          'profile_photo_path': await MultipartFile.fromFile(profilePhoto.path),
         }),
         options: Options(headers: {
           'Authorization': 'Bearer $token',

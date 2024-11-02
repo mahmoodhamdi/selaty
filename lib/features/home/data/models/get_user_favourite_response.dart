@@ -162,6 +162,48 @@ class FavouriteProduct extends Equatable {
       userAdded: json['user_added'],
     );
   }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'userId': userId,
+      'type': type,
+      'ord': ord,
+      'isUsed': isUsed,
+      'categoryId': categoryId,
+      'countryId': countryId,
+      'brandId': brandId,
+      'name': name,
+      'nameEn': nameEn,
+      'details': details,
+      'detailsEn': detailsEn,
+      'colorId': colorId,
+      'tag': tag,
+      'tagEn': tagEn,
+      'taxId': taxId,
+      'price': price,
+      'discount': discount,
+      'sku': sku,
+      'quantity': quantity,
+      'notifiQuantity': notifiQuantity,
+      'stokeId': stokeId,
+      'repositoryNumber': repositoryNumber,
+      'img': img,
+      'productCode': productCode,
+      'hashNumber': hashNumber,
+      'barcode': barcode,
+      'barcodeNumber': barcodeNumber,
+      'weight': weight,
+      'numViews': numViews,
+      'isActive': isActive,
+      'deletedAt': deletedAt,
+      'createdAt': createdAt,
+      'updatedAt': updatedAt,
+      'userIp': userIp,
+      'userPcInfo': userPcInfo,
+      'userAdded': userAdded,
+    };
+  }
 }
 
 // Favourite data model
@@ -186,9 +228,19 @@ class FavouriteData extends Equatable {
       id: json['id'],
       favoId: json['favo_id'],
       priceWithDiscount: json['price_with_discount'].toDouble(),
-      product:
-          json['product'] != null ? FavouriteProduct.fromJson(json['product']) : null,
+      product: json['product'] != null
+          ? FavouriteProduct.fromJson(json['product'])
+          : null,
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'favoId': favoId,
+      'priceWithDiscount': priceWithDiscount,
+      'product': product?.toMap(),
+    };
   }
 }
 

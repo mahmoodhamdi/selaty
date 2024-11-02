@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:selaty/features/home/presentation/widgets/product_ui_card.dart';
+import 'package:selaty/features/home/presentation/widgets/favourites_loading.dart';
 
-class FreshProductsGridView extends StatelessWidget {
-  const FreshProductsGridView({
-    super.key,
-  });
+class ShimmerLoading extends StatelessWidget {
+  const ShimmerLoading({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,14 +12,13 @@ class FreshProductsGridView extends StatelessWidget {
         height: 500,
         child: GridView.builder(
           scrollDirection: Axis.horizontal,
-          clipBehavior: Clip.none,
-          itemCount: 10,
+          itemCount: 6,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
-              childAspectRatio: 2 / 1.2,
+              childAspectRatio: 2.1 / 1.2,
               mainAxisSpacing: 20,
-              crossAxisSpacing: 20),
-          itemBuilder: (context, index) => const ProductUiCard(),
+              crossAxisSpacing: 10),
+          itemBuilder: (context, index) => const ShimmerProductCard(),
         ),
       ),
     );

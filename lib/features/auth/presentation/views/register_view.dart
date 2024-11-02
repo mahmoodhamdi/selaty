@@ -50,11 +50,11 @@ class _RegisterViewState extends State<RegisterView> {
   Future<void> getCurrentLocation() async {
     String? address =
         await LocationHelper.getAddressFromCurrentLocation(context);
-    if (address != null) {
+    if (address != null && mounted) {
       setState(() {
         fetchedAddress = address;
       });
-    } else {
+    } else if (mounted) {
       getCurrentLocation();
     }
   }
@@ -169,6 +169,8 @@ class _RegisterViewState extends State<RegisterView> {
                         onTap: () {
                           if (state.status != RegisterStatus.loading &&
                               formKey.currentState!.validate()) {
+                            THelperFunctions.hideKeyboard(context);
+
                             // Trigger registration
                             final registerCubit = context.read<RegisterCubit>();
                             registerCubit.register(RegisterParams(

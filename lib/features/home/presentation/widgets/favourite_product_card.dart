@@ -4,8 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:selaty/core/constants/colors.dart';
 import 'package:selaty/core/constants/styles.dart';
 import 'package:selaty/features/home/data/models/get_user_favourite_response.dart';
-import 'package:selaty/features/home/presentation/views/cart_view.dart';
-import 'package:shimmer/shimmer.dart';
+ import 'package:shimmer/shimmer.dart';
 
 class FavouriteProductCard extends StatelessWidget {
   final FavouriteProduct favouriteProduct;
@@ -24,9 +23,8 @@ class FavouriteProductCard extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => const CartView()));
-      },
+        
+       },
       child: Container(
         decoration: const BoxDecoration(
           color: Colors.white,

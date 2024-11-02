@@ -19,10 +19,10 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
       child: Container(
-        height: 40,
+        height: 50,
         decoration: BoxDecoration(
           color: Colors.grey.shade200, // Light flat background
-          borderRadius: BorderRadius.circular(30), // Rounded corners
+          borderRadius: BorderRadius.circular(8), // Rounded corners
           border: Border.all(
               color: Colors.grey.shade400), // Thin border for modern look
         ),

@@ -11,32 +11,11 @@ import 'package:selaty/features/home/domain/repository/home_repo.dart';
 class HomeRepoImpl extends HomeRepo {
   @override
   Future<Either<String, List<SliderResponseData>>> getSliderImages() async {
-    final localResult = await sl<HomeLocalDataSource>().getSliderImages();
-    return localResult.fold(
-      (error) async {
-        final remoteResult = await sl<HomeRemoteDataSource>().getSliderImages();
-        return remoteResult.fold(
-          (error) => Left(error),
-          (sliderImages) async {
-            sl<HomeLocalDataSource>().cacheSliderImages(sliderImages);
-            return Right(sliderImages);
-          },
-        );
-      },
+    final remoteResult = await sl<HomeRemoteDataSource>().getSliderImages();
+    return remoteResult.fold(
+      (error) => Left(error),
       (sliderImages) async {
-        if (sliderImages.isEmpty) {
-          final remoteResult =
-              await sl<HomeRemoteDataSource>().getSliderImages();
-          return remoteResult.fold(
-            (error) => Left(error),
-            (sliderImages) async {
-              sl<HomeLocalDataSource>().cacheSliderImages(sliderImages);
-              return Right(sliderImages);
-            },
-          );
-        } else {
-          return Right(sliderImages);
-        }
+        return Right(sliderImages);
       },
     );
   }
@@ -105,6 +84,65 @@ class HomeRepoImpl extends HomeRepo {
 
   @override
   Future<Either<String, List<FavouriteData>>> getUserFavourites() async {
-    return await sl<HomeRemoteDataSource>().getUserFavourites();
+    final localResult = await sl<HomeLocalDataSource>().getUserFavourites();
+
+    return await localResult.fold(
+      (error) async {
+        // If there's an error from the local source, attempt the remote fetch.
+        final remoteResult =
+            await sl<HomeRemoteDataSource>().getUserFavourites();
+        return remoteResult.fold(
+          (error) => Left(error),
+          (favourites) async {
+            // Cache the favourites fetched from remote source locally.
+            sl<HomeLocalDataSource>().cacheUserFavourites(favourites);
+            return Right(favourites);
+          },
+        );
+      },
+      (favourites) async {
+        // If local favourites are empty, fetch from remote as fallback.
+        if (favourites.isEmpty) {
+          final remoteResult =
+              await sl<HomeRemoteDataSource>().getUserFavourites();
+          return remoteResult.fold(
+            (error) => Left(error),
+            (favourites) async {
+              sl<HomeLocalDataSource>().cacheUserFavourites(favourites);
+              return Right(favourites);
+            },
+          );
+        } else {
+          return Right(favourites);
+        }
+      },
+    );
+  }
+
+  @override
+  Future<Either<String, String>> addToFavourites(
+      {required int productId}) async {
+    final remoteResult =
+        await sl<HomeRemoteDataSource>().addToFavourites(productId: productId);
+
+    return remoteResult.fold(
+      (error) => Left(error),
+      (successMessage) async {
+        // If adding to favorites remotely succeeds, update the local data source
+        final updatedFavouritesResult =
+            await sl<HomeRemoteDataSource>().getUserFavourites();
+
+        updatedFavouritesResult.fold(
+          (error) =>
+              null, // Handle the error silently, or you could log it if needed
+          (updatedFavourites) async {
+            await sl<HomeLocalDataSource>()
+                .cacheUserFavourites(updatedFavourites);
+          },
+        );
+
+        return Right(successMessage);
+      },
+    );
   }
 }

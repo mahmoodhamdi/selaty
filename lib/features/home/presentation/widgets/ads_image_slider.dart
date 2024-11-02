@@ -9,14 +9,14 @@ import 'carousel_item.dart';
 import 'custom_indicators.dart';
 import 'shimmer_loader.dart';
 
-class AdsImageSlider extends StatefulWidget {
-  const AdsImageSlider({super.key});
+class AdImageSlider extends StatefulWidget {
+  const AdImageSlider({super.key});
 
   @override
-  State<AdsImageSlider> createState() => _AdsImageSliderState();
+  State<AdImageSlider> createState() => _AdImageSliderState();
 }
 
-class _AdsImageSliderState extends State<AdsImageSlider>
+class _AdImageSliderState extends State<AdImageSlider>
     with SingleTickerProviderStateMixin {
   int _currentIndex = 0;
   late CarouselSliderController _carouselController;

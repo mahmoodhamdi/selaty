@@ -98,6 +98,8 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
                       onTap: () {
                         if (state.status != ForgetPasswordStatus.loading &&
                             _formKey.currentState!.validate()) {
+                          THelperFunctions.hideKeyboard(context);
+
                           _formKey.currentState!.save();
                           context.read<SendOtpCubit>().sendOtp(
                                 SendOtpReqBody(

@@ -25,7 +25,8 @@ class _MainViewState extends State<MainView> {
   @override
   void initState() {
     super.initState();
-    _controller = PersistentTabController(initialIndex: 2);
+    _controller = PersistentTabController(
+        initialIndex: 1); // Set initial index to 1 for Home tab
   }
 
   List<Widget> _buildScreens() {

@@ -124,6 +124,8 @@ class _OtpViewState extends State<OtpView> {
   }
 
   void _handleOtpSubmit(String otp) {
+    THelperFunctions.hideKeyboard(context);
+
     if (otp == widget.otp.toString()) {
       Navigator.pushReplacement(
         context,

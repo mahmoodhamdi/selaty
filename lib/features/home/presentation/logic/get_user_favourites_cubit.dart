@@ -14,7 +14,7 @@ class GetUserFavouritesCubit extends Cubit<GetUserFavouritesState> {
 
     result.fold(
       (error) => emit(state.copyWith(
-        status: GetUserFavouritesStatus.error,
+        status: GetUserFavouritesStatus.failure,
         errorMessage: error,
       )),
       (favourites) => emit(state.copyWith(

@@ -130,8 +130,8 @@ class _LoginViewState extends State<LoginView> {
                             onTap: () {
                               if (state.status != LoginStatus.loading &&
                                   formKey.currentState!.validate()) {
-                                // Trigger registration
-                                final loginCubit = context.read<LoginCubit>();
+                                THelperFunctions.hideKeyboard(context);
+                                 final loginCubit = context.read<LoginCubit>();
                                 loginCubit.login(LoginParms(
                                     loginReqBody: LoginReqBody(
                                   password: passwordController.text.trim(),

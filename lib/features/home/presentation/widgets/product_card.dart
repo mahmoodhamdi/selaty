@@ -1,10 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:selaty/core/constants/colors.dart';
 import 'package:selaty/core/constants/styles.dart';
 import 'package:selaty/features/home/data/models/product_reesponse_model.dart';
-import 'package:selaty/features/home/presentation/views/cart_view.dart';
+import 'package:selaty/features/home/presentation/logic/add_to_favourites_cubit.dart';
 import 'package:shimmer/shimmer.dart';
 
 class ProductCard extends StatelessWidget {
@@ -15,20 +16,14 @@ class ProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final isPortrait =
         MediaQuery.of(context).orientation == Orientation.portrait;
+    final favouritesCubit = context.read<AddToFavouritesCubit>();
 
     return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const CartView()),
-        );
-      },
+      onTap: () {},
       child: Container(
         decoration: const BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.all(
-            Radius.circular(8),
-          ),
+          borderRadius: BorderRadius.all(Radius.circular(8)),
         ),
         child: Column(
           children: [
@@ -36,7 +31,9 @@ class ProductCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    favouritesCubit.addToFavourites(product.id);
+                  },
                   icon: Icon(
                     product.isFavorite == 1
                         ? FontAwesomeIcons.solidHeart
@@ -52,12 +49,10 @@ class ProductCard extends StatelessWidget {
               child: CachedNetworkImage(
                 imageUrl: "https://marketappmaster.com/uploads/${product.img}",
                 placeholder: (context, url) => Shimmer.fromColors(
-                    baseColor: Colors.grey[300]!,
-                    highlightColor: Colors.grey[100]!,
-                    child: Container(
-                      color: Colors.grey[200],
-                      height: 100,
-                    )),
+                  baseColor: Colors.grey[300]!,
+                  highlightColor: Colors.grey[100]!,
+                  child: Container(color: Colors.grey[200], height: 100),
+                ),
                 errorWidget: (context, url, error) => const Icon(Icons.error),
                 fit: BoxFit.cover,
               ),
@@ -71,8 +66,8 @@ class ProductCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      maxLines: 2,
                       product.name,
+                      maxLines: 2,
                       style: Styles.textStyle12.copyWith(
                         color: Colors.grey.shade600,
                       ),
@@ -80,7 +75,7 @@ class ProductCard extends StatelessWidget {
                     Text(
                       product.quantity == 0
                           ? 'غير متوفر'
-                          : ' متبقي ${product.quantity}',
+                          : 'متبقي ${product.quantity}',
                       style: Styles.textStyle12.copyWith(
                         color: product.quantity == 0
                             ? primaryRed
@@ -94,6 +89,11 @@ class ProductCard extends StatelessWidget {
             const SizedBox(height: 8),
             Container(
               decoration: BoxDecoration(
+                color: Colors.grey.shade300,
+                borderRadius: const BorderRadius.only(
+                  bottomRight: Radius.circular(8),
+                  bottomLeft: Radius.circular(8),
+                ),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.grey.withOpacity(0.4),
@@ -102,23 +102,14 @@ class ProductCard extends StatelessWidget {
                     blurRadius: 10,
                   )
                 ],
-                color: Colors.grey.shade300,
-                borderRadius: const BorderRadius.only(
-                  bottomRight: Radius.circular(8),
-                  bottomLeft: Radius.circular(8),
-                ),
               ),
               child: Padding(
-                padding:
-                    const EdgeInsets.only(top: 4, right: 8, left: 8, bottom: 4),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      '${product.price} EGP',
-                      style: Styles.textStyle12Bold,
-                    ),
-                  ],
+                padding: const EdgeInsets.all(8),
+                child: Center(
+                  child: Text(
+                    '${product.price} EGP',
+                    style: Styles.textStyle12Bold,
+                  ),
                 ),
               ),
             ),

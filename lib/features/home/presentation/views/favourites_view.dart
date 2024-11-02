@@ -41,7 +41,7 @@ class FavouritesView extends StatelessWidget {
           builder: (context, state) {
             if (state.status == GetUserFavouritesStatus.loading) {
               return const FavouritesLoading();
-            } else if (state.status == GetUserFavouritesStatus.error) {
+            } else if (state.status == GetUserFavouritesStatus.failure) {
               return FavouritesError(
                 errorMessage: state.errorMessage!,
                 onRetry: () => context

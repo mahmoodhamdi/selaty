@@ -4,6 +4,7 @@ import 'package:dartz/dartz.dart';
 import 'package:selaty/core/depandancy_injection/service_locator.dart';
 import 'package:selaty/core/helpers/logger_helper.dart';
 import 'package:selaty/features/home/data/models/categories_response.dart';
+import 'package:selaty/features/home/data/models/get_profile_response.dart';
 import 'package:selaty/features/home/data/models/get_user_favourite_response.dart';
 import 'package:selaty/features/home/data/models/product_reesponse_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -16,11 +17,13 @@ abstract class HomeLocalDataSource {
   Future<Either<String, void>> cacheUserFavourites(
       List<FavouriteData> favourites);
   Future<Either<String, List<FavouriteData>>> getUserFavourites();
-
+  Future<Either<String, ProfileData>> getProfile();
+  Future<Either<String, void>> cacheProfile(ProfileData profile);
   Future<Either<String, void>> clearCache();
 }
 
 class HomeLocalDataSourceImpl implements HomeLocalDataSource {
+  
   @override
   Future<Either<String, void>> cacheCategories(
       List<Category> categories) async {
@@ -135,5 +138,38 @@ class HomeLocalDataSourceImpl implements HomeLocalDataSource {
       LoggerHelper.error("Failed to cache favourites: $e");
       return const Left("Failed to cache favourites");
     }
+  }
+  
+  @override
+  Future<Either<String, void>> cacheProfile(ProfileData profile)async {
+    try {
+      final jsonString = json.encode(profile.toJson());
+      sl<SharedPreferences>().setString('profile', jsonString);
+      LoggerHelper.info("Cached profile in Shared Preferences");
+      return const Right(null);
+    } catch (e) {
+      LoggerHelper.error("Failed to cache profile: $e");
+      return const Left("Failed to cache profile");
+    }
+
+  }
+  
+  @override
+  Future<Either<String, ProfileData>> getProfile() async{
+    try {
+      final jsonString = sl<SharedPreferences>().getString('profile');
+      if (jsonString != null) {
+        final profile = ProfileData.fromJson(json.decode(jsonString));
+        LoggerHelper.info("Loaded cached profile from Shared Preferences");
+        return Right(profile);
+      } else {
+        LoggerHelper.warning("No cached profile found");
+        return const Left("No cached profile found");
+      }
+    } catch (e) {
+      LoggerHelper.error("Failed to decode cached profile: $e");
+      return const Left("Failed to decode cached profile");
+    }
+    
   }
 }

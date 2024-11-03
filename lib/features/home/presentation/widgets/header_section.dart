@@ -10,7 +10,7 @@ class HeaderSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<GetProfileCubit>(
-      create: (context) => sl<GetProfileCubit>()..fetchProfile(context),
+      create: (context) => sl<GetProfileCubit>(),
       child: const UserInfo(),
     );
   }

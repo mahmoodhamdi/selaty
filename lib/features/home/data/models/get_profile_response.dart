@@ -48,6 +48,17 @@ class ProfileData extends Equatable {
       profilePhotoPath: json['profile_photo_path'] ?? '',
     );
   }
+  //to json
+  Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+      'mobile': mobile,
+      'email': email,
+      'profile_photo_path': profilePhotoPath,
+      'location': location,
+    };
+  }
+
   ProfileData copyWith({
     String? location,
   }) {

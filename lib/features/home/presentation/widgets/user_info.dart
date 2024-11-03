@@ -1,9 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:selaty/core/constants/api_constants.dart';
-import 'package:selaty/core/constants/colors.dart';
 import 'package:selaty/core/constants/styles.dart';
 import 'package:selaty/core/depandancy_injection/service_locator.dart';
 import 'package:selaty/core/enums/status.dart';
@@ -17,6 +15,7 @@ class UserInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context.read<GetProfileCubit>().fetchProfile();
     return BlocBuilder<GetProfileCubit, GetProfileState>(
       builder: (context, state) {
         // Show loading or error message based on the state
@@ -79,25 +78,6 @@ class UserInfo extends StatelessWidget {
                   Text(
                     userData != null ? userData.name : "",
                     style: Styles.textStyle16,
-                  ),
-                  Row(
-                    children: [
-                      const CircleAvatar(
-                        radius: 9,
-                        backgroundColor: Colors.white,
-                        child: Icon(
-                          FontAwesomeIcons.locationDot,
-                          color: primaryRed,
-                          size: 16,
-                        ),
-                      ),
-                      Text(
-                        userData != null
-                            ? userData.location!.trim()
-                            : "",
-                        style: Styles.textStyle16.copyWith(color: Colors.grey),
-                      ),
-                    ],
                   ),
                 ],
               ),

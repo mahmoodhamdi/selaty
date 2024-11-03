@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:selaty/core/constants/colors.dart';
 import 'package:selaty/core/depandancy_injection/service_locator.dart';
 import 'package:selaty/core/enums/status.dart';
+import 'package:selaty/core/helpers/helper_functions.dart';
 import 'package:selaty/features/home/data/models/get_user_favourite_response.dart';
 import 'package:selaty/features/home/presentation/logic/add_to_favourites/add_to_favourites_cubit.dart';
 import 'package:selaty/features/home/presentation/logic/add_to_favourites/add_to_favourites_state.dart';
@@ -42,11 +42,9 @@ class FavouritesGrid extends StatelessWidget {
                   listener: (context, state) {
                     if (state.status == AddToFavouritesStatus.success) {
                     } else if (state.status == AddToFavouritesStatus.failure) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(state.message ?? 'حدث خطأ'),
-                          backgroundColor: primaryRed,
-                        ),
+                      THelperFunctions.showSnackBar(
+                        context: context,
+                        message: state.message ?? 'فشل في الإضافة الي المفضلات',
                       );
                     }
                   },

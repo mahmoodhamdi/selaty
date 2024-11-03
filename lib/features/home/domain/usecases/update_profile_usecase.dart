@@ -5,7 +5,6 @@ import 'package:selaty/core/depandancy_injection/service_locator.dart';
 import 'package:selaty/core/usecase/usecase.dart';
 import 'package:selaty/features/auth/data/models/update_profile_request_model.dart';
 import 'package:selaty/features/auth/data/models/update_profile_response_model.dart';
-import 'package:selaty/features/auth/domain/repository/auth_repo.dart';
 import 'package:selaty/features/home/domain/repository/home_repo.dart';
 
 class UpdateProfileUsecase extends UseCase<

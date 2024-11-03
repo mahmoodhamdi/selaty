@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:selaty/core/constants/colors.dart';
 import 'package:selaty/core/depandancy_injection/service_locator.dart';
 import 'package:selaty/core/enums/status.dart';
+import 'package:selaty/core/helpers/helper_functions.dart';
 import 'package:selaty/features/home/data/models/product_reesponse_model.dart';
 import 'package:selaty/features/home/presentation/logic/add_to_favourites/add_to_favourites_cubit.dart';
 import 'package:selaty/features/home/presentation/logic/add_to_favourites/add_to_favourites_state.dart';
@@ -47,18 +47,14 @@ class ProductGrid extends StatelessWidget {
     return BlocListener<AddToFavouritesCubit, AddToFavouritesState>(
       listener: (context, state) {
         if (state.status == AddToFavouritesStatus.success) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(state.message!),
-              backgroundColor: primaryGreen,
-            ),
+          THelperFunctions.showSnackBar(
+            context: context,
+            message: state.message ?? 'تم الإضافة الي المفضلات',
           );
         } else if (state.status == AddToFavouritesStatus.failure) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(state.message ?? 'خطأ في الإضافة'),
-              backgroundColor: primaryRed,
-            ),
+          THelperFunctions.showSnackBar(
+            context: context,
+            message: state.message ?? 'فشل في الإضافة الي المفضلات',
           );
         }
       },

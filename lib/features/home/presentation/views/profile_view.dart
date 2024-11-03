@@ -7,6 +7,7 @@ import 'package:selaty/core/constants/api_constants.dart';
 import 'package:selaty/core/constants/colors.dart';
 import 'package:selaty/core/depandancy_injection/service_locator.dart';
 import 'package:selaty/core/enums/status.dart';
+import 'package:selaty/core/helpers/helper_functions.dart';
 import 'package:selaty/features/auth/data/models/update_profile_request_model.dart';
 import 'package:selaty/features/auth/presentation/logic/logout/logout_cubit.dart';
 import 'package:selaty/features/auth/presentation/logic/logout/logout_state.dart';
@@ -17,6 +18,7 @@ import 'package:selaty/features/home/presentation/logic/profile/get_profile_cubi
 import 'package:selaty/features/home/presentation/logic/profile/get_profile_state.dart';
 import 'package:selaty/features/home/presentation/logic/update_profile/update_profile_cubit.dart';
 import 'package:selaty/features/home/presentation/logic/update_profile/update_profile_state.dart';
+import 'package:selaty/features/home/presentation/views/main_view.dart';
 
 class ProfileView extends StatefulWidget {
   const ProfileView({super.key});
@@ -38,7 +40,7 @@ class _ProfileViewState extends State<ProfileView> {
   @override
   void initState() {
     super.initState();
-    context.read<GetProfileCubit>().fetchProfile(context);
+    context.read<GetProfileCubit>().fetchProfile();
   }
 
   @override
@@ -70,34 +72,17 @@ class _ProfileViewState extends State<ProfileView> {
         setState(() => _selectedImage = File(image.path));
       }
     } catch (e) {
-      _showErrorSnackBar('فشل في اختيار الصورة. حاول مرة أخرى.');
+      THelperFunctions.showSnackBar(context: context, message: e.toString());
     }
-  }
-
-  void _showErrorSnackBar(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-        backgroundColor: accentRedText,
-        behavior: SnackBarBehavior.floating,
-      ),
-    );
-  }
-
-  void _showSuccessSnackBar(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-        backgroundColor: primaryGreen,
-        behavior: SnackBarBehavior.floating,
-      ),
-    );
   }
 
   Future<void> _handleUpdateProfile() async {
     if (!(_formKey.currentState?.validate() ?? false)) return;
     if (_selectedImage == null && _currentPhotoUrl == null) {
-      _showErrorSnackBar('الرجاء اختيار صورة الملف الشخصي');
+      THelperFunctions.showSnackBar(
+        context: context,
+        message: 'يجب أختيار صورة لتحديث الملف الشخصي.',
+      );
       return;
     }
 
@@ -115,7 +100,7 @@ class _ProfileViewState extends State<ProfileView> {
 
       await context.read<UpdateProfileCubit>().updateProfile(params);
     } catch (e) {
-      _showErrorSnackBar('فشل تحديث الملف الشخصي. حاول مرة أخرى.');
+      THelperFunctions.showSnackBar(context: context, message: e.toString());
     } finally {
       setState(() => _isLoading = false);
     }
@@ -126,6 +111,14 @@ class _ProfileViewState extends State<ProfileView> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_rounded, color: primaryBlue),
+          onPressed: () => Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const MainView()),
+          ),
+        ),
         actions: [
           if (!_isLoading)
             IconButton(
@@ -152,11 +145,17 @@ class _ProfileViewState extends State<ProfileView> {
             BlocListener<UpdateProfileCubit, UpdateProfileState>(
               listener: (context, state) {
                 if (state.status == UpdateProfileStatus.success) {
-                  _showSuccessSnackBar('تم تحديث الملف الشخصي بنجاح!');
+                  THelperFunctions.showSnackBar(
+                    context: context,
+                    message: state.message ?? 'تم تحديث الملف الشخصي',
+                  );
                   setState(() => _isEditing = false);
-                  context.read<GetProfileCubit>().fetchProfile(context);
+                  context.read<GetProfileCubit>().fetchProfile();
                 } else if (state.status == UpdateProfileStatus.failure) {
-                  _showErrorSnackBar(state.message ?? 'فشل التحديث');
+                  THelperFunctions.showSnackBar(
+                    context: context,
+                    message: state.message ?? 'فشل في تحديث الملف الشخصي',
+                  );
                 }
               },
             ),
@@ -166,8 +165,10 @@ class _ProfileViewState extends State<ProfileView> {
                     state.profileData != null) {
                   _initializeUserData(state.profileData!);
                 } else if (state.status == ProfileStatus.failure) {
-                  _showErrorSnackBar(
-                      state.errorMessage ?? 'فشل في تحميل بيانات المستخدم');
+                  THelperFunctions.showSnackBar(
+                    context: context,
+                    message: state.errorMessage ?? 'فشل في تحديث الملف الشخصي',
+                  );
                 }
               },
             ),

@@ -6,7 +6,6 @@ import 'package:selaty/core/enums/status.dart';
 import 'package:selaty/features/home/presentation/logic/categories/categories_cubit.dart';
 import 'package:selaty/features/home/presentation/logic/product/product_cubit.dart';
 import 'package:selaty/features/home/presentation/logic/product/product_state.dart';
-import 'package:selaty/features/home/presentation/logic/profile/get_profile_cubit.dart';
 import 'package:selaty/features/home/presentation/logic/slider_images/slider_images_cubit.dart';
 import 'package:selaty/features/home/presentation/widgets/ads_image_slider.dart';
 import 'package:selaty/features/home/presentation/widgets/categories_list_view.dart';
@@ -50,7 +49,7 @@ class _HomeViewState extends State<HomeView> {
     if (!_scrollController.hasClients) return false;
     final maxScroll = _scrollController.position.maxScrollExtent;
     final currentScroll = _scrollController.offset;
-    return currentScroll >= (maxScroll * 0.99);
+    return currentScroll >= (maxScroll * 0.75);
   }
 
   Future<void> _onRefresh(BuildContext context) async {
@@ -59,7 +58,7 @@ class _HomeViewState extends State<HomeView> {
       context.read<ProductCubit>().fetchProducts(),
       context.read<CategoriesCubit>().fetchCategories(),
       context.read<SliderImagesCubit>().fetchSliderImages(),
-     ]);
+    ]);
   }
 
   @override

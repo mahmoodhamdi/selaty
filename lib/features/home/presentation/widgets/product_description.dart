@@ -31,13 +31,10 @@ class ProductDescription extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Description',
+                'الوصف :',
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
                     color: secondaryPurple, fontWeight: FontWeight.bold),
               ),
-              const SizedBox(height: 10),
-              Text(product.detailsEn,
-                  style: Theme.of(context).textTheme.bodyLarge),
               const SizedBox(height: 10),
               Text(product.details,
                   style: Theme.of(context).textTheme.bodyLarge),

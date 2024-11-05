@@ -25,3 +25,15 @@ enum AddToFavouritesStatus { initial, loading, success, failure }
 enum UpdateProfileStatus { initial, loading, success, failure }
 
 enum ProfileStatus { initial, loading, success, failure }
+
+enum FavouritesStatus {
+  initial,
+  addingToFavouritesLoading,
+  addingToFavouritesSuccess,
+  addingToFavouritesFailure,
+  fetchingFavouritesLoading,
+  fetchingFavouritesSuccess,
+  fetchingFavouritesFailure
+}
+
+enum CartStatus { initial, loading, success, error }

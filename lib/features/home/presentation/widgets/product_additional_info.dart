@@ -29,8 +29,8 @@ class ProductAdditionalInfo extends StatelessWidget {
           child: Column(
             children: [
               if (product.sku != null) _buildInfoRow('SKU', product.sku!),
-              _buildInfoRow('Barcode', product.barcodeNumber),
-              _buildInfoRow('Product Code', product.productCode),
+              _buildInfoRow('الرقم الضريبي', product.barcodeNumber),
+              _buildInfoRow('كود المنتج', product.productCode),
             ],
           ),
         ),

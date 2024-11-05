@@ -1,30 +1,34 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:selaty/core/constants/colors.dart';
 import 'package:selaty/core/constants/styles.dart';
 import 'package:selaty/features/home/data/models/get_user_favourite_response.dart';
- import 'package:shimmer/shimmer.dart';
+import 'package:selaty/features/home/presentation/logic/get_user_favourites/favourites_cubit.dart';
+import 'package:shimmer/shimmer.dart';
 
-class FavouriteProductCard extends StatelessWidget {
+class FavouriteProductCard extends StatefulWidget {
   final FavouriteProduct favouriteProduct;
-  final VoidCallback? onRemoveFavorite;
 
   const FavouriteProductCard({
     super.key,
     required this.favouriteProduct,
-    this.onRemoveFavorite,
   });
 
+  @override
+  State<FavouriteProductCard> createState() => _FavouriteProductCardState();
+}
+
+class _FavouriteProductCardState extends State<FavouriteProductCard> {
+  int count = 0;
   @override
   Widget build(BuildContext context) {
     final isPortrait =
         MediaQuery.of(context).orientation == Orientation.portrait;
 
     return GestureDetector(
-      onTap: () {
-        
-       },
+      onTap: () {},
       child: Container(
         decoration: const BoxDecoration(
           color: Colors.white,
@@ -47,7 +51,7 @@ class FavouriteProductCard extends StatelessWidget {
                       const BorderRadius.vertical(top: Radius.circular(8)),
                   child: CachedNetworkImage(
                     imageUrl:
-                        "https://marketappmaster.com/uploads/${favouriteProduct.img}",
+                        "https://marketappmaster.com/uploads/${widget.favouriteProduct.img}",
                     width: double.infinity,
                     placeholder: (context, url) => Shimmer.fromColors(
                       baseColor: Colors.grey[300]!,
@@ -78,7 +82,16 @@ class FavouriteProductCard extends StatelessWidget {
                   top: 8,
                   right: 8,
                   child: GestureDetector(
-                    onTap: onRemoveFavorite,
+                    onTap: () {
+                      if (count == 0) {
+                        context
+                            .read<FavouritesCubit>()
+                            .addToFavourites(widget.favouriteProduct.id);
+                        setState(() {
+                          count = 1;
+                        });
+                      }
+                    },
                     child: Container(
                       decoration: BoxDecoration(
                         color: Colors.white.withOpacity(0.8),
@@ -109,7 +122,7 @@ class FavouriteProductCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    favouriteProduct.name,
+                    widget.favouriteProduct.name,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: Styles.textStyle14.copyWith(
@@ -122,11 +135,11 @@ class FavouriteProductCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        favouriteProduct.quantity == 0
+                        widget.favouriteProduct.quantity == 0
                             ? 'غير متوفر'
-                            : 'متبقي ${favouriteProduct.quantity}',
+                            : 'متبقي ${widget.favouriteProduct.quantity}',
                         style: Styles.textStyle12.copyWith(
-                          color: favouriteProduct.quantity == 0
+                          color: widget.favouriteProduct.quantity == 0
                               ? primaryRed
                               : Colors.grey.shade600,
                         ),
@@ -139,7 +152,7 @@ class FavouriteProductCard extends StatelessWidget {
                           borderRadius: BorderRadius.circular(5),
                         ),
                         child: Text(
-                          '${favouriteProduct.price} EGP',
+                          '${widget.favouriteProduct.price} EGP',
                           style: Styles.textStyle12Bold.copyWith(
                             color: Colors.white,
                             fontSize: 14,

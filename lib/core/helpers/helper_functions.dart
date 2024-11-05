@@ -5,7 +5,6 @@ import 'package:selaty/core/constants/colors.dart';
 import 'package:selaty/core/helpers/logger_helper.dart';
 
 class THelperFunctions {
-  
   static Future<bool> showLocationServiceDialog(BuildContext context) async {
     return await showGeneralDialog<bool>(
           context: context,
@@ -270,14 +269,6 @@ class THelperFunctions {
       behavior: SnackBarBehavior.floating,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       duration: duration,
-      action: SnackBarAction(
-        label: 'Dismiss',
-        textColor: Colors.yellow,
-        onPressed: () {
-          LoggerHelper.info("SnackBar dismissed by user."); // Log dismissal
-          ScaffoldMessenger.of(context).hideCurrentSnackBar();
-        },
-      ),
     );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:dartz/dartz.dart';
 import 'package:selaty/core/depandancy_injection/service_locator.dart';
 import 'package:selaty/core/helpers/logger_helper.dart';
+import 'package:selaty/features/home/data/models/cart.dart';
 import 'package:selaty/features/home/data/models/categories_response.dart';
 import 'package:selaty/features/home/data/models/get_profile_response.dart';
 import 'package:selaty/features/home/data/models/get_user_favourite_response.dart';
@@ -19,11 +20,15 @@ abstract class HomeLocalDataSource {
   Future<Either<String, List<FavouriteData>>> getUserFavourites();
   Future<Either<String, ProfileData>> getProfile();
   Future<Either<String, void>> cacheProfile(ProfileData profile);
-  Future<Either<String, void>> clearCache();
+
+  Future<void> addToCart(String token, CartItem item);
+  Future<void> removeFromCart(String token, String itemId);
+  Future<List<CartItem>> getCartItems(String token);
+  Future<void> clearCart(String token);
+  Future<void> updateQuantity(String token, String itemId, int quantity);
 }
 
 class HomeLocalDataSourceImpl implements HomeLocalDataSource {
-  
   @override
   Future<Either<String, void>> cacheCategories(
       List<Category> categories) async {
@@ -139,9 +144,9 @@ class HomeLocalDataSourceImpl implements HomeLocalDataSource {
       return const Left("Failed to cache favourites");
     }
   }
-  
+
   @override
-  Future<Either<String, void>> cacheProfile(ProfileData profile)async {
+  Future<Either<String, void>> cacheProfile(ProfileData profile) async {
     try {
       final jsonString = json.encode(profile.toJson());
       sl<SharedPreferences>().setString('profile', jsonString);
@@ -151,11 +156,10 @@ class HomeLocalDataSourceImpl implements HomeLocalDataSource {
       LoggerHelper.error("Failed to cache profile: $e");
       return const Left("Failed to cache profile");
     }
-
   }
-  
+
   @override
-  Future<Either<String, ProfileData>> getProfile() async{
+  Future<Either<String, ProfileData>> getProfile() async {
     try {
       final jsonString = sl<SharedPreferences>().getString('profile');
       if (jsonString != null) {
@@ -170,6 +174,54 @@ class HomeLocalDataSourceImpl implements HomeLocalDataSource {
       LoggerHelper.error("Failed to decode cached profile: $e");
       return const Left("Failed to decode cached profile");
     }
-    
   }
+
+  @override
+  Future<void> addToCart(String token, CartItem item) async {
+    final cart = await _getCart(token);
+    cart.add(item);
+    await _saveCart(token, cart);
+  }
+
+  @override
+  Future<void> removeFromCart(String token, String itemId) async {
+    final cart = await _getCart(token);
+    cart.removeWhere((item) => item.id.toString() == itemId);
+    await _saveCart(token, cart);
+  }
+
+  @override
+  Future<List<CartItem>> getCartItems(String token) async {
+    return await _getCart(token);
+  }
+
+  @override
+  Future<void> clearCart(String token) async {
+    await sl<SharedPreferences>().remove(_getCartKey(token));
+  }
+
+  @override
+  Future<void> updateQuantity(String token, String itemId, int quantity) async {
+    final cart = await _getCart(token);
+    final index = cart.indexWhere((item) => item.id.toString() == itemId);
+    if (index != -1) {
+      cart[index] = cart[index].copyWith(quantity: quantity);
+      await _saveCart(token, cart);
+    }
+  }
+
+  Future<List<CartItem>> _getCart(String token) async {
+    final cartString = sl<SharedPreferences>().getString(_getCartKey(token));
+    if (cartString != null) {
+      return CartItem.decodeList(cartString);
+    }
+    return [];
+  }
+
+  Future<void> _saveCart(String token, List<CartItem> cart) async {
+    final cartString = CartItem.encodeList(cart);
+    await sl<SharedPreferences>().setString(_getCartKey(token), cartString);
+  }
+
+  String _getCartKey(String token) => 'cart_$token';
 }

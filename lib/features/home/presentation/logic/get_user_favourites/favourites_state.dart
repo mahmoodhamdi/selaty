@@ -2,13 +2,13 @@ import 'package:equatable/equatable.dart';
 import 'package:selaty/core/enums/status.dart';
 import 'package:selaty/features/home/data/models/get_user_favourite_response.dart';
 
-class AddToFavouritesState extends Equatable {
-  final AddToFavouritesStatus status;
+class FavouritesState extends Equatable {
+  final FavouritesStatus status;
   final String? message;
   final List<FavouriteData> favouriteList;
 
-  const AddToFavouritesState({
-    this.status = AddToFavouritesStatus.initial,
+  const FavouritesState({
+    this.status = FavouritesStatus.initial,
     this.message,
     this.favouriteList = const [],
   });
@@ -16,12 +16,12 @@ class AddToFavouritesState extends Equatable {
   @override
   List<Object?> get props => [status, message, favouriteList];
 
-  AddToFavouritesState copyWith({
-    AddToFavouritesStatus? status,
+  FavouritesState copyWith({
+    FavouritesStatus? status,
     String? message,
     List<FavouriteData>? favouriteList,
   }) {
-    return AddToFavouritesState(
+    return FavouritesState(
       status: status ?? this.status,
       message: message,
       favouriteList: favouriteList ?? this.favouriteList,

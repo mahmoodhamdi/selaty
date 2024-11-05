@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dartz/dartz.dart';
 import 'package:selaty/features/auth/data/models/update_profile_request_model.dart';
 import 'package:selaty/features/auth/data/models/update_profile_response_model.dart';
+import 'package:selaty/features/home/data/models/cart.dart';
 import 'package:selaty/features/home/data/models/categories_response.dart';
 import 'package:selaty/features/home/data/models/get_profile_response.dart';
 import 'package:selaty/features/home/data/models/get_user_favourite_response.dart';
@@ -21,4 +22,16 @@ abstract class HomeRepo {
     required File profilePhoto,
   });
   Future<Either<String, ProfileData>> getProfile();
+
+    Future<void> addToCart(CartItem item);
+  Future<void> removeFromCart(String itemId);
+  Future<List<CartItem>> getCartItems();
+  Future<void> clearCart();
+  Future<void> updateQuantity(String itemId, int quantity);
+  
+  
+  
+  
+  
+
 }

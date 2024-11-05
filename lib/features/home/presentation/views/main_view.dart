@@ -3,13 +3,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:selaty/core/constants/colors.dart';
 import 'package:selaty/core/depandancy_injection/service_locator.dart';
+import 'package:selaty/features/home/presentation/logic/cart/cart_cubit.dart';
 import 'package:selaty/features/home/presentation/logic/categories/categories_cubit.dart';
-import 'package:selaty/features/home/presentation/logic/get_user_favourites/get_user_favourites_cubit.dart';
+import 'package:selaty/features/home/presentation/logic/get_user_favourites/favourites_cubit.dart';
 import 'package:selaty/features/home/presentation/logic/product/product_cubit.dart';
 import 'package:selaty/features/home/presentation/logic/slider_images/slider_images_cubit.dart';
+import 'package:selaty/features/home/presentation/views/cart_view.dart';
 import 'package:selaty/features/home/presentation/views/favourites_view.dart';
 import 'package:selaty/features/home/presentation/views/home_view.dart';
-import 'package:selaty/features/home/presentation/views/user_cart_view.dart';
 
 class MainView extends StatefulWidget {
   const MainView({super.key});
@@ -42,7 +43,10 @@ class _MainViewState extends State<MainView>
 
   List<Widget> _buildScreens() {
     return [
-      const UserCartView(),
+      BlocProvider(
+        create: (context) => sl<CartCubit>()..loadCartItems(),
+        child: const CartView(),
+      ),
       MultiBlocProvider(
         providers: [
           BlocProvider(
@@ -55,15 +59,16 @@ class _MainViewState extends State<MainView>
             create: (context) => sl<ProductCubit>()..fetchProducts(),
           ),
           BlocProvider(
-            create: (context) =>
-                sl<GetUserFavouritesCubit>()..fetchUserFavourites(),
+            create: (context) => sl<FavouritesCubit>()..fetchUserFavourites(),
+          ),
+          BlocProvider(
+            create: (context) => sl<CartCubit>(),
           ),
         ],
         child: const HomeView(),
       ),
       BlocProvider(
-        create: (context) =>
-            sl<GetUserFavouritesCubit>()..fetchUserFavourites(),
+        create: (context) => sl<FavouritesCubit>()..fetchUserFavourites(),
         child: const FavouritesView(),
       ),
     ];

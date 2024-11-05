@@ -17,7 +17,6 @@ abstract class HomeLocalDataSource {
   Future<Either<String, void>> cacheProducts(List<Product> products);
   Future<Either<String, void>> cacheUserFavourites(
       List<FavouriteData> favourites);
-  Future<Either<String, List<FavouriteData>>> getUserFavourites();
   Future<Either<String, ProfileData>> getProfile();
   Future<Either<String, void>> cacheProfile(ProfileData profile);
 
@@ -64,7 +63,6 @@ class HomeLocalDataSourceImpl implements HomeLocalDataSource {
     }
   }
 
-  @override
   Future<Either<String, void>> clearCache() async {
     try {
       sl<SharedPreferences>().remove('slider_images');

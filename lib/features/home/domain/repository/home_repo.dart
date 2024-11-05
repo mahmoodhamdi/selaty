@@ -23,15 +23,9 @@ abstract class HomeRepo {
   });
   Future<Either<String, ProfileData>> getProfile();
 
-    Future<void> addToCart(CartItem item);
+  Future<void> addToCart(CartItem item);
   Future<void> removeFromCart(String itemId);
   Future<List<CartItem>> getCartItems();
   Future<void> clearCart();
   Future<void> updateQuantity(String itemId, int quantity);
-  
-  
-  
-  
-  
-
 }

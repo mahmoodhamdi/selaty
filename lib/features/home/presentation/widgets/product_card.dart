@@ -7,8 +7,11 @@ import 'package:selaty/core/constants/colors.dart';
 import 'package:selaty/core/constants/styles.dart';
 import 'package:selaty/core/depandancy_injection/service_locator.dart';
 import 'package:selaty/core/enums/status.dart';
+import 'package:selaty/core/helpers/helper_functions.dart';
+import 'package:selaty/features/home/data/models/cart.dart';
 import 'package:selaty/features/home/data/models/product_reesponse_model.dart';
 import 'package:selaty/features/home/presentation/logic/cart/cart_cubit.dart';
+import 'package:selaty/features/home/presentation/logic/cart/cart_state.dart';
 import 'package:selaty/features/home/presentation/logic/get_user_favourites/favourites_cubit.dart';
 import 'package:selaty/features/home/presentation/logic/get_user_favourites/favourites_state.dart';
 import 'package:selaty/features/home/presentation/views/product_details_view.dart';
@@ -49,7 +52,54 @@ class ProductCard extends StatelessWidget {
           ),
           child: Column(
             children: [
-              Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                BlocConsumer<CartCubit, CartState>(
+                  listener: (context, state) {
+                    if (state is CartError) {
+                      THelperFunctions.showSnackBar(
+                        context: context,
+                        message: 'خطأ في إضافة المنتج إلى السلة',
+                      );
+                    }
+                  },
+                  builder: (context, state) {
+                    bool isInCart = false;
+                    if (state is CartLoaded) {
+                      isInCart =
+                          state.items.any((item) => item.id == product.id);
+                    }
+
+                    return IconButton(
+                      icon: Icon(
+                        isInCart
+                            ? Icons.shopping_cart
+                            : Icons.add_shopping_cart_outlined,
+                        color: primaryGreen,
+                        size: isPortrait ? 20 : 20,
+                      ),
+                      onPressed: () {
+                        if (isInCart) {
+                          // Remove from cart
+                          context
+                              .read<CartCubit>()
+                              .removeItem(product.id.toString());
+                        } else {
+                          // Add to cart
+                          context.read<CartCubit>().addItem(
+                                CartItem(
+                                  imageUrl:
+                                      "${ApiConstants.imageUrl}${product.img}",
+                                  id: product.id,
+                                  name: product.name,
+                                  price: product.price,
+                                  quantity: 1,
+                                ),
+                              );
+                        }
+                      },
+                    );
+                  },
+                ),
                 BlocConsumer<FavouritesCubit, FavouritesState>(
                   listener: (context, state) {
                     if (state.status ==

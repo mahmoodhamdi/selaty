@@ -6,9 +6,9 @@ import 'package:selaty/core/depandancy_injection/service_locator.dart';
 import 'package:selaty/core/enums/status.dart';
 import 'package:selaty/features/home/presentation/logic/get_user_favourites/favourites_cubit.dart';
 import 'package:selaty/features/home/presentation/logic/get_user_favourites/favourites_state.dart';
+import 'package:selaty/features/home/presentation/widgets/favourite_product_card.dart';
 import 'package:selaty/features/home/presentation/widgets/favourites_empty.dart';
 import 'package:selaty/features/home/presentation/widgets/favourites_error.dart';
-import 'package:selaty/features/home/presentation/widgets/favourites_grid.dart';
 import 'package:selaty/features/home/presentation/widgets/favourites_loading.dart';
 
 class FavouritesView extends StatelessWidget {
@@ -53,7 +53,36 @@ class FavouritesView extends StatelessWidget {
                   if (favourites.isEmpty) {
                     return const FavouritesEmpty();
                   }
-                  return FavouritesGrid(initialFavourites: favourites);
+                  return BlocBuilder<FavouritesCubit, FavouritesState>(
+                    builder: (context, state) {
+                      return Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: GridView.builder(
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            childAspectRatio: 0.50 / 0.95,
+                            mainAxisSpacing: 10,
+                            crossAxisSpacing: 10,
+                          ),
+                          itemCount: state.favouriteList.length,
+                          itemBuilder: (context, index) {
+                            final favouriteData = state.favouriteList[index];
+                            final favouriteProduct = favouriteData.product;
+
+                            if (favouriteProduct == null) {
+                              return const FavouritesEmpty();
+                            }
+
+                            return FavouriteProductCard(
+                              favouriteProduct: favouriteProduct,
+                            );
+                          },
+                        ),
+                      );
+                    },
+                  );
+
                 default:
                   return const Center(child: Text("لا توجد المفضلات"));
               }

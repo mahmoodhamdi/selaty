@@ -49,6 +49,8 @@ class _LoginViewState extends State<LoginView> {
         listener: (context, state) {
           if (state.status == LoginStatus.success) {
             THelperFunctions.showSnackBar(
+            type: SnackBarType.success,
+
                 context: context, message: state.message);
 
             Future.delayed(const Duration(seconds: 1));
@@ -63,6 +65,7 @@ class _LoginViewState extends State<LoginView> {
           }
           if (state.status == LoginStatus.failure) {
             THelperFunctions.showSnackBar(
+                type: SnackBarType.error,
                 context: context, message: state.message);
           }
         },

@@ -6,6 +6,7 @@ import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:selaty/core/constants/colors.dart';
+import 'package:selaty/core/enums/status.dart';
 import 'package:selaty/core/helpers/helper_functions.dart';
 import 'package:selaty/core/helpers/logger_helper.dart';
 
@@ -280,6 +281,7 @@ class LocationHelper {
 
           // Show success snackbar
           THelperFunctions.showSnackBar(
+            type: SnackBarType.success,
             context: context,
             message: 'تم تحديد موقعك بنجاح',
           );
@@ -297,6 +299,8 @@ class LocationHelper {
         // Show error snackbar
         if (context.mounted) {
           THelperFunctions.showSnackBar(
+            type: SnackBarType.error,
+
             context: context,
             message: 'حدث خطاء في تحديد الموقع. يرجى المحاولة مرة أخرى.',
           );
@@ -308,6 +312,7 @@ class LocationHelper {
     } on PlatformException catch (e) {
       LoggerHelper.error("حدث خطأ في النظام", e.message);
       THelperFunctions.showSnackBar(
+        type: SnackBarType.error,
         context: context,
         message:
             e.message ?? 'حدث خطأ أثناء تحديد الموقع. يرجى المحاولة مرة أخرى.',

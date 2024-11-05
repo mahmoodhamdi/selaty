@@ -39,6 +39,7 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
       listener: (context, state) async {
         if (state.status == ForgetPasswordStatus.success) {
           THelperFunctions.showSnackBar(
+              type: SnackBarType.info,
               context: context, message: "تم إرسال رمز التحقق");
           Future.delayed(const Duration(microseconds: 500));
           Navigator.pushReplacement(
@@ -52,6 +53,7 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
         }
         if (state.status == ForgetPasswordStatus.failure) {
           THelperFunctions.showSnackBar(
+              type: SnackBarType.error,
               context: context, message: state.message!);
         }
       },

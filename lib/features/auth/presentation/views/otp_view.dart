@@ -6,6 +6,7 @@ import 'package:selaty/core/common/widgets/primary_button.dart';
 import 'package:selaty/core/constants/colors.dart';
 import 'package:selaty/core/constants/styles.dart';
 import 'package:selaty/core/depandancy_injection/service_locator.dart';
+import 'package:selaty/core/enums/status.dart';
 import 'package:selaty/core/helpers/helper_functions.dart';
 import 'package:selaty/features/auth/presentation/logic/set_new_password/set_new_password_cubit.dart';
 import 'package:selaty/features/auth/presentation/views/new_password_view.dart';
@@ -140,12 +141,14 @@ class _OtpViewState extends State<OtpView> {
       );
     } else {
       THelperFunctions.showSnackBar(
+          type: SnackBarType.error,
           context: context, message: 'الكود غير صحيح');
     }
   }
 
   void _resendOtp() {
     THelperFunctions.showSnackBar(
+      type: SnackBarType.info,
       context: context,
       message: 'تم ارسال رمز جديد',
     );

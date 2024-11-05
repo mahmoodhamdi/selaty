@@ -2,6 +2,7 @@ import 'dart:convert';
 
 class CartItem {
   final int id;
+  final int productQuantity;
   final String name;
   final String price;
   final int quantity;
@@ -12,6 +13,7 @@ class CartItem {
     required this.name,
     required this.price,
     required this.quantity,
+    required this.productQuantity,
     required this.imageUrl, // Include imageUrl in the constructor
   });
 
@@ -20,6 +22,7 @@ class CartItem {
       id: id,
       name: name,
       price: price,
+      productQuantity: productQuantity,
       quantity: quantity ?? this.quantity,
       imageUrl: imageUrl, // Keep the imageUrl the same
     );
@@ -40,12 +43,14 @@ class CartItem {
         'name': name,
         'price': price,
         'quantity': quantity,
+        'productQuantity': productQuantity,
         'imageUrl': imageUrl, // Add imageUrl to the JSON representation
       };
 
   factory CartItem.fromJson(Map<String, dynamic> json) {
     return CartItem(
       id: json['id'],
+      productQuantity: json['productQuantity'],
       name: json['name'],
       price: json['price'],
       quantity: json['quantity'],

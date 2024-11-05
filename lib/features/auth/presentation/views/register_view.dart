@@ -75,6 +75,7 @@ class _RegisterViewState extends State<RegisterView> {
       listener: (context, state) {
         if (state.status == RegisterStatus.success) {
           THelperFunctions.showSnackBar(
+              type: SnackBarType.success,
               context: context, message: state.message);
 
           Future.delayed(const Duration(microseconds: 500));
@@ -89,6 +90,7 @@ class _RegisterViewState extends State<RegisterView> {
         }
         if (state.status == RegisterStatus.failure) {
           THelperFunctions.showSnackBar(
+              type: SnackBarType.error,
               context: context, message: state.message);
         }
       },

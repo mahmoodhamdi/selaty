@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:selaty/core/constants/api_constants.dart';
 import 'package:selaty/core/constants/colors.dart';
+import 'package:selaty/core/enums/status.dart';
 import 'package:selaty/core/helpers/helper_functions.dart';
 import 'package:selaty/features/home/data/models/cart.dart';
 import 'package:selaty/features/home/data/models/favourite_item.dart';
@@ -52,6 +53,7 @@ class BottomNavigationBarComponent extends StatelessWidget {
                       listener: (context, state) {
                         if (state is CartError) {
                           THelperFunctions.showSnackBar(
+                            type: SnackBarType.error,
                             context: context,
                             message: 'خطأ في إضافة المنتج إلى السلة',
                           );
@@ -75,6 +77,7 @@ class BottomNavigationBarComponent extends StatelessWidget {
                               // Add to cart
                               context.read<CartCubit>().addItem(
                                     CartItem(
+                                      productQuantity: product.quantity,
                                       imageUrl:
                                           "${ApiConstants.imageUrl}${product.img}",
                                       id: product.id,
@@ -93,7 +96,7 @@ class BottomNavigationBarComponent extends StatelessWidget {
                             ),
                           ),
                           child: Text(
-                            isInCart ? 'إزالة من السلة' : 'إضافة للسلة',
+                            isInCart ? 'حذف من السلة' : 'إضافة للسلة',
                             style: const TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
@@ -111,15 +114,11 @@ class BottomNavigationBarComponent extends StatelessWidget {
                     listener: (context, state) {
                       if (state is FavoritesError) {
                         THelperFunctions.showSnackBar(
+                          type: SnackBarType.error,
                           context: context,
                           message: 'حدث خطأ أثناء الإضافة إلى المفضلة',
                         );
-                      } else if (state is FavoritesLoaded) {
-                        THelperFunctions.showSnackBar(
-                          context: context,
-                          message: 'تمت إضافة المنتج إلى المفضلة بنجاح',
-                        );
-                      }
+                      } else if (state is FavoritesLoaded) {}
                     },
                     builder: (context, state) {
                       bool isInFavorites = false;
@@ -173,7 +172,7 @@ class BottomNavigationBarComponent extends StatelessWidget {
                                   color: Colors.white)
                               : Text(
                                   isInFavorites
-                                      ? 'إزالة من المفضلة'
+                                      ? 'حذف من المفضلة'
                                       : 'إضافة للمفضلة',
                                   style: const TextStyle(
                                     fontSize: 18,

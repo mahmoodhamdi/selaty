@@ -70,7 +70,9 @@ class _ProfileViewState extends State<ProfileView> {
         setState(() => _selectedImage = File(image.path));
       }
     } catch (e) {
-      THelperFunctions.showSnackBar(context: context, message: e.toString());
+      THelperFunctions.showSnackBar(
+          type: SnackBarType.error,
+        context: context, message: e.toString());
     }
   }
 
@@ -78,6 +80,7 @@ class _ProfileViewState extends State<ProfileView> {
     if (!(_formKey.currentState?.validate() ?? false)) return;
     if (_selectedImage == null && _currentPhotoUrl == null) {
       THelperFunctions.showSnackBar(
+        type: SnackBarType.info,
         context: context,
         message: 'يجب أختيار صورة لتحديث الملف الشخصي.',
       );
@@ -98,7 +101,9 @@ class _ProfileViewState extends State<ProfileView> {
 
       await context.read<UpdateProfileCubit>().updateProfile(params);
     } catch (e) {
-      THelperFunctions.showSnackBar(context: context, message: e.toString());
+      THelperFunctions.showSnackBar(
+        type: SnackBarType.error,
+        context: context, message: e.toString());
     } finally {
       setState(() => _isLoading = false);
     }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
 import 'package:selaty/core/constants/colors.dart';
+import 'package:selaty/core/enums/status.dart';
 import 'package:selaty/core/helpers/logger_helper.dart';
 
 class THelperFunctions {
@@ -254,23 +255,71 @@ class THelperFunctions {
   static void showSnackBar({
     required BuildContext context,
     required String message,
-    Duration duration = const Duration(seconds: 3),
-    Color backgroundColor = const Color(0xFF323232),
-    Color textColor = Colors.white,
+    SnackBarType type = SnackBarType.info,
+    Duration duration = const Duration(seconds: 1),
   }) {
-    LoggerHelper.info("Showing SnackBar: $message"); // Log SnackBar action
+    Color getColor() {
+      switch (type) {
+        case SnackBarType.success:
+          return success;
+        case SnackBarType.error:
+          return error;
+        case SnackBarType.warning:
+          return warning;
+        case SnackBarType.info:
+        default:
+          return info;
+      }
+    }
+
+    IconData getIcon() {
+      switch (type) {
+        case SnackBarType.success:
+          return Icons.check_circle_outline;
+        case SnackBarType.error:
+          return Icons.error_outline;
+        case SnackBarType.warning:
+          return Icons.warning_amber_rounded;
+        case SnackBarType.info:
+        default:
+          return Icons.info_outline;
+      }
+    }
 
     final snackBar = SnackBar(
-      content: Text(
-        message,
-        style: TextStyle(color: textColor, fontSize: 16),
+      content: Row(
+        children: [
+          Icon(getIcon(), color: darkText),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Text(
+              message,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ),
+        ],
       ),
-      backgroundColor: backgroundColor,
+      backgroundColor: getColor(),
       behavior: SnackBarBehavior.floating,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       duration: duration,
+      margin: const EdgeInsets.symmetric(vertical: 100, horizontal: 24),
+      action: SnackBarAction(
+        label: 'اغلاق',
+        textColor: Colors.white,
+        onPressed: () {
+          ScaffoldMessenger.of(context).hideCurrentSnackBar();
+        },
+      ),
     );
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+    ScaffoldMessenger.of(context)
+      ..hideCurrentSnackBar()
+      ..showSnackBar(snackBar);
   }
 
   static void showAlert({

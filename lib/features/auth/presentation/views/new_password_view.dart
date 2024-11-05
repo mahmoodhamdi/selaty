@@ -51,6 +51,8 @@ class _NewPasswordViewState extends State<NewPasswordView> {
       listener: (context, state) {
         if (state.status == SetNewPasswordStatus.success) {
           THelperFunctions.showSnackBar(
+            type: SnackBarType.success,
+
               context: context, message: "تم تغيير كلمة المرور بنجاح");
           Future.delayed(const Duration(microseconds: 500));
           Navigator.pushReplacement(
@@ -61,6 +63,7 @@ class _NewPasswordViewState extends State<NewPasswordView> {
         }
         if (state.status == SetNewPasswordStatus.failure) {
           THelperFunctions.showSnackBar(
+              type: SnackBarType.error,
               context: context, message: state.message!);
         }
       },
@@ -127,6 +130,8 @@ class _NewPasswordViewState extends State<NewPasswordView> {
                                                 .trim()));
                               } else {
                                 THelperFunctions.showSnackBar(
+            type: SnackBarType.error,
+
                                     context: context,
                                     message: 'كلمة المرور غير متطابقة');
                               }

@@ -8,14 +8,45 @@ import 'package:selaty/features/home/data/data_sources/home_local_data_source.da
 import 'package:selaty/features/home/data/data_sources/home_remote_data_source.dart';
 import 'package:selaty/features/home/data/models/cart.dart';
 import 'package:selaty/features/home/data/models/categories_response.dart';
+import 'package:selaty/features/home/data/models/favourite_item.dart';
 import 'package:selaty/features/home/data/models/get_profile_response.dart';
-import 'package:selaty/features/home/data/models/get_user_favourite_response.dart';
 import 'package:selaty/features/home/data/models/product_reesponse_model.dart';
 import 'package:selaty/features/home/data/models/slider_response.dart';
 import 'package:selaty/features/home/domain/repository/home_repo.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeRepoImpl extends HomeRepo {
+  @override
+  Future<void> addToFavorites(FavoriteItem item) async {
+    final token = sl<SharedPreferences>().getString('USER_TOKEN');
+    await sl<HomeLocalDataSource>().addToFavorites(token!, item);
+    await sl<HomeRemoteDataSource>().addToFavorites(item);
+  }
+
+  @override
+  Future<void> removeFromFavorites(String itemId) async {
+    final token = sl<SharedPreferences>().getString('USER_TOKEN');
+    await sl<HomeLocalDataSource>().removeFromFavorites(token!, itemId);
+    await sl<HomeRemoteDataSource>().removeFromFavorites(itemId);
+  }
+
+  @override
+  Future<List<FavoriteItem>> getFavoriteItems() async {
+    final token = sl<SharedPreferences>().getString('USER_TOKEN');
+    return await sl<HomeLocalDataSource>().getFavoriteItems(token!);
+  }
+
+  @override
+  Future<void> clearFavorites() async {
+    final token = sl<SharedPreferences>().getString('USER_TOKEN');
+    //remove them one by one from remote first
+    final favoriteItems = await getFavoriteItems();
+    for (var item in favoriteItems) {
+      await sl<HomeRemoteDataSource>().removeFromFavorites(item.id.toString());
+    }
+    await sl<HomeLocalDataSource>().clearFavorites(token!);
+  }
+
   @override
   Future<Either<String, List<SliderResponseData>>> getSliderImages() async {
     final remoteResult = await sl<HomeRemoteDataSource>().getSliderImages();
@@ -62,43 +93,6 @@ class HomeRepoImpl extends HomeRepo {
   @override
   Future<Either<String, List<Product>>> getProducts({required int page}) async {
     return await sl<HomeRemoteDataSource>().getProducts(page: page);
-  }
-
-  @override
-  Future<Either<String, List<FavouriteData>>> getUserFavourites() async {
-    final result = await sl<HomeRemoteDataSource>().getUserFavourites();
-
-    return result.fold(
-      (error) => Left(error),
-      (favourites) => Right(favourites),
-    );
-  }
-
-  @override
-  Future<Either<String, String>> addToFavourites(
-      {required int productId}) async {
-    final remoteResult =
-        await sl<HomeRemoteDataSource>().addToFavourites(productId: productId);
-
-    return remoteResult.fold(
-      (error) => Left(error),
-      (successMessage) async {
-        // If adding to favorites remotely succeeds, update the local data source
-        final updatedFavouritesResult =
-            await sl<HomeRemoteDataSource>().getUserFavourites();
-
-        updatedFavouritesResult.fold(
-          (error) =>
-              null, // Handle the error silently, or you could log it if needed
-          (updatedFavourites) async {
-            await sl<HomeLocalDataSource>()
-                .cacheUserFavourites(updatedFavourites);
-          },
-        );
-
-        return Right(successMessage);
-      },
-    );
   }
 
   @override

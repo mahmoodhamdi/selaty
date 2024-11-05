@@ -5,7 +5,7 @@ import 'package:selaty/core/constants/colors.dart';
 import 'package:selaty/core/depandancy_injection/service_locator.dart';
 import 'package:selaty/features/home/presentation/logic/cart/cart_cubit.dart';
 import 'package:selaty/features/home/presentation/logic/categories/categories_cubit.dart';
-import 'package:selaty/features/home/presentation/logic/get_user_favourites/favourites_cubit.dart';
+import 'package:selaty/features/home/presentation/logic/favourites/favourites_cubit.dart';
 import 'package:selaty/features/home/presentation/logic/product/product_cubit.dart';
 import 'package:selaty/features/home/presentation/logic/slider_images/slider_images_cubit.dart';
 import 'package:selaty/features/home/presentation/views/cart_view.dart';
@@ -59,7 +59,7 @@ class _MainViewState extends State<MainView>
             create: (context) => sl<ProductCubit>()..fetchProducts(),
           ),
           BlocProvider(
-            create: (context) => sl<FavouritesCubit>()..fetchUserFavourites(),
+            create: (context) => sl<FavoriteCubit>()..loadFavoriteItems(),
           ),
           BlocProvider(
             create: (context) => sl<CartCubit>(),
@@ -67,8 +67,15 @@ class _MainViewState extends State<MainView>
         ],
         child: const HomeView(),
       ),
-      BlocProvider(
-        create: (context) => sl<FavouritesCubit>()..fetchUserFavourites(),
+      MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => sl<FavoriteCubit>()..loadFavoriteItems(),
+          ),
+          BlocProvider(
+            create: (context) => sl<CartCubit>()..loadCartItems(),
+          ),
+        ],
         child: const FavouritesView(),
       ),
     ];

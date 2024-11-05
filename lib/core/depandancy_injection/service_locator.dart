@@ -22,9 +22,11 @@ import 'package:selaty/features/home/data/data_sources/home_local_data_source.da
 import 'package:selaty/features/home/data/data_sources/home_remote_data_source.dart';
 import 'package:selaty/features/home/data/repository/home_repo_impl.dart';
 import 'package:selaty/features/home/domain/repository/home_repo.dart';
+import 'package:selaty/features/home/domain/usecases/remove_from_favorites_use_case.dart';
 import 'package:selaty/features/home/domain/usecases/add_to_cart_usecase.dart';
 import 'package:selaty/features/home/domain/usecases/add_to_favourites_usecase.dart';
 import 'package:selaty/features/home/domain/usecases/clear_cart_usecase.dart';
+import 'package:selaty/features/home/domain/usecases/clear_favorite_usecase.dart';
 import 'package:selaty/features/home/domain/usecases/get_cart_usecase.dart';
 import 'package:selaty/features/home/domain/usecases/get_categories_usecase.dart';
 import 'package:selaty/features/home/domain/usecases/get_products_usecase.dart';
@@ -36,7 +38,7 @@ import 'package:selaty/features/home/domain/usecases/update_cart_quantity_usecas
 import 'package:selaty/features/home/domain/usecases/update_profile_usecase.dart';
 import 'package:selaty/features/home/presentation/logic/cart/cart_cubit.dart';
 import 'package:selaty/features/home/presentation/logic/categories/categories_cubit.dart';
-import 'package:selaty/features/home/presentation/logic/get_user_favourites/favourites_cubit.dart';
+import 'package:selaty/features/home/presentation/logic/favourites/favourites_cubit.dart';
 import 'package:selaty/features/home/presentation/logic/product/product_cubit.dart';
 import 'package:selaty/features/home/presentation/logic/profile/get_profile_cubit.dart';
 import 'package:selaty/features/home/presentation/logic/slider_images/slider_images_cubit.dart';
@@ -85,10 +87,15 @@ Future<void> setupServiceLocator() async {
       () => GetSliderImagesUseCase());
   sl.registerLazySingleton<GetCategoriesUsecase>(() => GetCategoriesUsecase());
   sl.registerLazySingleton<GetProductsUsecase>(() => GetProductsUsecase());
-  sl.registerLazySingleton<GetUserFavouritesUsecase>(
-      () => GetUserFavouritesUsecase());
-  sl.registerLazySingleton<AddToFavouritesUsecase>(
-      () => AddToFavouritesUsecase());
+  sl.registerLazySingleton<GetFavoriteItemsUseCase>(
+      () => GetFavoriteItemsUseCase());
+  sl.registerLazySingleton<AddToFavoritesUseCase>(
+      () => AddToFavoritesUseCase());
+  sl.registerLazySingleton<RemoveFromFavoritesUseCase>(
+      () => RemoveFromFavoritesUseCase());
+  sl.registerLazySingleton<ClearFavoritesUseCase>(
+      () => ClearFavoritesUseCase());
+
   sl.registerLazySingleton<GetProfileUsecase>(() => GetProfileUsecase());
   sl.registerLazySingleton<AddToCartUseCase>(() => AddToCartUseCase());
   sl.registerLazySingleton<RemoveFromCartUseCase>(
@@ -117,7 +124,10 @@ Future<void> setupServiceLocator() async {
   sl.registerFactory<SliderImagesCubit>(() => SliderImagesCubit());
   sl.registerFactory<CategoriesCubit>(() => CategoriesCubit());
   sl.registerFactory<ProductCubit>(() => ProductCubit());
-  sl.registerFactory<FavouritesCubit>(() => FavouritesCubit(
-        [],
+  sl.registerFactory<FavoriteCubit>(() => FavoriteCubit(
+        addToFavorites: sl<AddToFavoritesUseCase>(),
+        removeFromFavorites: sl<RemoveFromFavoritesUseCase>(),
+        clearFavorites: sl<ClearFavoritesUseCase>(),
+        getFavoriteItems: sl<GetFavoriteItemsUseCase>(),
       ));
 }

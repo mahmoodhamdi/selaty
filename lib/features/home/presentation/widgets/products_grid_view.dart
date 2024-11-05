@@ -4,7 +4,7 @@ import 'package:selaty/core/depandancy_injection/service_locator.dart';
 import 'package:selaty/core/enums/status.dart';
 import 'package:selaty/features/home/data/models/product_reesponse_model.dart';
 import 'package:selaty/features/home/presentation/logic/cart/cart_cubit.dart';
-import 'package:selaty/features/home/presentation/logic/get_user_favourites/favourites_cubit.dart';
+import 'package:selaty/features/home/presentation/logic/favourites/favourites_cubit.dart';
 import 'package:selaty/features/home/presentation/logic/product/product_cubit.dart';
 import 'package:selaty/features/home/presentation/logic/product/product_state.dart';
 import 'package:selaty/features/home/presentation/widgets/product_card.dart';
@@ -30,7 +30,7 @@ class ProductsGridView extends StatelessWidget {
         return MultiBlocProvider(
           providers: [
             BlocProvider(
-              create: (context) => sl<FavouritesCubit>()..fetchUserFavourites(),
+              create: (context) => sl<FavoriteCubit>()..loadFavoriteItems(),
             ),
             BlocProvider(
               create: (context) => sl<CartCubit>()..loadCartItems(),

@@ -5,6 +5,7 @@ import 'package:selaty/core/depandancy_injection/service_locator.dart';
 import 'package:selaty/core/helpers/logger_helper.dart';
 import 'package:selaty/features/home/data/models/cart.dart';
 import 'package:selaty/features/home/data/models/categories_response.dart';
+import 'package:selaty/features/home/data/models/favourite_item.dart';
 import 'package:selaty/features/home/data/models/get_profile_response.dart';
 import 'package:selaty/features/home/data/models/get_user_favourite_response.dart';
 import 'package:selaty/features/home/data/models/product_reesponse_model.dart';
@@ -25,9 +26,55 @@ abstract class HomeLocalDataSource {
   Future<List<CartItem>> getCartItems(String token);
   Future<void> clearCart(String token);
   Future<void> updateQuantity(String token, String itemId, int quantity);
+  Future<void> addToFavorites(String token, FavoriteItem item);
+  Future<void> removeFromFavorites(String token, String itemId);
+  Future<List<FavoriteItem>> getFavoriteItems(String token);
+  Future<void> clearFavorites(String token);
 }
 
 class HomeLocalDataSourceImpl implements HomeLocalDataSource {
+  @override
+  Future<void> addToFavorites(String token, FavoriteItem item) async {
+    final favorites = await _getFavorites(token);
+    favorites.add(item);
+    await _saveFavorites(token, favorites);
+  }
+
+  @override
+  Future<void> removeFromFavorites(String token, String itemId) async {
+    final favorites = await _getFavorites(token);
+    favorites.removeWhere((item) => item.id.toString() == itemId);
+    await _saveFavorites(token, favorites);
+  }
+
+  @override
+  Future<List<FavoriteItem>> getFavoriteItems(String token) async {
+    return await _getFavorites(token);
+  }
+
+  @override
+  Future<void> clearFavorites(String token) async {
+    await sl<SharedPreferences>().remove(_getFavoritesKey(token));
+  }
+
+  Future<List<FavoriteItem>> _getFavorites(String token) async {
+    final favoritesString =
+        sl<SharedPreferences>().getString(_getFavoritesKey(token));
+    if (favoritesString != null) {
+      return FavoriteItem.decodeList(favoritesString);
+    }
+    return [];
+  }
+
+  Future<void> _saveFavorites(
+      String token, List<FavoriteItem> favorites) async {
+    final favoritesString = FavoriteItem.encodeList(favorites);
+    await sl<SharedPreferences>()
+        .setString(_getFavoritesKey(token), favoritesString);
+  }
+
+  String _getFavoritesKey(String token) => 'favorites_$token';
+
   @override
   Future<Either<String, void>> cacheCategories(
       List<Category> categories) async {

@@ -6,12 +6,14 @@ import 'package:selaty/features/auth/data/models/update_profile_request_model.da
 import 'package:selaty/features/auth/data/models/update_profile_response_model.dart';
 import 'package:selaty/features/home/data/data_sources/home_local_data_source.dart';
 import 'package:selaty/features/home/data/data_sources/home_remote_data_source.dart';
+import 'package:selaty/features/home/data/models/cart.dart';
 import 'package:selaty/features/home/data/models/categories_response.dart';
 import 'package:selaty/features/home/data/models/get_profile_response.dart';
 import 'package:selaty/features/home/data/models/get_user_favourite_response.dart';
 import 'package:selaty/features/home/data/models/product_reesponse_model.dart';
 import 'package:selaty/features/home/data/models/slider_response.dart';
 import 'package:selaty/features/home/domain/repository/home_repo.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeRepoImpl extends HomeRepo {
   @override
@@ -150,5 +152,35 @@ class HomeRepoImpl extends HomeRepo {
         return Right(success);
       },
     );
+  }
+
+  @override
+  Future<void> addToCart(CartItem item) async {
+    final token = sl<SharedPreferences>().getString('USER_TOKEN');
+    sl<HomeLocalDataSource>().addToCart(token!, item);
+  }
+
+  @override
+  Future<void> removeFromCart(String itemId) async {
+    final token = sl<SharedPreferences>().getString('USER_TOKEN');
+    sl<HomeLocalDataSource>().removeFromCart(token!, itemId);
+  }
+
+  @override
+  Future<List<CartItem>> getCartItems() async {
+    final token = sl<SharedPreferences>().getString('USER_TOKEN');
+    return await sl<HomeLocalDataSource>().getCartItems(token!);
+  }
+
+  @override
+  Future<void> clearCart() async {
+    final token = sl<SharedPreferences>().getString('USER_TOKEN');
+    sl<HomeLocalDataSource>().clearCart(token!);
+  }
+
+  @override
+  Future<void> updateQuantity(String itemId, int quantity) async {
+    final token = sl<SharedPreferences>().getString('USER_TOKEN');
+    sl<HomeLocalDataSource>().updateQuantity(token!, itemId, quantity);
   }
 }

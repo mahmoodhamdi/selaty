@@ -52,7 +52,7 @@ class ProductData {
 }
 
 class Product {
-  String?categoryName;
+  String? categoryName;
   int id;
   int userId;
   int type;
@@ -228,6 +228,51 @@ class Product {
           List<dynamic>.from(productAttributes.map((x) => x.toJson())),
     };
   }
+
+  Product copyWith({required int quantity}) {
+    return Product(
+      id: id,
+      userId: userId,
+      type: type,
+      ord: ord,
+      isUsed: isUsed,
+      categoryId: categoryId,
+      countryId: countryId,
+      brandId: brandId,
+      name: name,
+      nameEn: nameEn,
+      details: details,
+      detailsEn: detailsEn,
+      colorId: colorId,
+      tag: tag,
+      tagEn: tagEn,
+      taxId: taxId,
+      price: price,
+      discount: discount,
+      sku: sku,
+      quantity: quantity,
+      notifiQuantity: notifiQuantity,
+      stokeId: stokeId,
+      repositoryNumber: repositoryNumber,
+      img: img,
+      productCode: productCode,
+      hashNumber: hashNumber,
+      barcode: barcode,
+      barcodeNumber: barcodeNumber,
+      weight: weight,
+      numViews: numViews,
+      isActive: isActive,
+      deletedAt: deletedAt,
+      createdAt: createdAt,
+      updatedAt: updatedAt,
+      userIp: userIp,
+      userPcInfo: userPcInfo,
+      userAdded: userAdded,
+      priceAfterDiscount: priceAfterDiscount,
+      isFavorite: isFavorite,
+      productAttributes: productAttributes,
+    );
+  }
 }
 
 class ProductAttribute {
@@ -391,9 +436,9 @@ class Color {
 
   factory Color.fromJson(Map<String, dynamic> json) {
     return Color(
-      id: json['id']??0,
-      color: json['color']??'',
-      hex: json['hex']??'',
+      id: json['id'] ?? 0,
+      color: json['color'] ?? '',
+      hex: json['hex'] ?? '',
     );
   }
 

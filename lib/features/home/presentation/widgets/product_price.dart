@@ -25,7 +25,7 @@ class ProductPrice extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Price:', style: Theme.of(context).textTheme.titleLarge),
+                Text('السعر :', style: Theme.of(context).textTheme.titleLarge),
                 Text(
                   '\$${product.price}',
                   style: Theme.of(context).textTheme.headlineSmall?.copyWith(

@@ -22,16 +22,21 @@ import 'package:selaty/features/home/data/data_sources/home_local_data_source.da
 import 'package:selaty/features/home/data/data_sources/home_remote_data_source.dart';
 import 'package:selaty/features/home/data/repository/home_repo_impl.dart';
 import 'package:selaty/features/home/domain/repository/home_repo.dart';
+import 'package:selaty/features/home/domain/usecases/add_to_cart_usecase.dart';
 import 'package:selaty/features/home/domain/usecases/add_to_favourites_usecase.dart';
+import 'package:selaty/features/home/domain/usecases/clear_cart_usecase.dart';
+import 'package:selaty/features/home/domain/usecases/get_cart_usecase.dart';
 import 'package:selaty/features/home/domain/usecases/get_categories_usecase.dart';
 import 'package:selaty/features/home/domain/usecases/get_products_usecase.dart';
 import 'package:selaty/features/home/domain/usecases/get_profile_usecase.dart';
 import 'package:selaty/features/home/domain/usecases/get_slider_images_usecase.dart';
 import 'package:selaty/features/home/domain/usecases/get_user_favourites_usecase.dart';
+import 'package:selaty/features/home/domain/usecases/remove_from_cart_usecase.dart';
+import 'package:selaty/features/home/domain/usecases/update_cart_quantity_usecase.dart';
 import 'package:selaty/features/home/domain/usecases/update_profile_usecase.dart';
-import 'package:selaty/features/home/presentation/logic/add_to_favourites/add_to_favourites_cubit.dart';
+import 'package:selaty/features/home/presentation/logic/cart/cart_cubit.dart';
 import 'package:selaty/features/home/presentation/logic/categories/categories_cubit.dart';
-import 'package:selaty/features/home/presentation/logic/get_user_favourites/get_user_favourites_cubit.dart';
+import 'package:selaty/features/home/presentation/logic/get_user_favourites/favourites_cubit.dart';
 import 'package:selaty/features/home/presentation/logic/product/product_cubit.dart';
 import 'package:selaty/features/home/presentation/logic/profile/get_profile_cubit.dart';
 import 'package:selaty/features/home/presentation/logic/slider_images/slider_images_cubit.dart';
@@ -75,13 +80,6 @@ Future<void> setupServiceLocator() async {
   sl.registerFactory<LoginCubit>(
     () => LoginCubit(),
   );
-  sl.registerFactory<CachedUserCubit>(() => CachedUserCubit());
-  sl.registerFactory<LoginStatusCubit>(() => LoginStatusCubit());
-  sl.registerFactory<LogoutCubit>(() => LogoutCubit());
-  sl.registerFactory<SendOtpCubit>(() => SendOtpCubit());
-  sl.registerFactory<SetNewPasswordCubit>(() => SetNewPasswordCubit());
-  sl.registerFactory<UpdateProfileCubit>(() => UpdateProfileCubit());
-  sl.registerFactory<GetProfileCubit>(() => GetProfileCubit());
   //home use cases
   sl.registerLazySingleton<GetSliderImagesUseCase>(
       () => GetSliderImagesUseCase());
@@ -92,13 +90,34 @@ Future<void> setupServiceLocator() async {
   sl.registerLazySingleton<AddToFavouritesUsecase>(
       () => AddToFavouritesUsecase());
   sl.registerLazySingleton<GetProfileUsecase>(() => GetProfileUsecase());
+  sl.registerLazySingleton<AddToCartUseCase>(() => AddToCartUseCase());
+  sl.registerLazySingleton<RemoveFromCartUseCase>(
+      () => RemoveFromCartUseCase());
+  sl.registerLazySingleton<ClearCartUseCase>(() => ClearCartUseCase());
+  sl.registerLazySingleton<GetCartItemsUseCase>(() => GetCartItemsUseCase());
+  sl.registerLazySingleton<UpdateQuantityUseCase>(
+      () => UpdateQuantityUseCase());
 
-//home cubits
+// home cubits
+  sl.registerFactory<CachedUserCubit>(() => CachedUserCubit());
+  sl.registerFactory<LoginStatusCubit>(() => LoginStatusCubit());
+  sl.registerFactory<LogoutCubit>(() => LogoutCubit());
+  sl.registerFactory<SendOtpCubit>(() => SendOtpCubit());
+  sl.registerFactory<SetNewPasswordCubit>(() => SetNewPasswordCubit());
+  sl.registerFactory<UpdateProfileCubit>(() => UpdateProfileCubit());
+  sl.registerFactory<GetProfileCubit>(() => GetProfileCubit());
+  sl.registerFactory<CartCubit>(() => CartCubit(
+        addToCart: sl<AddToCartUseCase>(),
+        removeFromCart: sl<RemoveFromCartUseCase>(),
+        clearCart: sl<ClearCartUseCase>(),
+        getCartItems: sl<GetCartItemsUseCase>(),
+        updateQuantity: sl<UpdateQuantityUseCase>(),
+      ));
+
   sl.registerFactory<SliderImagesCubit>(() => SliderImagesCubit());
   sl.registerFactory<CategoriesCubit>(() => CategoriesCubit());
   sl.registerFactory<ProductCubit>(() => ProductCubit());
-  sl.registerFactory<GetUserFavouritesCubit>(() => GetUserFavouritesCubit());
-  sl.registerFactory<AddToFavouritesCubit>(() => AddToFavouritesCubit(
+  sl.registerFactory<FavouritesCubit>(() => FavouritesCubit(
         [],
       ));
 }

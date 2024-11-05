@@ -16,6 +16,7 @@ class FavouritesGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => sl<FavouritesCubit>()
+        // ignore: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
         ..emit(FavouritesState(favouriteList: initialFavourites)),
       child: BlocBuilder<FavouritesCubit, FavouritesState>(
         builder: (context, state) {

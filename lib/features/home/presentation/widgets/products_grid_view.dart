@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:selaty/core/depandancy_injection/service_locator.dart';
 import 'package:selaty/core/enums/status.dart';
 import 'package:selaty/features/home/data/models/product_reesponse_model.dart';
+import 'package:selaty/features/home/presentation/logic/cart/cart_cubit.dart';
 import 'package:selaty/features/home/presentation/logic/get_user_favourites/favourites_cubit.dart';
 import 'package:selaty/features/home/presentation/logic/product/product_cubit.dart';
 import 'package:selaty/features/home/presentation/logic/product/product_state.dart';
@@ -26,8 +27,15 @@ class ProductsGridView extends StatelessWidget {
           return Center(child: Text('Error: ${state.errorMessage}'));
         }
 
-        return BlocProvider(
-          create: (context) => sl<FavouritesCubit>()..fetchUserFavourites(),
+        return MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (context) => sl<FavouritesCubit>()..fetchUserFavourites(),
+            ),
+            BlocProvider(
+              create: (context) => sl<CartCubit>()..loadCartItems(),
+            ),
+          ],
           child: ProductGrid(products: state.products!),
         );
       },

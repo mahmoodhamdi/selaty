@@ -66,38 +66,11 @@ class HomeRepoImpl extends HomeRepo {
 
   @override
   Future<Either<String, List<FavouriteData>>> getUserFavourites() async {
-    final localResult = await sl<HomeLocalDataSource>().getUserFavourites();
+    final result = await sl<HomeRemoteDataSource>().getUserFavourites();
 
-    return await localResult.fold(
-      (error) async {
-        // If there's an error from the local source, attempt the remote fetch.
-        final remoteResult =
-            await sl<HomeRemoteDataSource>().getUserFavourites();
-        return remoteResult.fold(
-          (error) => Left(error),
-          (favourites) async {
-            // Cache the favourites fetched from remote source locally.
-            sl<HomeLocalDataSource>().cacheUserFavourites(favourites);
-            return Right(favourites);
-          },
-        );
-      },
-      (favourites) async {
-        // If local favourites are empty, fetch from remote as fallback.
-        if (favourites.isEmpty) {
-          final remoteResult =
-              await sl<HomeRemoteDataSource>().getUserFavourites();
-          return remoteResult.fold(
-            (error) => Left(error),
-            (favourites) async {
-              sl<HomeLocalDataSource>().cacheUserFavourites(favourites);
-              return Right(favourites);
-            },
-          );
-        } else {
-          return Right(favourites);
-        }
-      },
+    return result.fold(
+      (error) => Left(error),
+      (favourites) => Right(favourites),
     );
   }
 
